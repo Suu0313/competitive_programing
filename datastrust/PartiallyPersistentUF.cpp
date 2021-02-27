@@ -1,12 +1,12 @@
 struct PartiallyPersistentUF {
-  VI par, siz, last;
+  vector<int> par, siz, last;
   int now;
-  vector<VPII> hist;
+  vector<vector<pair<int,int>>> hist;
   
   PartiallyPersistentUF() {}
   PartiallyPersistentUF(int n): par(n,-1),siz(n,1),last(n,INF),now(0) {
     iota(ALL(par),0);
-    hist.assign(n,VPII(1,{0,1}));
+    hist.assign(n,vector<pair<int,int>>(1,{0,1}));
   }
   void init(int n){
     par.resize(n);
