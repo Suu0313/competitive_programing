@@ -1,7 +1,7 @@
 struct PotentializedUF {
   
-  VI par, siz;
-  VI diff_weight;
+  vector<int> par, siz;
+  vector<int> diff_weight;
   
   PotentializedUF() {}
   
