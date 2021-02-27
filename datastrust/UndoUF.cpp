@@ -1,6 +1,6 @@
 struct UndoUF {
-  VI par, siz;
-  stack<PII> hist;
+  vector<int> par, siz;
+  stack<pair<int,int>> hist;
   
   UndoUF() {}
   UndoUF(int n): par(n,-1),siz(n,1) {
