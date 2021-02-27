@@ -1,0 +1,314 @@
+{
+  "comment support":{
+    "scope": "cpp",
+    "prefix": "//",
+    "body": [
+      "/*",
+      "$0",
+      "//*/"
+    ],
+    "description": "long comment"
+  },
+  "brep support":{
+    "scope": "cpp",
+    "prefix": "BREP",
+    "body": [
+      "BREP(${bit}, ${N}){",
+      "  REP(${i},${N}){",
+      "    if((${bit}>>${i})&1){",
+      "      $0",
+      "    }",
+      "  }",
+      "}"
+    ],
+    "description": "bit rep"
+  },
+  "search support":{
+    "scope": "cpp",
+    "prefix": "ifin",
+    "body": [
+      "if(${x}<0||${H}<=${x}||${y}<0||${W}<=${y}) ${continue}"
+    ],
+    "description": "search on grid"
+  },
+  "sort support":{
+    "scope": "cpp",
+    "prefix": "sorts",
+    "body": [
+      "sort(ALL(${P}),[](auto &a, auto &b){ return a.SE<b.SE;});",
+      "$0"
+    ],
+    "description": "sort by second"
+  },
+  "setprecision":{
+    "scope": "cpp",
+    "prefix": "setp",
+    "body": [
+      "cout << fixed << setprecision(12);",
+      "$0"
+    ],
+    "description": "fixed setprecision"
+  },
+  "VVT":{
+    "scope": "cpp",
+    "prefix": "VVT",
+    "body": [
+      "vector<vector<${type}>> ${name}(${n}, vector<${type}>(${m},${def}));"
+    ],
+    "description": "VVT Constructor"
+  },
+  "binary_search":{
+    "scope": "cpp",
+    "prefix": "binary",
+    "body": [
+      "auto isok = [&](${type} ${x}){",
+      "  ${0}",
+      "};",
+      "",
+      "${type} ok = ${l}, ng = ${r};",
+      "while(abs(ok-ng) > 1){",
+      "  ${type} wj = (ok + ng)/2;",
+      "  if(isok(wj)) ok = wj;",
+      "  else ng = wj;",
+      "}"
+    ],
+    "description":"binary search temp"
+  },
+  "inite graph":{
+    "scope": "cpp",
+    "prefix": "graph",
+    "body": [
+      "REP(${i},${M}){",
+      "  ${int} ${u}, ${v};",
+      "  cin >> ${u} >> ${v};",
+      "  ${u}--; ${v}--;",
+      "  ${G}.at(${u}).EB(${v});",
+      "  ${G}.at(${v}).EB(${u});",
+      "}",
+    ],
+    "description": "inite graph"
+  },
+  "Segment Tree": {
+    "scope": "cpp",
+    "prefix": "seg",
+    "body": [
+      "SegmentTree<${type}> seg(",
+      "  ${N},",
+      "  ${e},",
+      "  [](${type} ${a}, ${type} ${b}) { return ${fuga}; }",
+      ");"
+    ],
+    "description": "Segment Tree Constructor"
+  },
+  "Lazy Segment Tree":{
+    "scope": "cpp",
+    "prefix": "lazy",
+    "body": [
+      "LazySegTree<${M},${OM}> ${seg}(",
+      "  ${N},",
+      "  [](${M} ${a}, ${M} ${b}) { return ${hoge}; },",
+      "  [](${M} ${c}, ${OM} ${d}) { return ${fuga}; },",
+      "  [](${OM} ${e}, ${OM} ${f}) { return ${fugafuga}; },",
+      "  ${me},",
+      "  ${ome}",
+      ");"
+    ],
+    "description": "Lazy Segment Tree Constructor"
+
+  },
+  "find roop":{
+    "scope": "cpp",
+    "prefix": "roop",
+    "body": [
+      "int ${d} = 0, ${t} = 0;",
+      "VI ${Log}, ${dist}(${N},-1);",
+      "",
+      "while(${dist}.at(${t})<0){",
+      "  ${dist}.at(${t}) = ${d}++;",
+      "  ${Log}.PB(${t});",
+      "  ${t} = ${next};",
+      "}",
+      "",
+      "int ${len} = ${d} - ${dist}.at(${t});",
+      "",
+      "if(${K} < ${d}){",
+      "  ${hoge}",
+      "}else{",
+      "  ${fuga}",
+      "}"
+    ],
+    "description": "find roop by simulation"
+  },
+  "header":{
+    "scope": "cpp",
+    "prefix": "header",
+    "body": [
+      "#include <bits/stdc++.h>",
+      "using namespace std;",
+      "",
+      "using LL = long long;",
+      "#define FOR(i,a,b) for(int i=(a);i<(b);++i)",
+      "#define REP(i,n)  FOR(i,0,n)",
+      "",
+      "int main() {",
+      "  ${0}",
+      "}"
+    ],
+    "description": "cpp template"
+  },
+  "faster":{
+    "scope": "cpp",
+    "prefix": "faster",
+    "body": [
+      "#pragma GCC target(\"avx2\")",
+      "#pragma GCC optimize(\"O3\")",
+      "#pragma GCC optimize(\"unroll-loops\")",
+      "",
+      "cin.tie(0);",
+      "ios::sync_with_stdio(false);"
+    ],
+    "description": "more faster more danger"
+  },
+  "int input":{
+    "scope": "python",
+    "prefix": "int",
+    "body": [
+      "int(input())"
+    ],
+    "description": "int input"
+  },
+  "map input":{
+    "scope": "python",
+    "prefix": "map",
+    "body": [
+      "map(int, input().split())"
+    ],
+    "description": "map input"
+  },
+  "create_array":{
+    "scope": "python",
+    "prefix": "array",
+    "body": [
+      "def create_array(*dims, initial=0):",
+      "    n = len(dims)",
+      "    code = \"[\" * n + \"{}] * {}\" + \" for _ in range({})]\" * (n - 1)",
+      "    return eval(code.format(initial, *reversed(dims)))"
+    ],
+    "description": "create_array"
+  },
+  "list input":{
+    "scope": "python",
+    "prefix": "list",
+    "body": [
+      "list(map(int, input().split()))"
+    ],
+    "description": "list input"
+  },
+  "priority_queue":{
+    "scope": "cpp",
+    "prefix": "priority",
+    "body": [
+      "priority_queue<${T},vector<${T}>,decltype(${f})> pq{${f}};"
+    ],
+    "description": "priority_queue"
+  },
+  "limits":{
+    "scope": "cpp",
+    "prefix": "limit",
+    "body": [
+      "numeric_limits<${T}>::${max}();"
+    ],
+    "description": "numeric_limits"
+  },
+  "unique":{
+    "scope": "cpp",
+    "prefix": "unique",
+    "body": [
+      "${vals}.erase(unique(ALL(${vals})), ${vals}.end());"
+    ],
+    "description": "std::unique"
+  },
+  "range for":{
+    "scope": "cpp",
+    "prefix": "fore",
+    "body": [
+      "for(auto&&${x} : ${v}){",
+      "  ${0}",
+      "}"
+    ],
+    "description": "range based for"
+  },
+  "two pointers":{
+    "scope": "cpp",
+    "prefix": "twop",
+    "body": [
+      "LL sum = 0;",
+      "int r = 0;",
+      "REP(l,N){",
+      "  while(r<N && ${c1}){",
+      "    sum += ${a}.at(r++);",
+      "  }",
+      "  if(${c2}) ans += ${hoge};",
+      "  sum -= a.at(l);",
+      "}"
+    ],
+    "description":"two pointers tmep"
+  },
+  "subset for":{
+    "scope": "cpp",
+    "prefix": "forin",
+    "body": [
+      "for(int ${T} = 0; ; ${T} = (${T}-${S})&${S}){",
+      "  ${0}",
+      "  ",
+      "  if(${T} == ${S}) break;",
+      "}"
+    ],
+    "description": "enumerate subset in ascending order"
+  },
+  "subset forr":{
+    "scope": "cpp",
+    "prefix": "forrin",
+    "body": [
+      "for(int ${T} = ${S}; ; ${T} = (${T}-1)&${S}){",
+      "  ${0}",
+      "  ",
+      "  if(${T} == 0) break;",
+      "}"
+    ],
+    "description": "enumerate subset in descending order"
+  },
+  "superset for":{
+    "scope": "cpp",
+    "prefix": "forex",
+    "body": [
+      "for(int ${T} = ${S}; ${S} < (1<<${n}); ${T} = (${T}+1)|${S}){",
+      "  ${0}",
+      "}"
+    ],
+    "description": "enumerate subset (contained in 2^n)"
+  },
+  "nCk": {
+    "scope": "cpp",
+    "prefix": "fork",
+    "body": [
+      "for(int ${s} = (1<<${k})-1; ${s} < (1<<${n}); ){",
+      "  ${0}",
+      "  ",
+      "  int ${t} = ${s} | (${s}-1);",
+      "  ${s} = (${t}+1) | (((~ ${t} & - ~ ${t}) - 1) >> (__builtin_ctz(${s}) + 1));",
+      "}"
+    ],
+    "description": "enumerate subset popcnt==k in 2^n"
+  },
+  "serch on adjacency matrix": {
+    "scope": "cpp",
+    "prefix": "adj",
+    "body": [
+      "REP(${i},4){",
+      "  int ${x} = ${a} + dx.at(${i}), ${y} = ${b} + dy.at(${i});",
+      "}"
+    ],
+    "description": "serch on adjacency matrix"
+  }
+}
