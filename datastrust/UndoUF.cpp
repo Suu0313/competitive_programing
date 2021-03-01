@@ -1,37 +1,28 @@
 struct UndoUF {
-  vector<int> par, siz;
-  stack<pair<int,int>> hist;
+  vector<int> data;
+  stack<pair<int, int>> hist;
   
   UndoUF() {}
-  UndoUF(int n): par(n,-1),siz(n,1) {
-    iota(ALL(par),0);
-  }
+  UndoUF(int n): data(n, -1) {}
   void init(int n){
-    par.resize(n);
-    iota(ALL(par),0);
-    siz.assign(n,1);
+    data.assign(n,-1);
   }
 
   int find(int x) {
-    if(par[x] == x){
-      return x;
-    }else{
-      return find(par[x]);
-    }
+    if(data[x] < 0) return x;
+    return find(data[x]);
   }
 
   bool unite(int x, int y){
     x = find(x);
     y = find(y);
-    hist.emplace(x,par[x]);
-    hist.emplace(y,par[y]);
+    hist.emplace(x,data[x]);
+    hist.emplace(y,data[y]);
     if(x == y) return false;
 
-    if(siz[x] < siz[y]){
-      swap(x,y);
-    }
-    siz[x] += siz[y];
-    par[y] = x;
+    if(data[x] > data[y]) swap(x,y);
+    data[x] += data[y];
+    data[y] = x;
     return true;
   }
 
@@ -40,14 +31,14 @@ struct UndoUF {
   }
 
   int size(int x){
-    return siz[find(x)];
+    return -data[find(x)];
   }
 
   bool undo(){
     if(hist.empty()) return false;
     REP(i,2){
       auto[x,px] = hist.top();
-      par[x] = px;
+      data[x] = px;
       hist.pop();
     }
     return true;
