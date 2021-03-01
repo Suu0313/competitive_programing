@@ -1,4 +1,4 @@
-#define "https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A"
+#define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A"
 
 #include <bits/stdc++.h>
 using namespace std;
