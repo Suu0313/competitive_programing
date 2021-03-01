@@ -12,12 +12,14 @@ template<class T> struct Point{
   bool operator<(const Point &b) const { 
     if(x==b.x) return y<b.y;
     return x<b.x; }
-  T Norm() { return x * x + y * y; }
-  double Abs() { return sqrt(Norm()); }
+  T Norm() const { return x * x + y * y; }
+  double Abs() const { return hypot<double>(x, y); }
   double dist(const Point &b){ return hypot<double>(x-b.x,y-b.y); }
+  double arg() const { return atan2<double>(y, x); }
   
   int ort() const {
-    if (abs(x) < EPS && abs(y) < EPS) return 0;
+    //if (abs(x) < EPS && abs(y) < EPS) return 0;
+    if (abs(x) == 0 && abs(y) == 0) return 0;
     if(y==0) return x>0 ? 1 : 3;
     if(x==0) return y>0 ? 2 : 4;
     if (y > 0) return x>0 ? 1 : 2;
@@ -35,8 +37,7 @@ template<class T> struct Point{
   }
 
   Point flip(double theta) const {
-    theta *= 2;
-    return Point(cos(theta)*x+sin(theta)*y, sin(theta)*x-cos(theta)*y);
+    return (*this).rotate(-theta).flip_y().rotate(theta);
   }
 
   Point operator*(const Point &b) const { return Point(x*b.x-y*b.y,x*b.y+y*b.x); }
@@ -50,7 +51,6 @@ template<class T> struct Point{
     p = Point<T>(a, b);
     return (is);
   }
-
 };
 
 template<class T> T Cross(const Point<T> &a, const Point<T> &b) { return a.x * b.y - a.y * b.x; }
@@ -65,5 +65,5 @@ template<class T> bool Intersect(const Point<T> &a, const Point<T> &b, const Poi
   }
   return false;
 }
-typedef Point<int> point;
+typedef Point<double> point;
 typedef vector<point> polygon;
