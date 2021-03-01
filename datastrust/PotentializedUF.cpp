@@ -1,57 +1,49 @@
+template <typename T = int>
 struct PotentializedUF {
   
-  vector<int> par, siz;
-  vector<int> diff_weight;
+  vector<int> data;
+  vector<T> diff_weight;
   
   PotentializedUF() {}
   
-  PotentializedUF(int n):par(n), siz(n,1), diff_weight(n,0) {
-    iota(ALL(par),0);
-  }
+  PotentializedUF(int n):data(n, -1), diff_weight(n) { }
   
-  void init(int n) {
-    
-    par.assign(n,0);
-    siz.assign(n,1);
+  void init(int n) { 
+    data.assign(n, -1);
     diff_weight.assign(n,0);
-    iota(ALL(par),0);
   }
   
   
   int find(int x) {
-    if(par[x] == x){
-      return x;
-    }else{
-      int r = find(par[x]);
-      diff_weight[x] += diff_weight[par[x]];
-      return par[x] = r;
-    }
+    if(data[x] < 0) return x;
+    int r = find(data[x]);
+    diff_weight[x] += diff_weight[data[x]];
+    return data[x] = r;
+    
   }
 
-  void unite(int x, int y, int w){
+  bool unite(int x, int y, T w){
     w += weight(x); w -= weight(y);
-    x = find(x);
-    y = find(y);
-    if(x == y) return;
+    x = find(x); y = find(y);
+    if(x == y) return false;
 
-    if(siz[x] < siz[y]){
-      swap(x,y); w = -w;
-    }
-    siz[x] += siz[y];
-    par[y] = x;
+    if(data[x] > data[y]){ swap(x,y); w = -w; }
+    data[x] += data[y];
+    data[y] = x;
     diff_weight[y] = w;
+    return true;
   }
 
-  int weight(int x){
+  T weight(int x){
     find(x);
     return diff_weight[x];
   }
 
-  int diff(int x, int y){
+  T diff(int x, int y){
     if(same(x,y)){
       return weight(y) - weight(x);
     }
-    return -1;
+    return T(0);
   }
 
   bool same(int x, int y){
@@ -59,7 +51,7 @@ struct PotentializedUF {
   }
   
   int size(int x){
-    return siz[find(x)];
+    return -data[find(x)];
   }
 
 };
