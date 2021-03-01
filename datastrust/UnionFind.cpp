@@ -1,29 +1,21 @@
 struct UnionFind {
   
-  vector<int> par, siz;
+  vector<int> data;
   int cnt,n,smax;
   
   UnionFind() {}
-  
-  UnionFind(int n_):par(n_), siz(n_,1),cnt(n_),n(n_),smax(1) {
-    iota(ALL(par),0);
-  }
+  UnionFind(int n_): data(n_,-1),cnt(n_),n(n_),smax(1) {}
   
   void init(int n_) {
-    par.assign(n_,0);
-    siz.assign(n_,1);
-    iota(ALL(par),0);
+    data.assign(n_,-1);
     cnt = n_;
     n = n_;
     smax = 1;
   }
   
   int find(int x) {
-    if(par[x] == x){
-      return x;
-    }else{
-      return par[x] = find(par[x]);
-    }
+    if(data[x] < 0) return x;
+    return data[x] = find(data[x]);
   }
 
   bool unite(int x, int y){
@@ -32,12 +24,10 @@ struct UnionFind {
     if(x == y) return false;
     cnt--;
 
-    if(siz[x] < siz[y]){
-      swap(x,y);
-    }
-    siz[x] += siz[y];
-    chmax(smax, siz[x]);
-    par[y] = x;
+    if(data[x] < data[y]) swap(x,y);
+    data[x] += data[y];
+    smax = max(smax, -data[x]);
+    data[y] = x;
     return true;
   }
 
@@ -46,7 +36,7 @@ struct UnionFind {
   }
   
   int size(int x){
-    return siz[find(x)];
+    return -data[find(x)];
   }
 
 
@@ -65,7 +55,7 @@ struct UnionFind {
     }
     result.erase(
       remove_if(
-        ALL(result),
+        result.begin(), result.end(),
         [&](const vector<int>& v) { return v.empty(); }
       ),
       result.end()
