@@ -1,4 +1,4 @@
-template<typename P=LL, typename T=int>
+template<typename P=int64_t, typename T=int>
 map<P,T> Factoring(P A){
   map<P,T> mp;
   for(P i = 2; i*i<=A; i++){
