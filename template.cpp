@@ -116,6 +116,33 @@ vector<T> make_v(size_t a,T b){return vector<T>(a,b);}
 template<typename... Ts>
 auto make_v(size_t a,Ts... ts){return vector<decltype(make_v(ts...))>(a,make_v(ts...)); }
 
+template<typename T>
+vector<tuple<T>> in_zip(vector<T> &v){
+  vector<tuple<T>> vt(v.size());
+  for(int i = 0; i < (int)v.size(); i++) vt[i] = make_tuple(v[i]);
+  return vt;
+}
+
+template<typename T, typename... Ts>
+auto in_zip(vector<T> &v, Ts&&... vs){
+  auto vt = in_zip(v); auto vts = in_zip(vs...);
+  vector res(v.size(), tuple_cat(vt[0], vts[0]));
+  for(int i = 1; i < (int)v.size(); i++) res[i] = tuple_cat(vt[i], vts[i]);
+  return res;
+}
+
+template<typename T>
+vector<tuple<int, T>> in_enumerate(vector<T> &v){
+  vector<int> idx(v.size()); iota(idx.begin(), idx.end(), 0);
+  return in_zip(idx, v);
+}
+
+template<typename T, typename... Ts>
+auto in_enumerate(vector<T> &v, Ts&&... vs){
+  vector<int> idx(v.size()); iota(idx.begin(), idx.end(), 0);
+  return in_zip(idx, v, vs...);
+}
+
 const vector<int> dx = {1,0,-1,0,1,1,-1,-1};
 const vector<int> dy = {0,1,0,-1,1,-1,1,-1};
 
@@ -209,15 +236,11 @@ namespace debugger{
     cout << "}";
   }
   template<typename T>
-  void view(const set<T>& s){
-    view(vector<T>(ALL(s)));
-  }
+  void view(const set<T>& s){ view(vector<T>(s.begin(), s.end())); }
   template<typename T1, typename T2>
   void view(const map<T1, T2>& mp){
     cout << "{\n";
-    for(auto&&[f,s] : mp){
-      cout << "\t[" << f << "]: " << s << "\n";
-    }
+    for(auto&&[f,s] : mp) cout << "\t[" << f << "]: " << s << "\n";
     cout << "}";
   }
 }
@@ -246,10 +269,3 @@ int main() {
 
   return 0;
 }
-/*
-制約は見ましたか？
-実行時間制限は見ましたか？
-サンプルは試しましたか？
-cat in.txt | .\a.exe > out.txt
-C++になっていますか？
-//*/
