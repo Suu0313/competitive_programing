@@ -28,8 +28,6 @@ using prquer = priority_queue<T,vector<T>,greater<T>>;
 #define uset unordered_set
 #define umset unordered_multiset
 
-using int128 = __int128_t;
-
 #define LB lower_bound
 #define UB upper_bound
 #define FI first
@@ -143,9 +141,6 @@ auto in_enumerate(vector<T> &v, Ts&&... vs){
   return in_zip(idx, v, vs...);
 }
 
-const vector<int> dx = {1,0,-1,0,1,1,-1,-1};
-const vector<int> dy = {0,1,0,-1,1,-1,1,-1};
-
 bool cYN(bool fl=true,bool fl2=false){cout << (fl?"Yes":"No") << endl; if(fl2){ exit(0); } return fl; }
 bool CYN(bool fl=true,bool fl2=false){cout << (fl?"YES":"NO") << endl; if(fl2){ exit(0); } return fl; }
 template<typename T = int>
@@ -175,36 +170,6 @@ ostream &operator<<(ostream &os, const vector< T > &v) {
   return os;
 }
 
-istream& operator>>(istream& is, __int128_t &a){
-  string s; is >> s;
-  __int128_t res = 0;
-  for(auto&&c : s) if('0' <= c && c <= '9') res = 10*res + c-'0';
-  a = res * (s[0]=='-' ? -1 : 1);
-  return is;
-}
-
-ostream& operator<<(ostream& os, __int128_t &a){
-  ostream::sentry s(os);
-  if(s){
-    __uint128_t tmp = a<0 ? -a : a;
-    char buffer[128];
-    char *d = std::end(buffer);
-    do{
-      --d;
-      *d = "0123456789"[tmp%10];
-      tmp /= 10;
-    }while(tmp != 0);
-    if(a < 0){
-      --d; *d = '-';
-    }
-    int len = std::end(buffer) - d;
-    if(os.rdbuf()->sputn(d, len) != len){
-      os.setstate(ios_base::badbit);
-    }
-  }
-  return os;
-}
-
 void Vcin([[maybe_unused]] int i) {}
 template<class T, class... Ts>
 void Vcin(int i, vector<T> &v, Ts&&... vs){ cin >> v[i]; Vcin(i, vs...); }
@@ -215,6 +180,9 @@ template< typename T >
 void Vcout(const vector<T> &v, string sep = "\n", string en = "\n"){
   for(int i = 0; i < SZ(v); i++) cout << v[i] << (i + 1 != SZ(v) ? sep : en);
 }
+
+const vector<int> dx = {1,0,-1,0,1,1,-1,-1};
+const vector<int> dy = {0,1,0,-1,1,-1,1,-1};
 
 namespace debugger{
   template<typename T>
@@ -254,18 +222,49 @@ void debug_out(T&& t, Ts&&... ts){ debugger::view(t); cout << ", "; debug_out(ts
 #define debug(...) do{ cout <<"L: "<<__LINE__<<" [ " << #__VA_ARGS__ << " ]: "; debug_out(__VA_ARGS__); }while(false)
 #else
 #define debug(...)
+
+using int128 = __int128_t;
+
+istream& operator>>(istream& is, __int128_t &a){
+  string s; is >> s;
+  __int128_t res = 0;
+  for(auto&&c : s) if('0' <= c && c <= '9') res = 10*res + c-'0';
+  a = res * (s[0]=='-' ? -1 : 1);
+  return is;
+}
+
+ostream& operator<<(ostream& os, __int128_t &a){
+  ostream::sentry s(os);
+  if(s){
+    __uint128_t tmp = a<0 ? -a : a;
+    char buffer[128];
+    char *d = std::end(buffer);
+    do{
+      --d;
+      *d = "0123456789"[tmp%10];
+      tmp /= 10;
+    }while(tmp != 0);
+    if(a < 0){
+      --d; *d = '-';
+    }
+    int len = std::end(buffer) - d;
+    if(os.rdbuf()->sputn(d, len) != len){
+      os.setstate(ios_base::badbit);
+    }
+  }
+  return os;
+}
+
 #endif
 
 #pragma endregion
 
 
 
-int main() {
-
+int main(){
   // cin.tie(0); ios::sync_with_stdio(false);
   cout << fixed << setprecision(12);
 
-  
 
   return 0;
 }
