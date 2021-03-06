@@ -17,7 +17,7 @@ template<class T> struct Point{
     return x<b.x; }
   T Norm() const { return x * x + y * y; }
   double Abs() const { return hypot<double>(x, y); }
-  double dist(const Point &b){ return hypot<double>(x-b.x,y-b.y); }
+  double dist(const Point &b) const { return hypot<double>(x-b.x,y-b.y); }
   double arg() const { return atan2<double>(y, x); }
   
   int ort() const {
@@ -92,8 +92,27 @@ template<class T> struct Line{
   Point<T> a, b;
   Line() {}
   Line(Point<T> a, Point<T> b): a(a), b(b) {}
-  Line(T A, T B, T C){
-    a = Point<T>(0, C/B); b = Point<T>(C/A, 0);
+  Line(T A, T B, T C){ // Ax + By = C
+    if(A == 0){ a = Point<T>(0, C/B); b = Point<T>(1, C/B); }
+    else if(B == 0){ a = Point<T>(C/A, 0); b = Point<T>(C/A, 1); }
+    else{ a = Point<T>(0, C/B); b = Point<T>(C/A, 0); }
+  }
+
+  Point<T> flip(const Point<T> &p) const {
+    return (p - a).flip((b-a).arg()) + a;
+  }
+  Point<T> projection(const Point<T> &p) const {
+    return (p + flip(p))/2;
+  }
+
+  int angletype(const Line &l) const {
+    if(Cross(b-a, l.b-l.a) == 0) return 1;
+    if(Dot(a-b, l.b-l.a) == 0) return -1;
+    return 0;
+  }
+
+  Point<T>  Cross_Point(const Line &l) const {
+    
   }
 };
 
@@ -102,13 +121,27 @@ template<class T> struct Segment{
   Segment() {}
   Segment(Point<T> a, Point<T> b): a(a), b(b) {}
 
-  bool Intersect(const Segment &other) const {
-    return ::Intersect(a, b, other.a, other.b);
+  bool Intersect(const Segment &s) const {
+    return iSP(a, b, s.a)*iSP(a, b, s.b)<=0 && iSP(s.a, s.b, a)*iSP(s.a, s.b, b)<=0;
   }
   Point<T> Center() const { return (a + b) / 2; }
   Line<T> PerpBisector() const {
     Point<T> center = this->Center();
     return Line<T>((a-center).rotate90() + center, center);
+  }
+
+  int angletype(const Segment &s) const {
+    if(Cross(b-a, s.b-s.a) == 0) return 1;
+    if(Dot(a-b, s.b-s.a) == 0) return -1;
+    return 0;
+  }
+
+  Point<T>  Cross_Point(const Segment &s) const {
+    
+  }
+
+  double dist(const Segment &s) const {
+    
   }
 };
 
