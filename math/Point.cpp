@@ -14,7 +14,7 @@ template<class T> struct Point{
     return x<b.x; }
   T Norm() const { return x * x + y * y; }
   double Abs() const { return hypot<double>(x, y); }
-  double dist(const Point &b){ return hypot<double>(x-b.x,y-b.y); }
+  double dist(const Point &b) const { return hypot<double>(x-b.x,y-b.y); }
   double arg() const { return atan2<double>(y, x); }
   
   int ort() const {
