@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../../math/PrimeFact.cpp"
+#include "../../../math/PrimeFact.cpp"
 
 int main(){
   int n; cin >> n;
