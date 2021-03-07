@@ -1,5 +1,5 @@
 ---
-title: Segment Tree
+title: PrimeFact
 documentation_of: ../../../math/PrimeFact.cpp
 ---
 
