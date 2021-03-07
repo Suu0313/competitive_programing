@@ -1,0 +1,1 @@
+priority_queue<T, vector<T>, decltype(compare)> pq{compare};
