@@ -36,7 +36,7 @@ struct UndoUF {
 
   bool undo(){
     if(hist.empty()) return false;
-    REP(i,2){
+    for (int i = 0; i < 2; i++){
       auto[x,px] = hist.top();
       data[x] = px;
       hist.pop();
