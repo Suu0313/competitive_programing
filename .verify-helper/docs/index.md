@@ -1,1 +1,8 @@
-test
+---
+title: Segment Tree
+documentation_of: ../../../math/PrimeFact.cpp
+---
+
+## 説明
+
+素因数分解
