@@ -51,7 +51,7 @@ struct UnionFind {
       result.at(i).reserve(group_size.at(i));
     }
     for(int i=0; i<n; i++){
-      result.at(leader_buf.at(i)).EB(i);
+      result.at(leader_buf.at(i)).emplace_back(i);
     }
     result.erase(
       remove_if(
