@@ -1,6 +1,6 @@
-VI Zalg(string &S){
-  int N = SZ(S);
-  VI Z(N);
+vector<int> Zalg(const string &S){
+  int N = S.size();
+  vector<int> Z(N);
   Z.at(0) = N;
   int i = 1, j = 0;
   
