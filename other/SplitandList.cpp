@@ -1,13 +1,13 @@
-void SplitandList(VLL &a, VLL &b, VLL &c){
+void SplitandList(vector<long long> &a, vector<long long> &b, vector<long long> &c){
   b.assign(1,0); c.assign(1,0);
   auto merge = [&](LL x){
-    VLL d;
+    vector<long long> d;
     auto it = b.begin();
     for(auto&&y : b){
-      while(x+*it < y) d.EB(x + *it++);
-      d.EB(y);
+      while(x+*it < y) d.emplace_back(x + *it++);
+      d.emplace_back(y);
     }
-    while(it < b.end()) d.EB(x + *it++);
+    while(it < b.end()) d.emplace_back(x + *it++);
     swap(b, d);
   };
   for(auto&&x : a){

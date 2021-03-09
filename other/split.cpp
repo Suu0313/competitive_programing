@@ -6,8 +6,8 @@ void split(const string& str, char delim, const F& f){
     f(token);
   }
 }
-VS split(const string& str, char delim=' '){
-  VS tokens;
+vector<string> split(const string& str, char delim=' '){
+  vector<string> tokens;
   split(str, delim, [&tokens](const string& token){
     if(!token.empty()) tokens.EB(token);
   });
