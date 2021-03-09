@@ -1,8 +1,8 @@
 template <typename T>
 T LCS(T s, T t){
-  int n = SZ(s), m = SZ(t);
-  VVI dp(n+1,VI(m+1,0));
-  REP(i,n)REP(j,m){
+  int n = s.size(), m = t.size();
+  vector dp(n+1, vector(m+1,0));
+  for(int i = 0; i < n)for(int j = 0; j < m; j++){
     if(s.at(i)==t.at(j)){
       dp.at(i+1).at(j+1)=dp.at(i).at(j)+1;
     }else{
@@ -19,6 +19,6 @@ T LCS(T s, T t){
       res.push_back(s.at(i));
     }
   }
-  reverse(ALL(res));
+  reverse(res.begin(), res.end());
   return res;
 }
