@@ -27,7 +27,7 @@ namespace NTT{
     int cnt = 1;
     int x = (m-1) / 2;
     while(x%2 == 0) x >>= 1;
-    for(int i=3; (LL)(i)*i <= x; i+=2){
+    for(int i=3; (long long)(i)*i <= x; i+=2){
       if(x%i == 0){
         divs[cnt++] = i;
         while (x % i == 0) x /= i;
