@@ -17,7 +17,7 @@ struct Fraction{
   Fraction(string S){
     S += ".0";
     string T;
-    VS st;
+    vector<string> st;
     stringstream ss{S};
     while(getline(ss,T,'.')) st.PB(T);
     LL A = stoll(st.at(0));

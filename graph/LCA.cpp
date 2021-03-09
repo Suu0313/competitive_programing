@@ -1,18 +1,19 @@
+template<typename T = int>
 struct LCA{
-  VVI parent;
-  VI dist;
+  vector<vector<int>> parent;
+  vector<int> dist;
 
-  LCA (VVI &G, int root){ init(G,root); }
+  LCA (vector<vector<T>> &G, int root){ init(G, root); }
 
-  void init(VVI &G, int root){
-    int V = SZ(G);
+  void init(vector<vector<T>> &G, int root){
+    int V = G.size();
     int K = 1;
-    while((1<<K)<V) K++;
-    parent.assign(K,VI(V,-1));
+    while((1<<K) < V) K++;
+    parent.assign(K, vector<int>(V, -1));
     dist.assign(V,-1);
     dfs(G,root,-1,0);
-    REP(k,K-1){
-      REP(v,V){
+    for(int k = 0; k < K-1; k++){
+      for(int v = 0; v < V; v++){
         if(parent.at(k).at(v)<0){
           parent.at(k+1).at(v) = -1;
         }else{
@@ -22,25 +23,26 @@ struct LCA{
     }
   }
 
-  void dfs(VVI &G, int v, int p, int d){
+  void dfs(vector<vector<T>> &G, int v, int p, int d){
     parent.at(0).at(v) = p;
     dist.at(v) = d;
-    for(auto e : G.at(v)){
+    for(auto &&e : G.at(v)){
       if(e != p) dfs(G, e, v, d+1);
     }
   }
 
   int quert(int u, int v){
     if(dist.at(u) < dist.at(v)) swap(u,v);
-    int K = SZ(parent);
+    int K = parent.size();
 
-    REP(k,K){
+    for(int k = 0; k < K; k++){
       if((dist.at(u)-dist.at(v))>>k & 1){
         u = parent.at(k).at(u);
       }
     }
     if(u==v) return u;
-    REPR(k,K){
+
+    for(int k = K-1; k >= 0; k--){
       if(parent.at(k).at(u) != parent.at(k).at(v)){
         u = parent.at(k).at(u);
         v = parent.at(k).at(v);
