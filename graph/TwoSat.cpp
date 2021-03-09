@@ -27,10 +27,10 @@ struct TwoSat{
     scc.addEdge(rev(u),u);
   }
 
-  VI answer(){
+  vector<int> answer(){
     scc.build();
-    VI res(n);
-    REP(i,n){
+    vector<int> res(n);
+    for(int i = 0; i < n; i++){
       if(scc.issame(i,rev(i))) return {};
       res.at(i) = scc.at(i) > scc.at(rev(i));
     }

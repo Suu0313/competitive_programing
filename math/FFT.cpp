@@ -23,7 +23,7 @@ namespace FFT{
   }
   
   void DFT(vector<Complex> &f, int inverse){
-    int n = SZ(f);
+    int n = f.size();
     if(n==1)return;
     vector<Complex> va(n/2),vb(n/2);
     REP(i,n/2){

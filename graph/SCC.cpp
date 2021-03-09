@@ -1,14 +1,14 @@
 struct SCC{
-  //StronglyConnectedComponents
+  //  StronglyConnectedComponents
   int N;
-  VVI G, rG;
+  vector<vector<int>> G, rG;
 
   int group;
-  VI compo, order;
-  VB used;
+  vector<int> compo, order;
+  vector<bool> used;
 
-  SCC(VVI &G):N(SZ(G)), G(G), rG(SZ(G)){
-    REP(i,N){
+  SCC(vector<vector<int>> &G):N(G.size()), G(N), rG(N){
+    for(int i = 0; i < N; i++){
       for(auto e : G.at(i)){
         rG.at(e).EB(i);
       }
@@ -19,16 +19,16 @@ struct SCC{
   int at(int k){return compo.at(k);}
 
   void addEdge(int u, int v){
-    G.at(u).EB(v);
-    rG.at(v).EB(u);
+    G.at(u).emplace_back(v);
+    rG.at(v).emplace_back(u);
   }
 
   void dfs(int now){
     if(used.at(now)) return;
     used.at(now) = true;
     for(auto to : G.at(now)) dfs(to);
-    //帰りがけ順で突っ込む
-    order.EB(now);
+    //  帰りがけ順で突っ込む
+    order.emplace_back(now);
   }
   void rdfs(int now, int cnt){
     if(compo.at(now) != -1) return;
@@ -42,8 +42,8 @@ struct SCC{
     order.clear();
     group = 0;
 
-    REP(i,N) dfs(i);
-    reverse(ALL(order));
+    for(int i = 0; i < N; i++) dfs(i);
+    reverse(order.begin(), order.end());
     for(auto e : order){
       if(compo.at(e) == -1){
         rdfs(e,group);
@@ -56,27 +56,27 @@ struct SCC{
     return compo.at(u) == compo.at(v);
   }
 
-  VVI reconstruct(){
-    VVI ret(group);
-    REP(i,N){
+  vector<vector<int>> reconstruct(){
+    vector<vector<int>> ret(group);
+    for(int i = 0; i < N; i++){
       for(auto to : G.at(i)){
         int s = compo.at(i);
         int t = compo.at(to);
-        if(s != t) ret.at(s).EB(t);
+        if(s != t) ret.at(s).emplace_back(t);
       }
     }
     for(auto&&v : ret){
-      SORT(v);
-      v.erase(unique(ALL(v)), v.end());
+      sort(v.begin(), v.end());
+      v.erase(unique(v.begin(), v.end()), v.end());
     }
     return ret;
   }
 
-  VVI groups(){
-    VVI res(group);
-    REP(i,N){
+  vector<vector<int>> groups(){
+    vector<vector<int>> res(group);
+    for(int i = 0; i < N; i++){
       int p = compo.at(i);
-      res.at(p).EB(i);
+      res.at(p).emplace_back(i);
     }
     return res;
   }
