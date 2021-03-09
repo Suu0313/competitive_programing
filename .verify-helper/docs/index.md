@@ -1,6 +1,6 @@
 ---
 title: PrimeFact
-documentation_of: ../../../math/PrimeFact.cpp
+documentation_of: ../../math/PrimeFact.cpp
 ---
 
 ## 説明
