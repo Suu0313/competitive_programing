@@ -1,6 +1,6 @@
-bool IsPrime(LL N){
+bool IsPrime(long long N){
   if(N <= 1) return false;
-  for(LL i = 2; i*i <= N; ++i){
+  for(long long i = 2; i*i <= N; ++i){
     if(N%i == 0) return false;
   }
   return true;
