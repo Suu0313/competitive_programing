@@ -95,6 +95,10 @@ template<class T> struct Line{
   Line(T A, T B, T C){
     a = Point<T>(0, C/B); b = Point<T>(C/A, 0);
   }
+
+  T dist(const Point<T> &p) const {
+    return abs(Cross(p-a, b-a)/ (b-a).Abs());
+  }
 };
 
 template<class T> struct Segment{
