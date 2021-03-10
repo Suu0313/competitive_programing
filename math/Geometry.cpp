@@ -2,7 +2,7 @@ template<class T> struct Point{
   T x,y;
   Point(){}
   Point(T x, T y) : x(x), y(y) {}
-  Point(pair<T,T> p) : x(p.first), y(p.second) {}
+  Point(const pair<T,T> &p) : x(p.first), y(p.second) {}
   
   Point operator+(const Point &b) const { return Point(x + b.x, y + b.y); }
   Point operator-(const Point &b) const { return Point(x - b.x, y - b.y); }
@@ -17,7 +17,7 @@ template<class T> struct Point{
     return x<b.x; }
   T Norm() const { return x * x + y * y; }
   double Abs() const { return hypot<double>(x, y); }
-  double dist(const Point &b){ return hypot<double>(x-b.x,y-b.y); }
+  double dist(const Point &b) const { return hypot<double>(x-b.x,y-b.y); }
   double arg() const { return atan2<double>(y, x); }
   
   int ort() const {
@@ -61,12 +61,7 @@ template<class T> T Cross(const Point<T> &a, const Point<T> &b) { return a.x * b
 template<class T> T Dot(const Point<T> &a, const Point<T> &b) { return a.x * b.x + a.y * b.y; }
 
 template<class T> bool Intersect(const Point<T> &a, const Point<T> &b, const Point<T> &c, const Point<T> &d) {
-  if( Cross((c-a),(b-a))>0 != Cross((d-a),(b-a))>0 ){
-    if( Cross((a-c),(d-c))>0 != Cross((b-c),(d-c))>0 ){
-      return true;
-    }
-  }
-  return false;
+  return iSP(a, b, c)*iSP(a, b, d)<=0 && iSP(c, d, a)*iSP(c, d, b)<=0;
 }
 
 template<class T> int iSP(const Point<T> &a, const Point<T> &b, const Point<T> &c){
@@ -85,19 +80,57 @@ template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Poin
   return -1; // obtuse angle
 }
 
-typedef Point<double> point;
-typedef vector<point> polygon;
+template<typename T> T Area(const vector<Point<T>> &ps){
+  T res = Cross(ps.back(), ps.front())/2;
+  for(int i = 0; i < (int)ps.size()-1; i++){
+    res += Cross(ps[i], ps[i+1])/2;
+  }
+  return res;
+}
+
+template<typename T> bool isConvex(vector<Point<T>> ps){
+  int n = ps.size();
+  ps.emplace_back(ps[0]);
+  ps.emplace_back(ps[1]);
+  for(int i = 0; i < n; i++){
+    if(iSP(ps[i], ps[i+1], ps[i+2]) == -1) return false;
+  }
+  return true;
+}
 
 template<class T> struct Line{
   Point<T> a, b;
   Line() {}
-  Line(Point<T> a, Point<T> b): a(a), b(b) {}
-  Line(T A, T B, T C){
-    a = Point<T>(0, C/B); b = Point<T>(C/A, 0);
+  Line(const Point<T> &a, const Point<T> &b): a(a), b(b) {}
+  Line(T A, T B, T C){ // Ax + By = C
+    if(A == 0){ a = Point<T>(0, C/B); b = Point<T>(1, C/B); }
+    else if(B == 0){ a = Point<T>(C/A, 0); b = Point<T>(C/A, 1); }
+    else{ a = Point<T>(0, C/B); b = Point<T>(C/A, 0); }
   }
-
+  //Line(const Segment<T> &s): a(s.a), b(s.b) {}
+  Point<T> flip(const Point<T> &p) const {
+    return (p - a).flip((b-a).arg()) + a;
+  }
+  Point<T> projection(const Point<T> &p) const {
+    return (p + flip(p))/2;
+  }
+  int angletype(const Line &l) const {
+    if(Cross(b-a, l.b-l.a) == 0) return 1;
+    if(Dot(a-b, l.b-l.a) == 0) return -1;
+    return 0;
+  }
+  bool Intersect(const Line &l) const {
+    return angletype(l) != 1;
+  }
+  Point<T>  Cross_Point(const Line &l) const {
+    return (b-a)*Cross(l.a-a, l.b-l.a)/Cross(b-a,l.b-l.a) + a;
+  }
   T dist(const Point<T> &p) const {
     return abs(Cross(p-a, b-a)/ (b-a).Abs());
+  }
+  T dist(const Line &l) const {
+    if(Intersect(l)) return 0;
+    return dist(l.a);
   }
 };
 
@@ -106,13 +139,30 @@ template<class T> struct Segment{
   Segment() {}
   Segment(Point<T> a, Point<T> b): a(a), b(b) {}
 
-  bool Intersect(const Segment &other) const {
-    return ::Intersect(a, b, other.a, other.b);
+  bool Intersect(const Segment &s) const {
+    return iSP(a, b, s.a)*iSP(a, b, s.b)<=0 && iSP(s.a, s.b, a)*iSP(s.a, s.b, b)<=0;
   }
   Point<T> Center() const { return (a + b) / 2; }
   Line<T> PerpBisector() const {
     Point<T> center = this->Center();
     return Line<T>((a-center).rotate90() + center, center);
+  }
+  int angletype(const Segment &s) const {
+    if(Cross(b-a, s.b-s.a) == 0) return 1;
+    if(Dot(a-b, s.b-s.a) == 0) return -1;
+    return 0;
+  }
+  Point<T> Cross_Point(const Segment &s) const {
+    return (b-a)*Cross(s.a-a, s.b-s.a)/Cross(b-a,s.b-s.a) + a;
+  }
+  T dist(const Point<T> &p) const {
+    if(Dot(b-a, p-a) < 0) return p.dist(a);
+    if(Dot(a-b, p-b) < 0) return p.dist(b);
+    return abs(Cross(p-a, b-a)/ (b-a).Abs());
+  }
+  T dist(const Segment &s) const {
+    if(Intersect(s)) return 0;
+    return min({dist(s.a), dist(s.b), s.dist(a), s.dist(b)});
   }
 };
 
@@ -122,3 +172,6 @@ template<class T> struct Circle{
   Circle() {}
   Circle(Point<T> o, T r): o(o), r(r) {}
 };
+
+typedef Point<int> point;
+typedef vector<point> polygon;
