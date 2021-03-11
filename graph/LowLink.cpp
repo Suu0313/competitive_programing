@@ -1,9 +1,10 @@
+template<typename T>
 struct LowLink{
-  vector<vector<int>> G;
+  vector<vector<T>> G;
   vector<bool> used;
   vector<int> ord, low, aps;
   vector<pair<int, int>> bridges;
-  LowLink(vector<vector<int>> &G_) : G(G_){
+  LowLink(vector<vector<T>> &G_) : G(G_){
     int N = G.size();
     used.assign(N,false);
     ord.assign(N,0);
@@ -22,7 +23,7 @@ struct LowLink{
     low.at(id) = ord.at(id);
     bool isAps = false;
     int cnt = 0;
-    for(auto e : G.at(id)){
+    for(auto&&e : G.at(id)){
       if(!used.at(e)) {
         cnt++;
         k = dfs(e,k,id);
@@ -36,6 +37,5 @@ struct LowLink{
     if(par == -1 && cnt >= 2) isAps = true;
     if(isAps) aps.emplace_back(id);
     return k;
-  
   }
 };
