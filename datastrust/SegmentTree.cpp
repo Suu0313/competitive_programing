@@ -40,7 +40,7 @@ struct SegmentTree{
   }
 
   void change(int l, int r, T x){
-    FOR(k,l,r) change(k,x);
+    for(int k = l; k < r; k++) change(k,x);
   }
 
   template<typename C>
@@ -52,7 +52,7 @@ struct SegmentTree{
 
   template<typename C>
   void update(int l, int r, C c){
-    FOR(k,l,r) update(k,c);
+    for(int k = l; k < r; k++) update(k,c);
   }
 
   T at(int k){
