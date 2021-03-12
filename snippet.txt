@@ -220,14 +220,6 @@
     ],
     "description": "numeric_limits"
   },
-  "unique":{
-    "scope": "cpp",
-    "prefix": "unique",
-    "body": [
-      "${vals}.erase(unique(ALL(${vals})), ${vals}.end());"
-    ],
-    "description": "std::unique"
-  },
   "range for":{
     "scope": "cpp",
     "prefix": "fore",
