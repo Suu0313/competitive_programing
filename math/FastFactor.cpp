@@ -1,9 +1,9 @@
 struct FastFactor{
   int n;
-  VI min_factor;
+  vector<int> min_factor;
 
   FastFactor(int n_):n(n_+1),min_factor(n_+1){
-    iota(ALL(min_factor),0);
+    iota(min_factor.begin(), min_factor.end(), 0);
     for(int i = 2; i*i < n; ++i){
       if(min_factor.at(i) < i) continue;
       for(int j = i*i; j < n; j += i){
@@ -27,10 +27,10 @@ struct FastFactor{
     return p == min_factor.at(p);
   }
 
-  VI prime_table(){
-    VI res;
-    REP(i,n){
-      if(isPrime(i)) res.PB(i);
+  vector<int> prime_table(){
+    vector<int> res;
+    for(int i=0; i < n ; i++){
+      if(isPrime(i)) res.push_back(i);
     }
     return res;
   }
