@@ -302,5 +302,12 @@
       "}"
     ],
     "description": "serch on adjacency matrix"
+  },
+  "create dp table":{
+    "scope": "cpp",
+    "prefix": "dp",
+    "body": [
+      "auto ${dp} = make_v(${0});"
+    ]
   }
 }
