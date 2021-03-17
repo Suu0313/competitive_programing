@@ -309,5 +309,14 @@
     "body": [
       "auto ${dp} = make_v(${0});"
     ]
+  },
+  "random":{
+    "scope": "cpp",
+    "prefix": "rnd",
+    "body": [
+      "random_device seed;",
+      "mt19937 rng(seed());",
+      "uniform_int_distribution<> db(${l}, ${r})"
+    ]
   }
 }
