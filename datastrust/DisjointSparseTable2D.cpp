@@ -15,7 +15,7 @@ struct DisjointSparseTable2D{
 
       for(int ci = 1; ci < mb; ci++){
         int shift = 1 << ci;
-        for(int cj = 0; cj < n; cj += shift << 1){
+        for(int cj = 0; cj < m; cj += shift << 1){
           int t = min(cj+shift, m);
           table[0][rj][ci][t-1] = v[rj][t-1];
           for(int k = t-2; k >= cj; k--){
@@ -41,7 +41,11 @@ struct DisjointSparseTable2D{
             for(int k = rt-2; k >= rj; k--){
               table[ri][k][ci][cj] = f(table[0][k][ci][cj], table[ri][k+1][ci][cj]);
             }
-            if(n <= rt) break;
+          }
+        }
+        if(n <= rt) break;
+        for(int ci = 0; ci < mb; ci++){
+          for(int cj = 0; cj < m; cj++){
             table[ri][rt][ci][cj] = table[0][rt][ci][cj];
             int r = min(rt+rshift, n);
             for(int k = rt+1; k < r; k++){
