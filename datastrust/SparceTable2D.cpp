@@ -1,11 +1,11 @@
 template<typename T>
-struct SpaceTable2D{
+struct SparceTable2D{
   using F = function<T(T, T)>;
   const F f;
   vector<vector<vector<vector<T>>>> table;
   vector<int> lookup;
 
-  SpaceTable2D(const vector<vector<T>> &v, const F &f): f(f){
+  SparceTable2D(const vector<vector<T>> &v, const F &f): f(f){
     const int n = v.size(), m = v[0].size();
     const int nb = 32 - __builtin_clz(n), mb = 32 - __builtin_clz(m);
     table.assign(nb, vector(n, vector(mb, vector<T>(m))));
