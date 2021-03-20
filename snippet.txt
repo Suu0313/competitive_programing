@@ -298,7 +298,7 @@
     "prefix": "adj",
     "body": [
       "REP(${i},4){",
-      "  int ${x} = ${a} + dx.at(${i}), ${y} = ${b} + dy.at(${i});",
+      "  int ${x} = ${a} + dx[${i}], ${y} = ${b} + dy[${i}];",
       "}"
     ],
     "description": "serch on adjacency matrix"
