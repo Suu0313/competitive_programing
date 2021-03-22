@@ -74,20 +74,6 @@
     ],
     "description":"binary search temp"
   },
-  "inite graph":{
-    "scope": "cpp",
-    "prefix": "graph",
-    "body": [
-      "REP(${i},${M}){",
-      "  ${int} ${u}, ${v};",
-      "  cin >> ${u} >> ${v};",
-      "  ${u}--; ${v}--;",
-      "  ${G}.at(${u}).EB(${v});",
-      "  ${G}.at(${v}).EB(${u});",
-      "}",
-    ],
-    "description": "inite graph"
-  },
   "Segment Tree": {
     "scope": "cpp",
     "prefix": "seg",
