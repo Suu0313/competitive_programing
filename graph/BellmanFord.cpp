@@ -1,5 +1,5 @@
 template<typename T>
-vector<T> BellmanFord(const vector<edge<T>> &edges, int V, int s){
+vector<T> BellmanFord(const Edges<T> &edges, int V, int s){
   const T inf = numeric_limits<T>::max();
   vector<T> dist(V, inf); dist[s] = 0;
   for(int i = 0; i < V-1; i++){

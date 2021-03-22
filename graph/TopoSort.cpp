@@ -1,5 +1,5 @@
 template<typename T>
-vector<int> TopoSort(const vector<vector<T>> &G){
+vector<int> TopoSort(const Graph<T> &G){
   vector<int> ans;
   int n = G.size();
   vector<int> ind(n,0);

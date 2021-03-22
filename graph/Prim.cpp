@@ -1,7 +1,7 @@
 template<typename T>
-pair<T, vector<vector<edge<T>>>> Prim(const vector<vector<edge<T>>> &g){
+pair<T, Graph<T>> Prim(const Graph<T> &g){
   T sum = 0;
-  vector<vector<edge<T>>> mst(g.size());
+  Graph<T> mst(g.size());
   vector<bool> used(g.size());
   using tpii = tuple<T, int, int>;
   priority_queue<tpii, vector<tpii>, greater<>> pq;
@@ -12,8 +12,7 @@ pair<T, vector<vector<edge<T>>>> Prim(const vector<vector<edge<T>>> &g){
     used[v] = true;
     if(p >= 0){
       sum += d;
-      mst[p].emplace_back(p, v, d);
-      mst[v].emplace_back(v, p, d);
+      mst.add_edge(p,v,d);
     }
     for(auto&&e : g[v]){
       if(used[e.to]) continue;

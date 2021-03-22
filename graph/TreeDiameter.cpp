@@ -1,7 +1,7 @@
 template<typename T>
 struct TreeDiameter{
-  vector<vector<edge<T>>> g;
-  TreeDiameter(const  vector<vector<edge<T>>> &g): g(g) {}
+  Graph<T> g;
+  TreeDiameter(const  Graph<T> &g): g(g) {}
   T solve(){
     auto p = dfs(0, -1);
     auto q = dfs(p.second, -1);

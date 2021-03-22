@@ -1,10 +1,9 @@
 template<typename T>
 struct CycleDetection{
-  vector<vector<T>> g;
+  Graph<T> g;
   vector<int> used;
   vector<pair<int, int>> pre, cycle;
-  CycleDetection(const vector<vector<T> >& g)
-  : g(g), used(g.size()), pre(g.size()) {}
+  CycleDetection(const Graph<T> &g): g(g), used(g.size()), pre(g.size()) {}
 
   bool dfs(int v){
     used[v] = 1;

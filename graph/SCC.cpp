@@ -1,16 +1,17 @@
+template<typename T = int>
 struct SCC{
   //  StronglyConnectedComponents
   int N;
-  vector<vector<int>> G, rG;
+  Graph<T> G, rG;
 
   int group;
   vector<int> compo, order;
   vector<bool> used;
 
-  SCC(vector<vector<int>> &G):N(G.size()), G(N), rG(N){
+  SCC(const Graph<T> &G):N(G.size()), G(G), rG(N){
     for(int i = 0; i < N; i++){
-      for(auto e : G.at(i)){
-        rG.at(e).EB(i);
+      for(auto&&e : G.at(i)){
+        rG.add_directed_edge(e.to, i);
       }
     }
   }
@@ -19,21 +20,8 @@ struct SCC{
   int at(int k){return compo.at(k);}
 
   void addEdge(int u, int v){
-    G.at(u).emplace_back(v);
-    rG.at(v).emplace_back(u);
-  }
-
-  void dfs(int now){
-    if(used.at(now)) return;
-    used.at(now) = true;
-    for(auto to : G.at(now)) dfs(to);
-    //  帰りがけ順で突っ込む
-    order.emplace_back(now);
-  }
-  void rdfs(int now, int cnt){
-    if(compo.at(now) != -1) return;
-    compo.at(now) = cnt;
-    for(auto to : rG.at(now)) rdfs(to, cnt);
+    G.add_directed_edge(u, v);
+    rG.add_directed_edge(v, u);
   }
 
   void build(){
@@ -79,5 +67,19 @@ struct SCC{
       res.at(p).emplace_back(i);
     }
     return res;
+  }
+
+private:
+  void dfs(int now){
+    if(used.at(now)) return;
+    used.at(now) = true;
+    for(auto&&to : G.at(now)) dfs(to);
+    //  帰りがけ順で突っ込む
+    order.emplace_back(now);
+  }
+  void rdfs(int now, int cnt){
+    if(compo.at(now) != -1) return;
+    compo.at(now) = cnt;
+    for(auto to : rG.at(now)) rdfs(to, cnt);
   }
 };

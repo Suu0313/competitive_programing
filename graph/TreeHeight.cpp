@@ -1,8 +1,8 @@
 template<typename T>
 struct TreeHeight{
-  vector<vector<edge<T>>> g;
+  Graph<T> g;
   vector<T> height;
-  TreeHeight(const vector<vector<edge<T>>> &g): g(g), height(g.size()) {
+  TreeHeight(const Graph<T> &g): g(g), height(g.size()) {
     const size_t n = g.size();
     vector<T> height_p(n, -1), height_q(n, -1);
     int p = dfs(0, height_p);

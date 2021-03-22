@@ -4,7 +4,7 @@ struct LCA{
   vector<int> depth;
   vector<T> dist;
 
-  LCA(vector<vector<edge<T>>> &G, int root){ init(G, root); }
+  LCA(const Graph<T> &G, int root){ init(G, root); }
 
   int quert(int u, int v){
     if(depth.at(u) < depth.at(v)) swap(u,v);
@@ -40,7 +40,7 @@ struct LCA{
 
 private:
 
-  void init(vector<vector<edge<T>>> &G, int root){
+  void init(const Graph<T> &G, int root){
     int V = G.size();
     int K = 1;
     while((1<<K) < V) K++;
@@ -59,7 +59,7 @@ private:
     }
   }
 
-  void dfs(vector<vector<edge<T>>> &G, int v, int p, int d){
+  void dfs(const Graph<T> &G, int v, int p, int d){
     parent.at(0).at(v) = p;
     depth.at(v) = d;
     for(auto &&e : G.at(v)){
