@@ -1,6 +1,7 @@
+template<typename T = int>
 struct TwoSat{
   int n;
-  SCC scc;
+  SCC<T> scc;
   inline int rev(int x){
     if(x >= n) return x - n;
     else return x + n;

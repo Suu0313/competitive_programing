@@ -1,5 +1,5 @@
 template<typename T>
-vector<T> Dijkstra(const vector<vector<edge<T>>> &g, int s){
+vector<T> Dijkstra(const Graph<T> &g, int s){
   priority_queue<pair<T, int>,vector<pair<T, int>>, greater<>> pq;
   vector<T> dist(g.size(), -1);
   vector<bool> seen(g.size(), false);

@@ -1,13 +1,14 @@
 template<typename T = int>
 struct HeavyLightDecomposition{
   int n, root;
-  vector<vector<T>> Graph, g;
+  Graph<T> g;
   vector<int> sz, depth, par, in, out, rev, branch;
+  vector<T> dist;
 
-  HeavyLightDecomposition(const vector<vector<T>> &g, int root = 0):
-      n(g.size()), root(root), Graph(g), g(g),
+  HeavyLightDecomposition(const Graph<T> &g, int root = 0):
+      n(g.size()), root(root), g(g),
       sz(n,0), depth(n,0), par(n,0),
-      in(n,0), out(n,0), rev(n,0), branch(n,0) {
+      in(n,0), out(n,0), rev(n,0), branch(n,0), dist(n,0) {
     int t = 0;
     dfs0(root, -1, 0);
     dfs(root, -1, t);
@@ -29,8 +30,8 @@ struct HeavyLightDecomposition{
     }
   }
 
-  int dist(int u, int v) const {
-    return depth[u] + depth[v] - 2*depth[lca[u, v]];
+  T get_dist(int u, int v) const {
+    return dist[u] + dist[v] - 2*dist[lca(u, v)];
   }
 
   template<typename Q>
@@ -70,6 +71,7 @@ private:
     if(g[v].size() && g[v].front() == p) swap(g[v].front(), g[v].back());
     for(auto&&to : g[v]){
       if(to == p) continue;
+      dist[to] = dist[v] + to.cost;
       dfs0(to, v, d+1);
       sz[v] += sz[to];
       if(sz[g[v].front()] < sz[to]) swap(g[v].front(), to);

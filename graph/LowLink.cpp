@@ -1,10 +1,10 @@
 template<typename T>
 struct LowLink{
-  vector<vector<T>> G;
+  Graph<T> G;
   vector<bool> used;
   vector<int> ord, low, aps;
   vector<pair<int, int>> bridges;
-  LowLink(vector<vector<T>> &G_) : G(G_){
+  LowLink(const Graph<T> &G_) : G(G_){
     int N = G.size();
     used.assign(N,false);
     ord.assign(N,0);
@@ -29,7 +29,7 @@ struct LowLink{
         k = dfs(e,k,id);
         low.at(id) = min(low.at(id),low.at(e));
         if(par != -1 && ord.at(id)<=low.at(e)) isAps = true;
-        if(ord.at(id) < low.at(e)) bridges.emplace_back(min(id,e),max(id,e));
+        if(ord.at(id) < low.at(e)) bridges.emplace_back(min<int>(id,e),max<int>(id,e));
       }else if(e != par) {
         low.at(id) = min(low.at(id),ord.at(e));
       }
