@@ -1,10 +1,11 @@
 template<typename T>
 struct SparseTable{
   using F = function<T(T, T)>;
-  const F f;
+  F f;
   vector<vector<T>> table;
   vector<int> lookup;
   
+  SparseTable() {}
   SparseTable(const vector<T> &v, const F &f): f(f){
     const int n = v.size();
     const int b = 32 - __builtin_clz(n);
