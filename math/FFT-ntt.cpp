@@ -42,4 +42,34 @@ namespace FFT{
     }
     return c;
   }
+
+  template<int mod>
+  vector<ModInt<mod>> multiply(const vector<ModInt<mod>> &a, const vector<ModInt<mod>> &b){
+    int n = int(a.size()), m = int(b.size());
+    if (!n || !m) return {};
+
+    static constexpr long long MOD1 = 754974721;
+    static constexpr long long MOD2 = 167772161;
+    static constexpr long long MOD3 = 469762049;
+
+    static const ModInt<MOD2> i1 = 95869806;
+    static const ModInt<MOD3> i2 = 104391568;
+    static const ModInt<mod> M12 = MOD1 * MOD2;
+
+    vector<long long> a2(n), b2(m);
+    for(int i = 0; i < n; i++) a2[i] = a[i].x;
+    for(int i = 0; i < m; i++) b2[i] = b[i].x;
+
+    auto c1 = NTT::multiply(tovMint<MOD1>(a2), tovMint<MOD1>(b2));
+    auto c2 = NTT::multiply(tovMint<MOD2>(a2), tovMint<MOD2>(b2));
+    auto c3 = NTT::multiply(tovMint<MOD3>(a2), tovMint<MOD3>(b2));
+
+    vector<ModInt<mod>> c(n + m - 1);
+    for(int i = 0; i < n+m-1; i++){
+      ModInt<MOD2> v1 = (c2[i] - c1[i].x) * i1;
+      ModInt<MOD3> v2 = (c3[i] - c1[i].x  - v1.x * MOD1) * i2;
+      c[i] = M12 * v2.x + c1[i].x + MOD1 * v1.x;
+    }
+    return c;
+  }
 }
