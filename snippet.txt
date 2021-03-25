@@ -100,7 +100,20 @@
       ");"
     ],
     "description": "Lazy Segment Tree Constructor"
-
+  },
+  "Range Add Init":{
+    "scope": "cpp",
+    "prefix": "raq",
+    "body": [
+      "LazySegTree<pair<${M1}, ${M2}>,${OM}> seg(",
+      "  ${N},",
+      "  [](pair<${M1}, ${M2}> ${a}, pair<${M1}, ${M2}> ${b}) { return make_pair(${a}.first+${b}.first, ${a}.second+${b}.second); },",
+      "  [](pair<${M1}, ${M2}> ${c}, ${OM} ${d}) { return make_pair(${c}.first+${d}*${c}.second, ${c}.second); },",
+      "  [](${OM} ${e}, ${OM} ${f}) { return ${e}+${f}; },",
+      "  ${me},",
+      "  ${ome}",
+      ");"
+    ]
   },
   "find roop":{
     "scope": "cpp",
