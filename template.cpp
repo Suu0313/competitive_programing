@@ -91,7 +91,19 @@ inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
 template<class T> inline T CEIL(T x, T y) { return (x+y-1)/y; }
 inline int popcnt(uint64_t x) { return __builtin_popcountll(x); }
 template<typename T>
+T ModInv(T a, T m){
+  T b = m, u= 1, v = 0;
+  while(b){
+    T t = a/b;
+    a -= t*b; swap(a,b);
+    u -= t*v; swap(u,v);
+  }
+  u %= m; if(u<0) u+= m;
+  return u;
+}
+template<typename T>
 T mypow(T a, LL n, T m = 0, T e = 1){
+  if(n < 0){ assert(m != 0); return ModInv(mypow(a, -n, m, e), m); }
   T res = e;
   while(n > 0){ if(n&1){ res *= a; if(m) res %= m; } a *= a; n >>= 1; if(m) a %= m; }
   return res;
