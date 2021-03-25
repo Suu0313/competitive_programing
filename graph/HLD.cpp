@@ -50,7 +50,7 @@ struct HeavyLightDecomposition{
   }
 
   template<typename U, typename Q, typename F, typename S>
-  U query(int u, int v, const U &ui, const Q &q, const F &f, const S &s, bool isedge = false){
+  U query(int u, int v, const U &ui, const Q &q, const F &f, const S &s, bool isedge){
     U l = ui, r = ui;
     for(;; v = par[branch[v]]){
       if(in[u] > in[v]) swap(u, v), swap(l, r);
