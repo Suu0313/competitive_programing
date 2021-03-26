@@ -155,9 +155,9 @@
     ],
     "description": "cpp template"
   },
-  "faster":{
+  "QCfium":{
     "scope": "cpp",
-    "prefix": "faster",
+    "prefix": "qcfium",
     "body": [
       "#pragma GCC target(\"avx2\")",
       "#pragma GCC optimize(\"O3\")",
