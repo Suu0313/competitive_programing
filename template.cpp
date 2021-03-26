@@ -129,6 +129,11 @@ template<typename... Ts>
 auto make_v(size_t a,Ts... ts){return vector<decltype(make_v(ts...))>(a,make_v(ts...)); }
 
 template<typename T>
+valarray<T> make_va(size_t a,T b){return valarray(b,a);}
+template<typename... Ts>
+auto make_va(size_t a,Ts... ts){ return valarray(make_va(ts...), a); }
+
+template<typename T>
 vector<tuple<T>> in_zip(vector<T> &v){
   vector<tuple<T>> vt(v.size());
   for(size_t i = 0; i < v.size(); i++) vt[i] = make_tuple(v[i]);
