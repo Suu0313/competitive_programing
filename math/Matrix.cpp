@@ -128,11 +128,11 @@ struct Matrix{
       }
       M[i][m] = b[i];
     }
-    size_t rank = GaussJordan(true);
+    size_t rank = M.GaussJordan(true);
 
-    vector<T> res;
+    vector<T> res; // it has bug! to fix!!
     for(size_t row = rank; row < m; ++row){
-      if(abs(M[row][n]) > EPS) return res;
+      if(abs(M[row][m]) > EPS) return res;
     }
 
     res.assign(m, 0);
