@@ -1,17 +1,15 @@
 template<typename T = int>
 struct HeavyLightDecomposition{
-  int n, root;
+  int n;
   Graph<T> g;
   vector<int> sz, depth, par, in, out, rev, branch;
   vector<T> dist;
 
   HeavyLightDecomposition(const Graph<T> &g, int root = 0):
-      n(g.size()), root(root), g(g),
+      n(g.size()), g(g),
       sz(n,0), depth(n,0), par(n,0),
       in(n,0), out(n,0), rev(n,0), branch(n,0), dist(n,0) {
-    int t = 0;
-    dfs0(root, -1, 0);
-    dfs(root, -1, t);
+    dfs0(root); dfs(root);
   }
 
   int la(int v, int k){
@@ -66,26 +64,51 @@ struct HeavyLightDecomposition{
   }
 
 private:
-  void dfs0(int v, int p, int d){
-    sz[v] = 1; depth[v] = d; par[v] = p;
-    if(g[v].size() && g[v].front() == p) swap(g[v].front(), g[v].back());
-    for(auto&&to : g[v]){
-      if(to == p) continue;
-      dist[to] = dist[v] + to.cost;
-      dfs0(to, v, d+1);
-      sz[v] += sz[to];
-      if(sz[g[v].front()] < sz[to]) swap(g[v].front(), to);
+  void dfs0(int root){
+    stack<pair<int, bool>> st;
+    st.emplace(root, true);
+    par[root] = -1;
+    while(!st.empty()){
+      auto[v, f] = st.top(); st.pop();
+      if(f){
+        sz[v] = 1; st.emplace(v, false);
+        if(g[v].size() && g[v][0] == par[v]) swap(g[v].front(), g[v].back());
+        
+        for(auto&&to : g[v]){
+          if(to == par[v]) continue;
+          depth[to] = depth[v] + 1;
+          dist[to] = dist[v] + to.cost;
+          par[to] = v;
+          st.emplace(to, true);
+        }
+      }else{
+        for(auto&&to : g[v]){
+          sz[v] += sz[to];
+          if(sz[g[v].front()] < sz[to]) swap(g[v].front(), to);
+        }
+      }
     }
   }
 
-  void dfs(int v, int p, int &t){
-    in[v] = t++; rev[in[v]] = v;
-    for(auto&&to : g[v]){
-      if(to == p) continue;
-      if(g[v].front() == to) branch[to] = branch[v];
-      else branch[to] = to;
-      dfs(to, v, t);
+  void dfs(int root){
+    stack<pair<int, bool>> st;
+    st.emplace(root, true);
+    int t = 0;
+    while(!st.empty()){
+      auto[v, f] = st.top(); st.pop();
+      if(f){
+        in[v] = t++; rev[in[v]] = v;
+        st.emplace(v, false);
+        for(int i = (int)g[v].size()-1; i >= 0; i--){
+          auto&&to = g[v][i];
+          if(to == par[v]) continue;
+          if(g[v].front() == to) branch[to] = branch[v];
+          else branch[to] = to;
+          st.emplace(to, true);
+        }
+      }else{
+        out[v] = t;
+      }
     }
-    out[v] = t;
   }
 };
