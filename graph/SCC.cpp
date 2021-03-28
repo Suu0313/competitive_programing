@@ -1,14 +1,13 @@
-template<typename T = int>
 struct StronglyConnectedComponents{
   int N;
-  vector<vector<T>> G, rG;
+  vector<vector<int>> G, rG;
 
   int group;
   vector<int> compo, order;
   vector<bool> used;
 
-  template<typename U>
-  StronglyConnectedComponents(const U &g, bool cal = true):N(g.size()), G(N), rG(N){
+  template<typename T>
+  StronglyConnectedComponents(const T &g, bool cal = true):N(g.size()), G(N), rG(N){
     for(int i = 0; i < N; i++){
       for(auto&&e : g[i]){
         G[i].emplace_back(e.to);
@@ -90,7 +89,6 @@ private:
           st.emplace(e, true);
         }
       }else{
-        //  帰りがけ順で突っ込む
         order.emplace_back(v);
       }
     }
