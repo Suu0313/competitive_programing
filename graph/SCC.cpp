@@ -1,38 +1,40 @@
 template<typename T = int>
-struct SCC{
-  //  StronglyConnectedComponents
+struct StronglyConnectedComponents{
   int N;
-  Graph<T> G, rG;
+  vector<vector<T>> G, rG;
 
   int group;
   vector<int> compo, order;
   vector<bool> used;
 
-  SCC(const Graph<T> &G):N(G.size()), G(G), rG(N){
+  template<typename U>
+  StronglyConnectedComponents(const U &g, bool cal = true):N(g.size()), G(N), rG(N){
     for(int i = 0; i < N; i++){
-      for(auto&&e : G.at(i)){
-        rG.add_directed_edge(e.to, i);
+      for(auto&&e : g[i]){
+        G[i].emplace_back(e.to);
+        rG[e.to].emplace_back(i);
       }
     }
+    if(cal) build();
   }
-  SCC(int n):N(n), G(n), rG(n){}
+  StronglyConnectedComponents(int n):N(n), G(n), rG(n){}
 
   int at(int k){return compo.at(k);}
 
   void addEdge(int u, int v){
-    G.add_directed_edge(u, v);
-    rG.add_directed_edge(v, u);
+    G[u].emplace_back(v);
+    rG[v].emplace_back(u);
   }
 
   void build(){
     compo.assign(N,-1);
     used.assign(N,false);
-    order.clear();
+    order.clear(); order.reserve(N);
     group = 0;
 
     for(int i = 0; i < N; i++) dfs(i);
     reverse(order.begin(), order.end());
-    for(auto e : order){
+    for(auto&&e : order){
       if(compo.at(e) == -1){
         rdfs(e,group);
         group++;
@@ -71,15 +73,42 @@ struct SCC{
 
 private:
   void dfs(int now){
-    if(used.at(now)) return;
-    used.at(now) = true;
-    for(auto&&to : G.at(now)) dfs(to);
-    //  帰りがけ順で突っ込む
-    order.emplace_back(now);
+    if(used[now]) return;
+
+    stack<pair<int, bool>> st;
+    st.emplace(now, true);
+
+    while(!st.empty()){
+      auto[v,f] = st.top(); st.pop();
+      if(f){
+        if(used[v]) continue;
+        used[v] = true;
+
+        st.emplace(v, false);
+        for(auto&&e : G[v]){
+          if(used[e]) continue;
+          st.emplace(e, true);
+        }
+      }else{
+        //  帰りがけ順で突っ込む
+        order.emplace_back(v);
+      }
+    }
   }
+
   void rdfs(int now, int cnt){
     if(compo.at(now) != -1) return;
     compo.at(now) = cnt;
-    for(auto to : rG.at(now)) rdfs(to, cnt);
+
+    stack<int> st; st.push(now);
+    while(!st.empty()){
+      auto v = st.top(); st.pop();
+
+      for(auto&&e : rG[v]){
+        if(compo[e] != -1) continue;
+        compo[e] = cnt;
+        st.push(e);
+      }
+    }
   }
 };
