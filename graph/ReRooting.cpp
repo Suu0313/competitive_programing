@@ -32,6 +32,15 @@ struct ReRooting{
     tree[v].emplace_back(u, d, e, e);
   }
 
+  vector<T> solve(int root = 0){
+    TopologicalSort(root);
+    for(int i = V-1; i >= 0; i--) dfs_sub(i, dag[i]);
+    for(int i = 0; i < V; i++) dfs_all(i, dag[i]);
+    return dp;
+  }
+
+private:
+
   void TopologicalSort(int root){
     queue<int> qu;
     vector<bool> seen(V);
@@ -73,12 +82,5 @@ struct ReRooting{
       if(rev[e.to] > idx) dp_p[e.to] = f(e.ndp, buff);
       e.ndp = f(e.ndp, buff); buff = f(buff, e.dp);
     }
-  }
-
-  vector<T> solve(int root = 0){
-    TopologicalSort(root);
-    for(int i = V-1; i >= 0; i--) dfs_sub(i, dag[i]);
-    for(int i = 0; i < V; i++) dfs_all(i, dag[i]);
-    return dp;
   }
 };
