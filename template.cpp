@@ -45,7 +45,6 @@ template<typename T> using prquer = priority_queue<T,vector<T>,greater<T>>;
 #define SORT(c) sort((c).begin(),(c).end())
 #define SORTR(c) sort((c).rbegin(), (c).rend())
 #define REVERSE(c) reverse((c).begin(),(c).end())
-#define NEXP(a) next_permutation((a).begin(),(a).end())
 #define AAI(a,b,c) (a).begin(),(a).end(), (b).begin(),(b).end(), inserter(c,(c).end())
 #define UNIQUE(v) (v).erase(unique((v).begin(),(v).end()), (v).end())
 
@@ -63,7 +62,6 @@ template<typename T> using prquer = priority_queue<T,vector<T>,greater<T>>;
 #define SREPR(i,n) CFORR(i,1,n)
 #define BFOR(bit,a,b) for(LL bit=(a); bit<(1ll<<(b)); bit++)
 #define BREP(bit,n) BFOR(bit,0,n)
-#define PERM(c) for(bool c##per=1; c##per; c##per=NEXP(c))
 
 #define EACH1(a, v) for(auto&&a : v)
 #define EACH2(a,b, v) for(auto&&[a,b] : v)
