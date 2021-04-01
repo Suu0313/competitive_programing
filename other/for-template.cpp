@@ -1,7 +1,7 @@
 struct subsets{
   struct itr{
     uint64_t s, t;
-    bool operator!=(monostate e){ return (t&s) != 0; }
+    bool operator!=([[maybe_unused]] monostate e){ return (t&s) != 0; }
     void operator++() { t -= 1; }
     uint64_t operator*() { return t &= s; }
   };
@@ -34,7 +34,7 @@ struct combination{
 struct permutation{
   struct itr{
     vector<int> idx; bool fl;
-    bool operator!=(monostate e){ return fl; }
+    bool operator!=([[maybe_unused]] monostate e){ return fl; }
     void operator++() { fl = next_permutation(idx.begin(), idx.end()); }
     vector<int> operator*() { return idx; }
   };
