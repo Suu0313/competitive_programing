@@ -31,15 +31,6 @@
     ],
     "description": "search on grid"
   },
-  "sort support":{
-    "scope": "cpp",
-    "prefix": "sorts",
-    "body": [
-      "sort(ALL(${P}),[](auto &a, auto &b){ return a.SE<b.SE;});",
-      "$0"
-    ],
-    "description": "sort by second"
-  },
   "setprecision":{
     "scope": "cpp",
     "prefix": "setp",
@@ -145,9 +136,6 @@
       "#include <bits/stdc++.h>",
       "using namespace std;",
       "",
-      "using LL = long long;",
-      "#define FOR(i,a,b) for(int i=(a);i<(b);++i)",
-      "#define REP(i,n)  FOR(i,0,n)",
       "",
       "int main() {",
       "  ${0}",
@@ -228,22 +216,6 @@
       "}"
     ],
     "description": "range based for"
-  },
-  "two pointers":{
-    "scope": "cpp",
-    "prefix": "twop",
-    "body": [
-      "LL sum = 0;",
-      "int r = 0;",
-      "REP(l,N){",
-      "  while(r<N && ${c1}){",
-      "    sum += ${a}.at(r++);",
-      "  }",
-      "  if(${c2}) ans += ${hoge};",
-      "  sum -= a.at(l);",
-      "}"
-    ],
-    "description":"two pointers tmep"
   },
   "subset for":{
     "scope": "cpp",
