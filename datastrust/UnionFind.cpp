@@ -14,8 +14,10 @@ struct UnionFind {
   }
   
   int find(int x) {
-    if(data[x] < 0) return x;
-    return data[x] = find(data[x]);
+    int root = x;
+    while(data[root] >= 0) root = data[root];
+    while(data[x] >= 0) tie(data[x], x) = make_pair(root, data[x]);
+    return root;
   }
 
   bool unite(int x, int y){

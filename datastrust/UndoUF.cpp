@@ -9,8 +9,8 @@ struct UndoUF {
   }
 
   int find(int x) {
-    if(data[x] < 0) return x;
-    return find(data[x]);
+    while(data[x] >= 0) x = data[x];
+    return x;
   }
 
   bool unite(int x, int y){
@@ -36,7 +36,7 @@ struct UndoUF {
 
   bool undo(){
     if(hist.empty()) return false;
-    for (int i = 0; i < 2; i++){
+    for(int i = 0; i < 2; i++){
       auto[x,px] = hist.top();
       data[x] = px;
       hist.pop();
