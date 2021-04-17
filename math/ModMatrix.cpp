@@ -1,83 +1,186 @@
-template<int mod>
+template <typename T>
 struct Matrix{
-  using Mint = ModInt<mod>;
-  vector<vector<Mint>> val;
-  Matrix(int n, int m, Mint x=0): val(n,vector<Mint>(m,x)) {}
-  Matrix(vector<vector<Mint>> x): val(x) {}
-  void init(int n, int m, Mint x=0) {val.assign(n,vector<Mint>(m,x));}
-  size_t size() const {return val.size();}
-  inline vector<Mint>& operator[] (int i) {return val[i];}
-  inline vector<Mint>& at(int i) {return val.at(i);}
-};
+  vector<vector<T>> A;
 
-template<int mod>
-Matrix<mod> operator*(Matrix<mod>A, Matrix<mod>B) {
-  Matrix<mod> res(SZ(A), SZ(B.at(0)));
-  REP(i, SZ(A))REP(j,SZ(B.at(0)))REP(k,SZ(B)){
-    res.at(i).at(j) += A.at(i).at(k)*B.at(k).at(j);
+  Matrix() {}
+  Matrix(size_t n, size_t m, T e = 0): A(n, vector<T>(m, e)) {}
+  Matrix(size_t n): A(n, vector<T>(n)) {}
+  Matrix(const vector<vector<T>> &e): A(e) {}
+  Matrix(const initializer_list<initializer_list<T>> &x): A(x.begin(),x.end()) {}
+  
+  size_t height() const { return A.size(); }
+  size_t width() const { return A.at(0).size(); }
+
+  vector<T> &operator[](int k) { return A.at(k); }
+  const vector<T> &operator[](int k) const { return A.at(k); }
+  vector<T> &at(int k) { return A.at(k); }
+  const vector<T> &at(int k) const { return A.at(k); }
+
+  Matrix &operator+=(const Matrix &B){
+    size_t n = height(), m = width();
+    for (size_t i = 0; i < n; i++)
+      for (size_t j = 0; j < m; j++)
+        (*this)[i][j] += B[i][j];
+    return (*this);
   }
-  return res;
-}
 
-template<int mod>
-Matrix<mod> pow(Matrix<mod>A, LL n){
-  int m = SZ(A);
-  Matrix<mod> res(m, m);
-  REP(i,m) res.at(i).at(i) = 1;
-  while(n > 0){
-    if(n & 1) res = res*A;
-    A = A*A;
-    n >>= 1;
+  Matrix &operator-=(const Matrix &B){
+    size_t n = height(), m = width();
+    for (size_t i = 0; i < n; i++)
+      for (size_t j = 0; j < m; j++)
+        (*this)[i][j] -= B[i][j];
+    return (*this);
   }
-  return res;
-}
 
-template<int mod>
-int GaussJordan(Matrix<mod> &A, bool is_extended = false) {
-  int m = SZ(A), n = SZ(A.at(0));
-  int rank = 0;
-  REP(col, n){
-    if(is_extended && col==n-1) break;
-    int pivot = -1;
-    FOR(row, rank, m){
-      if(A.at(row).at(col) != 0){
-        pivot = row;
-        break;
+  Matrix &operator*=(const Matrix &B){
+    size_t n = height(), m = B.width(), l = width();
+    vector<vector<T>> C(n, vector<T>(m));
+    for (size_t i = 0; i < n; i++)
+      for (size_t k = 0; k < l; k++)
+        for (size_t j = 0; j < m; j++)
+          C[i][j] += (*this)[i][k] * B[k][j];
+    A.swap(C);
+    return (*this);
+  }
+
+  Matrix &operator^=(long long k){
+    Matrix B = Matrix::I(height());
+    while(k > 0){
+      if(k&1) B *= *this;
+      *this *= *this;
+      k >>= 1;
+    }
+    A.swap(B.A);
+    return (*this);
+  }
+
+  Matrix operator+(const Matrix &B) const {
+    return Matrix(*this) += B;
+  }
+  Matrix operator-(const Matrix &B) const {
+    return Matrix(*this) -= B;
+  }
+  Matrix operator*(const Matrix &B) const {
+    return Matrix(*this) *= B;
+  }
+  Matrix operator^(const long long k) const {
+    return Matrix(*this) ^= k;
+  }
+
+  friend istream &operator>>(istream &is, Matrix &p){
+    size_t n = p.height(), m = p.width();
+    for (size_t i = 0; i < n; i++)
+      for (size_t j = 0; j < m; j++)
+        is >>  p[i][j];
+    return (is);
+  }
+
+  friend ostream &operator<<(ostream &os, Matrix &p){
+    size_t n = p.height(), m = p.width();
+    for (size_t i = 0; i < n; i++)
+      for (size_t j = 0; j < m; j++)
+        os << p[i][j] << " \n"[j+1==m];
+    return (os);
+  }
+
+  static Matrix I(size_t n){
+    Matrix res(n);
+    for (size_t i = 0; i < n; i++) res[i][i] = 1;
+    return res;
+  }
+
+  size_t GaussJordan(bool is_extended = false){
+    size_t n = height(), m = width();
+    size_t rank = 0;
+    for(size_t col = 0; col < m; ++col){
+      if(is_extended && col == m-1) break;
+      int pivot = -1;
+      for(size_t row = rank; row < n; ++row){
+        if(A[row][col] != 0){
+          pivot = row; break;
+        }
+      }
+      if(pivot == -1) continue;
+      swap(A[pivot], A[rank]);
+      T finv = T(1)/A[rank][col];
+      for(size_t col2 = 0; col2 < m; ++col2) A[rank][col2] *= finv;
+      for(size_t row = 0; row < n; ++row){
+        if(row != rank && A[row][col] != 0){
+          T fac = A[row][col];
+          for(size_t col2 = 0; col2 < m; ++col2){
+            A[row][col2] -= A[rank][col2] * fac;
+          }
+        }
+      }
+      ++rank;
+    }
+    return rank;
+  }
+
+  vector<T> linear_equation(vector<T> &b){
+    size_t n = height(), m = width();
+    Matrix M(n, m+1);
+    for (size_t i = 0; i < n; i++){
+      for (size_t j = 0; j < m; j++) M[i][j] = (*this)[i][j];
+      M[i][m] = b[i];
+    }
+    size_t rank = M.GaussJordan(true);
+
+    vector<T> res;
+    for(size_t row = rank; row < n; ++row){
+      if(M[row][m] != 0) return res;
+    }
+
+    res.assign(m, 0);
+    for(size_t i = 0; i < rank; ++i) res[i] = M[i][m];
+    return res;
+  }
+
+  Matrix inv() const {
+    assert(height() == width());
+    size_t n = height();
+    Matrix M(n, n*2);
+    for (size_t i = 0; i < n; i++){
+      for (size_t j = 0; j < n; j++) M[i][j] = (*this)[i][j];
+      M[i][i+n] = 1;
+    }
+    size_t rank = M.GaussJordan();
+    assert(rank == n);
+    Matrix res(n);
+    for (size_t i = 0; i < n; i++){
+      for (size_t j = 0; j < n; j++){
+        res[i][j] = M[i][j+n];
       }
     }
-    if(pivot == -1) continue;
-    swap(A.at(pivot), A.at(rank));
+    return res;
+  }
 
-    auto inv = A.at(rank).at(col).inverse();
-    REP(col2,n) A.at(rank).at(col2) *= inv;
-
-    REP(row,m){
-      if(row != rank && A.at(row).at(col)!=0){
-        auto fac = A.at(row).at(col);
-        REP(col2,n){
-          A.at(row).at(col2) -= A.at(rank).at(col2)*fac;
+  T determinant() const {
+    Matrix M(*this);
+    assert(height() == width());
+    size_t n = height();
+    T res = 1;
+    for(size_t col = 0; col < n; ++col){
+      int pivot = -1;
+      for(size_t row = col; row < n; ++row){
+        if(M[row][col] != 0){
+          pivot = row; break;
+        }
+      }
+      if(pivot == -1) return 0;
+      if(col != pivot){
+        res *= -1; swap(M[col], M[pivot]);
+      }
+      res *= M[col][col];
+      T finv = T(1)/M[col][col];
+      for(size_t col2 = 0; col2 < n; ++col2) M[col][col2] *= finv;
+      for(size_t row = col+1; row < n; ++row){
+        T fac = M[row][col];
+        for(size_t col2 = 0; col2 < n; ++col2){
+          M[row][col2] -= M[col][col2] * fac;
         }
       }
     }
-    ++rank;
+    return res;
   }
-  return rank;
-}
-template<int mod>
-int linear_equation(Matrix<mod> A, vector<ModInt<mod>> b, vector<ModInt<mod>> &res){
-  int m = SZ(A), n = SZ(A.at(0));
-  Matrix<mod> M(m, n+1);
-  REP(i,m){
-    REP(j,n) M.at(i).at(j) = A.at(i).at(j);
-    M.at(i).at(n) = b.at(i);
-  }
-  int rank = GaussJordan(M, true);
-
-  FOR(row, rank, m){
-    if(M.at(row).at(n) != 0) return -1;
-  }
-
-  res.assign(n,0);
-  REP(i,rank) res.at(i) = M.at(i).at(n);
-  return rank;
-}
+};

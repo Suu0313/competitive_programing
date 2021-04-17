@@ -1,13 +1,12 @@
 template <typename T>
 struct Matrix{
-  using mat = vector<vector<T>>;
-  mat A;
+  vector<vector<T>> A;
 
   Matrix() {}
   Matrix(size_t n, size_t m, T e = 0): A(n, vector<T>(m, e)) {}
   Matrix(size_t n): A(n, vector<T>(n)) {}
-  Matrix(mat e): A(e) {}
-  Matrix(initializer_list<initializer_list<T>> x): A(x.begin(),x.end()) {}
+  Matrix(const vector<vector<T>> &e): A(e) {}
+  Matrix(const initializer_list<initializer_list<T>> &x): A(x.begin(),x.end()) {}
   
   size_t height() const { return A.size(); }
   size_t width() const { return A.at(0).size(); }
@@ -35,10 +34,10 @@ struct Matrix{
 
   Matrix &operator*=(const Matrix &B){
     size_t n = height(), m = B.width(), l = width();
-    mat C(n, vector<T> (m));
+    vector<vector<T>> C(n, vector<T>(m));
     for (size_t i = 0; i < n; i++)
-      for (size_t j = 0; j < m; j++)
-        for (size_t k = 0; k < l; k++)
+      for (size_t k = 0; k < l; k++)
+        for (size_t j = 0; j < m; j++)
           C[i][j] += (*this)[i][k] * B[k][j];
     A.swap(C);
     return (*this);
@@ -96,16 +95,16 @@ struct Matrix{
     for(size_t col = 0; col < m; ++col){
       if(is_extended && col == m-1) break;
       int pivot = -1;
-      T ma = EPS;
-      for(size_t row = 0; row < n; ++row){
+      T EPS = 1e-10, ma = EPS;
+      for(size_t row = rank; row < n; ++row){
         if(abs(A[row][col]) > ma){
           ma = abs(A[row][col]); pivot = row;
         }
       }
       if(pivot == -1) continue;
       swap(A[pivot], A[rank]);
-      T fac = A[rank][col];
-      for(size_t col2 = 0; col2 < m; ++col2) A[rank][col2] /= fac;
+      T finv = T(1)/A[rank][col];
+      for(size_t col2 = 0; col2 < m; ++col2) A[rank][col2] *= finv;
       for(size_t row = 0; row < n; ++row){
         if(row != rank && abs(A[row][col]) > EPS){
           T fac = A[row][col];
@@ -123,15 +122,14 @@ struct Matrix{
     size_t n = height(), m = width();
     Matrix M(n, m+1);
     for (size_t i = 0; i < n; i++){
-      for (size_t j = 0; j < m; j++){
-        M[i][j] = (*this)[i][j];
-      }
+      for (size_t j = 0; j < m; j++) M[i][j] = (*this)[i][j];
       M[i][m] = b[i];
     }
     size_t rank = M.GaussJordan(true);
 
-    vector<T> res; // it has bug! to fix!!
-    for(size_t row = rank; row < m; ++row){
+    vector<T> res;
+    T EPS = 1e-10;
+    for(size_t row = rank; row < n; ++row){
       if(abs(M[row][m]) > EPS) return res;
     }
 
@@ -140,7 +138,51 @@ struct Matrix{
     return res;
   }
 
-  T determinant(){
-    // ToDo
+  Matrix inv() const {
+    assert(height() == width());
+    size_t n = height();
+    Matrix M(n, n*2);
+    for (size_t i = 0; i < n; i++){
+      for (size_t j = 0; j < n; j++) M[i][j] = (*this)[i][j];
+      M[i][i+n] = 1;
+    }
+    size_t rank = M.GaussJordan();
+    assert(rank == n);
+    Matrix res(n);
+    for (size_t i = 0; i < n; i++){
+      for (size_t j = 0; j < n; j++){
+        res[i][j] = M[i][j+n];
+      }
+    }
+    return res;
+  }
+
+  T determinant() const {
+    Matrix M(*this);
+    assert(height() == width());
+    size_t n = height();
+    T res = 1, EPS = 1e-10;
+    for(size_t col = 0; col < n; ++col){
+      int pivot = -1;
+      for(size_t row = col; row < n; ++row){
+        if(abs(M[row][col]) > EPS){
+          pivot = row; break;
+        }
+      }
+      if(pivot == -1) return 0;
+      if(col != pivot){
+        res *= -1; swap(M[col], M[pivot]);
+      }
+      res *= M[col][col];
+      T finv = T(1)/M[col][col];
+      for(size_t col2 = 0; col2 < n; ++col2) M[col][col2] *= finv;
+      for(size_t row = col+1; row < n; ++row){
+        T fac = M[row][col];
+        for(size_t col2 = 0; col2 < n; ++col2){
+          M[row][col2] -= M[col][col2] * fac;
+        }
+      }
+    }
+    return res;
   }
 };
