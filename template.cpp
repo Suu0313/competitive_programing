@@ -45,8 +45,9 @@ template<typename T> using prquer = priority_queue<T,vector<T>,greater<T>>;
 #define SORT(c) sort((c).begin(),(c).end())
 #define SORTR(c) sort((c).rbegin(), (c).rend())
 #define REVERSE(c) reverse((c).begin(),(c).end())
-#define AAI(a,b,c) (a).begin(),(a).end(), (b).begin(),(b).end(), inserter(c,(c).end())
+#define AAI(a,b,c) (a).begin(),(a).end(), (b).begin(),(b).end(), inserter((c),(c).end())
 #define UNIQUE(v) (v).erase(unique((v).begin(),(v).end()), (v).end())
+#define IOTA(v) iota((v).begin(), (v).end(), 0)
 
 #define OVERLOAD4(a,b,c,d,name,...) name
 
@@ -60,7 +61,7 @@ template<typename T> using prquer = priority_queue<T,vector<T>,greater<T>>;
 #define CFORR(i,a,b) for(auto i=decltype(b){b}, i##_l=(a); i>=i##_l; i--)
 #define CREPR(i,n) CFORR(i,0,n)
 #define SREPR(i,n) CFORR(i,1,n)
-#define BFOR(bit,a,b) for(LL bit=(a); bit<(1ll<<(b)); bit++)
+#define BFOR(bit,a,b) for(long long bit=(a); bit<(1ll<<(b)); bit++)
 #define BREP(bit,n) BFOR(bit,0,n)
 
 #define EACH1(a, v) for(auto&&a : v)
@@ -84,10 +85,19 @@ constexpr LL TEN(int n) { return n? 10*TEN(n-1) : 1; };
 #define SUB_OVERFLOW(a, b) __builtin_sub_overflow_p (a, b, (decltype((a)+(b))) 0)
 #define MUL_OVERFLOW(a, b) __builtin_mul_overflow_p (a, b, (decltype((a)+(b))) 0)
 
-template<class T> inline T sqr(T x) { return x*x; }
+template<class T> constexpr T Sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
-template<class T> inline T CEIL(T x, T y) { return (x+y-1)/y; }
-inline int popcnt(uint64_t x) { return __builtin_popcountll(x); }
+inline int Pcnt(uint64_t x) { return __builtin_popcountll(x); }
+template<class T> constexpr T Ceil(T x, T y) {
+  if(y < 0) x = -x, y = -y;
+  if(x >= 0) return (x + y - 1) / y;
+  return x / y;
+}
+template<class T> constexpr T Floor(T x, T y) {
+  if(y < 0) x = -x, y = -y;
+  if(x >= 0) return x / y;
+  return (x - y + 1) / y;
+}
 template<typename T>
 T ModInv(T a, T m){
   T b = m, u= 1, v = 0;
@@ -100,10 +110,19 @@ T ModInv(T a, T m){
   return u;
 }
 template<typename T>
-T mypow(T a, LL n, T m = 0, T e = 1){
-  if(n < 0){ assert(m != 0); return ModInv(mypow(a, -n, m, e), m); }
+T Pow(T a, LL n, T m = 0, T e = 1){
+  if(n < 0){ assert(m != 0); return ModInv(Pow(a, -n, m, e), m); }
   T res = e;
   while(n > 0){ if(n&1){ res *= a; if(m) res %= m; } a *= a; n >>= 1; if(m) a %= m; }
+  return res;
+}
+uint64_t Sqrt(uint64_t x){
+  uint64_t res = 0, over = 1;
+  while(over*over <= x) over <<= 1;
+  while(over-res > 1){
+    uint64_t wj = res + ((over-res) >> 1);
+    ((wj*wj <= x) ? res : over) = wj;
+  }
   return res;
 }
 
@@ -111,25 +130,23 @@ template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } retu
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 
 template<typename T>
-T sum(const vector<T> &v){ return reduce(v.begin(), v.end()); }
+T Sum(const vector<T> &v){ return reduce(v.begin(), v.end()); }
 template<typename T>
 T gcd(const vector<T> &v){ return reduce(v.begin(), v.end(), T(0), [](auto&&a, auto&&b){ return gcd(a,b); }); }
 template<typename T>
 T lcm(const vector<T> &v){ return reduce(v.begin(), v.end(), T(1), [](auto&&a, auto&&b){ return lcm(a,b); }); }
 
-template<typename T> T max(const vector<T> &v){return *max_element(v.begin(), v.end()); }
-template<typename T> T min(const vector<T> &v){return *min_element(v.begin(), v.end()); }
-template<typename T> void Vadd(vector<T> &v, T a){for(auto&& x : v) x += a; }
+template<typename T> T max(const vector<T> &v){ return *max_element(v.begin(), v.end()); }
+template<typename T> T min(const vector<T> &v){ return *min_element(v.begin(), v.end()); }
+template<typename T> void Vadd(vector<T> &v, T a=-1){ for(auto&& x : v) x += a; }
 
 template<typename T>
 vector<T> make_v(size_t a,T b){return vector<T>(a,b);}
-template<typename... Ts>
-auto make_v(size_t a,Ts... ts){return vector<decltype(make_v(ts...))>(a,make_v(ts...)); }
+template<typename... Ts> auto make_v(size_t a,Ts... ts){ return vector(a,make_v(ts...)); }
 
 template<typename T>
-valarray<T> make_va(size_t a,T b){return valarray(b,a);}
-template<typename... Ts>
-auto make_va(size_t a,Ts... ts){ return valarray(make_va(ts...), a); }
+valarray<T> make_va(size_t a,T b){return valarray<T>(b,a);}
+template<typename... Ts> auto make_va(size_t a,Ts... ts){ return valarray(make_va(ts...), a); }
 
 template<typename T>
 vector<tuple<T>> in_zip(vector<T> &v){
@@ -137,7 +154,6 @@ vector<tuple<T>> in_zip(vector<T> &v){
   for(size_t i = 0; i < v.size(); i++) vt[i] = make_tuple(v[i]);
   return vt;
 }
-
 template<typename T, typename... Ts>
 auto in_zip(vector<T> &v, Ts&&... vs){
   auto vt = in_zip(v); auto vts = in_zip(vs...);
@@ -151,7 +167,6 @@ vector<tuple<int, T>> in_enumerate(vector<T> &v){
   vector<int> idx(v.size()); iota(idx.begin(), idx.end(), 0);
   return in_zip(idx, v);
 }
-
 template<typename T, typename... Ts>
 auto in_enumerate(vector<T> &v, Ts&&... vs){
   vector<int> idx(v.size()); iota(idx.begin(), idx.end(), 0);
@@ -166,23 +181,20 @@ template<class T> void COUT(T&& t){ cout << t << '\n'; }
 template<class T,class... Ts>
 void COUT(T&& t,Ts&&... ts){ cout << t << " "; COUT(ts...); }
 template<class... Ts> void CIN(Ts&&... ts){ (cin >> ... >> ts); }
+#define INPUT(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)
 
-template< typename T1, typename T2 >
-istream &operator>>(istream &is, pair< T1, T2 > &p) {
+template< typename T1, typename T2 > istream &operator>>(istream &is, pair< T1, T2 > &p) {
   is >> p.first >> p.second; return is;
 }
-template< typename T1, typename T2 >
-ostream &operator<<(ostream &os, const pair< T1, T2 >& p) {
+template< typename T1, typename T2 > ostream &operator<<(ostream &os, const pair< T1, T2 >& p) {
   os << p.first << " " << p.second; return os;
 }
-template< typename T >
-istream &operator>>(istream &is, vector< T > &v) {
+template< typename T > istream &operator>>(istream &is, vector< T > &v) {
   for(auto&&in : v) is >> in;
   return is;
 }
-template< typename T >
-ostream &operator<<(ostream &os, const vector< T > &v) {
-  for(int i = 0; i < SZ(v); i++) os << v[i] << (i + 1 != SZ(v) ? " " : "");
+template< typename T > ostream &operator<<(ostream &os, const vector< T > &v) {
+  for(size_t i = 0; i < v.size(); i++) os << v[i] << (i + 1 != v.size() ? " " : "");
   return os;
 }
 
@@ -198,17 +210,6 @@ void Vcout(const vector<T> &v, const string &sep = "\n", const string &en = "\n"
 }
 
 constexpr int dx[] = {1,0,-1,0,1,1,-1,-1}, dy[] = {0,1,0,-1,1,-1,1,-1};
-
-#define INPUT(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)
-
-#ifdef _DEBUG
-template<typename T> void debug_out(T &&t) { cout << t << "\n"; }
-template <typename T, typename... Ts>
-void debug_out(T&& t, Ts&&... ts){ cout << t << ", "; debug_out(ts...); }
-#define dbg(...) do{ cout <<"L: "<<__LINE__<<" [ " << #__VA_ARGS__ << " ]: "; debug_out(__VA_ARGS__); } while(false)
-#else
-#define dbg(...)
-#endif
 
 #pragma endregion
 
