@@ -1,16 +1,19 @@
 template<typename T>
 struct CycleDetection{
   Graph<T> g;
+  bool directed;
   vector<int> used;
   vector<pair<int, int>> pre, cycle;
-  CycleDetection(const Graph<T> &g): g(g), used(g.size()), pre(g.size()) {}
+  CycleDetection(const Graph<T> &g, bool directed = true)
+    : g(g), directed(directed), used(g.size()), pre(g.size()) {}
 
-  bool dfs(int v){
+  bool dfs(int v, int q = -1){
     used[v] = 1;
     for(auto&&e : g[v]){
+      if(e == q && !directed) continue;
       if(used[e] == 0){
         pre[e] = make_pair(v, e);
-        if(dfs(e)) return true;
+        if(dfs(e, v)) return true;
       }else if(used[e] == 1){
         int p = v;
         while(p != e){
