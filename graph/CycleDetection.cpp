@@ -7,6 +7,17 @@ struct CycleDetection{
   CycleDetection(const Graph<T> &g, bool directed = true)
     : g(g), directed(directed), used(g.size()), pre(g.size()) {}
 
+  vector<pair<int, int>> find(){
+    for(int i = 0; i < (int)g.size(); i++){
+      if(used[i]==0 && dfs(i)){
+        reverse(cycle.begin(), cycle.end());
+        return cycle;
+      }
+    }
+    return {};
+  }
+
+private:
   bool dfs(int v, int q = -1){
     used[v] = 1;
     for(auto&&e : g[v]){
@@ -26,15 +37,5 @@ struct CycleDetection{
     }
     used[v] = 2;
     return false;
-  }
-
-  vector<pair<int, int>> find(){
-    for(int i = 0; i < (int)g.size(); i++){
-      if(used[i]==0 && dfs(i)){
-        reverse(cycle.begin(), cycle.end());
-        return cycle;
-      }
-    }
-    return {};
   }
 };
