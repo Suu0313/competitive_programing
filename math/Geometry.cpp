@@ -56,6 +56,8 @@ template<class T> struct Point{
   }
 };
 
+template<typename T> using Polygon = vector<Point<T>>;
+
 template<class T> T Cross(const Point<T> &a, const Point<T> &b) { return a.x * b.y - a.y * b.x; }
 
 template<class T> T Dot(const Point<T> &a, const Point<T> &b) { return a.x * b.x + a.y * b.y; }
@@ -80,7 +82,7 @@ template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Poin
   return -1; // obtuse angle
 }
 
-template<typename T> T Area(const vector<Point<T>> &ps){
+template<typename T> T Area(const Polygon<T> &ps){
   if((int)ps.size() < 3) return 0;
   T res = Cross(ps.back(), ps.front());
   for(int i = 0; i < (int)ps.size()-1; i++){
@@ -89,12 +91,54 @@ template<typename T> T Area(const vector<Point<T>> &ps){
   return res/2;
 }
 
-template<typename T> bool isConvex(const vector<Point<T>> &ps){
+template<typename T> bool isConvex(const Polygon<T> &ps){
   int n = ps.size();
   for(int i = 0; i < n; i++){
     if(iSP(ps[i], ps[(i+1)%n], ps[(i+2)%n]) == -1) return false;
   }
   return true;
+}
+
+template<typename T>
+Polygon<T> ConvexHull(Polygon<T> ps, bool strict = true){
+  int n = ps.size(), k = 0;
+  sort(ps.begin(), ps.end());
+  Polygon<T> res(2 * n);
+  auto check = [&](int i){
+    if(strict) return Cross(res[k-1]-res[k-2], ps[i]-res[k-1]) <= 0;
+    return Cross(res[k-1]-res[k-2], ps[i]-res[k-1]) < 0;
+  };
+  for(int i = 0; i < n; res[k++] = ps[i++]){
+    while(k > 1 && check(i)) k--;
+  }
+  for(int i = n-2, t=k+1; i >= 0; res[k++] = ps[i--]){
+    while(k >= t && check(i)) k--;
+  }
+  res.resize(k-1);
+  return res;
+}
+
+template<typename T>
+double ConvexDiameter(const Polygon<T> &ps){
+  Polygon<T> qs = ConvexHull(ps);
+  int n = qs.size();
+  if(n == 2) return qs[0].dist(qs[1]);
+  int i=0, j=0;
+  for(int k = 0; k < n; k++){
+    if(!(qs[i] < qs[k])) i = k;
+    if(qs[j] < qs[k]) j = k;
+  }
+  double res = 0;
+  int si = i, sj = j;
+  while(i!=sj || j!=si){
+    res = max(res, qs[i].dist(qs[j]));
+    if(Cross(qs[(i+1)%n]-qs[i], qs[(j+1)%n]-qs[j]) < 0){
+      i = (i + 1)%n;
+    }else{
+      j = (j + 1)%n;
+    }
+  }
+  return res;
 }
 
 template<class T> struct Line{
@@ -121,14 +165,14 @@ template<class T> struct Line{
   bool Intersect(const Line &l) const {
     return angletype(l) != 1;
   }
-  Point<T>  Cross_Point(const Line &l) const {
+  Point<T> Cross_Point(const Line &l) const {
     if(Cross(b-a,l.b-l.a) == 0) return l.a;
     return (b-a)*Cross(l.a-a, l.b-l.a)/Cross(b-a,l.b-l.a) + a;
   }
-  T dist(const Point<T> &p) const {
+  double dist(const Point<T> &p) const {
     return abs(Cross(p-a, b-a)/ (b-a).Abs());
   }
-  T dist(const Line &l) const {
+  double dist(const Line &l) const {
     if(Intersect(l)) return 0;
     return dist(l.a);
   }
@@ -137,8 +181,9 @@ template<class T> struct Line{
 template<class T> struct Segment{
   Point<T> a, b;
   Segment() {}
-  Segment(Point<T> a, Point<T> b): a(a), b(b) {}
+  Segment(const Point<T> &a, const Point<T> &b): a(a), b(b) {}
 
+  double length() const { return a.dist(b); }
   bool Intersect(const Segment &s) const {
     return iSP(a, b, s.a)*iSP(a, b, s.b)<=0 && iSP(s.a, s.b, a)*iSP(s.a, s.b, b)<=0;
   }
@@ -156,14 +201,59 @@ template<class T> struct Segment{
     if(Cross(b-a,s.b-s.a) == 0) return s.a;
     return (b-a)*Cross(s.a-a, s.b-s.a)/Cross(b-a,s.b-s.a) + a;
   }
-  T dist(const Point<T> &p) const {
+  double dist(const Point<T> &p) const {
     if(Dot(b-a, p-a) < 0) return p.dist(a);
     if(Dot(a-b, p-b) < 0) return p.dist(b);
     return abs(Cross(p-a, b-a)/ (b-a).Abs());
   }
-  T dist(const Segment &s) const {
+  double dist(const Segment &s) const {
     if(Intersect(s)) return 0;
     return min({dist(s.a), dist(s.b), s.dist(a), s.dist(b)});
+  }
+};
+
+template<typename T>
+struct Triangle{
+  Point<T> a, b, c;
+  Triangle() {}
+  Triangle(const Point<T> &a, const Point<T> &b, const Point<T> &c): a(a), b(b), c(c){}
+
+  double angle_a() const {
+    double ab = a.dist(b), bc = b.dist(c), ca = c.dist(a);
+    return acos((ca*ca + ab*ab - bc*bc)/(2*ca*ab));
+  }
+  double angle_b() const {
+    double ab = a.dist(b), bc = b.dist(c), ca = c.dist(a);
+    return acos((ab*ab + bc*bc - ca*ca)/(2*ab*bc));
+  }
+  double angle_c() const {
+    double ab = a.dist(b), bc = b.dist(c), ca = c.dist(a);
+    return acos((bc*bc + ca*ca - ab*ab)/(2*bc*ca));
+  }
+  Point<T> divpoint(double p, double q, double r) const {
+    return (a*p + b*q + c*r)/(p + q + r);
+  }
+
+  Point<T> centerofgravity() const {
+    return (a + b + c)/3;
+  }
+  Point<T> circumcenter() const {
+    return divpoint(sin(2*angle_a()), sin(2*angle_b()), sin(2*angle_c()));
+  }
+  Point<T> orthocenter() const {
+    return centerofgravity()*3 - circumcenter()*2;
+  }
+  Point<T> innercenter() const {
+    return divpoint(b.dist(c), c.dist(a), a.dist(b));
+  }
+  Point<T> excenterA() const {
+    return divpoint(-b.dist(c), c.dist(a), a.dist(b));
+  }
+  Point<T> excenterB() const {
+    return divpoint(b.dist(c), -c.dist(a), a.dist(b));
+  }
+  Point<T> excenterC() const {
+    return divpoint(b.dist(c), c.dist(a), -a.dist(b));
   }
 };
 
@@ -171,7 +261,10 @@ template<class T> struct Circle{
   Point<T> o;
   T r;
   Circle() {}
-  Circle(Point<T> o, T r): o(o), r(r) {}
+  Circle(const Point<T> &o, const T &r): o(o), r(r) {}
+  Circle(const Point<T> &a, const Point<T> &b): o((a+b)/2), r(a.dist(b)/2) {}
+  Circle(const Point<T> &a, const Point<T> &b, const Point<T> &c)
+    : o(Triangle(a,b,c).circumcenter()), r(o.dist(a)) {}
 
   int Intersect(const Circle&c) const {
     if(r < c.r) return c.Intersect(*this);
@@ -182,26 +275,14 @@ template<class T> struct Circle{
     if(r-c.r - d < (1e-10)) return 1;
     return 0;
   }
+  int Contains(const Point<T> &p) const {
+    double d = o.dist(p);
+    if(d == r) return 1; // on
+    return (d > r) ? 2 : 0; // out/in
+  }
 };
 
-template<typename T>
-vector<Point<T>> ConvexHull(vector<Point<T>> ps, bool strict = true){
-  int n = ps.size(), k = 0;
-  sort(ps.begin(), ps.end());
-  vector<Point<T>> res(2 * n);
-  auto check = [&](int i){
-    if(strict) return Cross(res[k-1]-res[k-2], ps[i]-res[k-1]) <= 0;
-    return Cross(res[k-1]-res[k-2], ps[i]-res[k-1]) < 0;
-  };
-  for(int i = 0; i < n; res[k++] = ps[i++]){
-    while(k > 1 && check(i)) k--;
-  }
-  for(int i = n-2, t=k+1; i >= 0; res[k++] = ps[i--]){
-    while(k >= t && check(i)) k--;
-  }
-  res.resize(k-1);
-  return res;
-}
+
 
 template<typename T>
 bool cmp_y(const Point<T>& p1, const Point<T> &p2){
@@ -216,7 +297,7 @@ bool cmp_arg(const Point<T>& p1, const Point<T> &p2){
 }
 
 template<typename T>
-int Contains(const vector<Point<T>> &ps, const Point<T>& p){
+int Contains(const Polygon<T> &ps, const Point<T>& p){
   bool in = false;
   int n = ps.size();
   for(int i = 0; i < n; i++){
@@ -229,31 +310,8 @@ int Contains(const vector<Point<T>> &ps, const Point<T>& p){
 }
 
 template<typename T>
-double ConvexDiameter(const vector<Point<T>> &ps){
-  vector<Point<T>> qs = ConvexHull(ps);
-  int n = qs.size();
-  if(n == 2) return qs[0].dist(qs[1]);
-  int i=0, j=0;
-  for(int k = 0; k < n; k++){
-    if(!(qs[i] < qs[k])) i = k;
-    if(qs[j] < qs[k]) j = k;
-  }
-  double res = 0;
-  int si = i, sj = j;
-  while(i!=sj || j!=si){
-    res = max(res, qs[i].dist(qs[j]));
-    if(Cross(qs[(i+1)%n]-qs[i], qs[(j+1)%n]-qs[j]) < 0){
-      i = (i + 1)%n;
-    }else{
-      j = (j + 1)%n;
-    }
-  }
-  return res;
-}
-
-template<typename T>
-pair<vector<Point<T>>,vector<Point<T>>> ConvexCut(const vector<Point<T>> &ps, const Line<T> &l){
-  vector<Point<T>> lres, rres;
+pair<Polygon<T>,Polygon<T>> ConvexCut(const Polygon<T> &ps, const Line<T> &l){
+  Polygon<T> lres, rres;
   int n = ps.size();
   for(int i = 0; i < n; i++){
     int a = iSP(l.a, l.b, ps[i]), b = iSP(l.a, l.b, ps[(i+1)%n]);
@@ -268,14 +326,14 @@ pair<vector<Point<T>>,vector<Point<T>>> ConvexCut(const vector<Point<T>> &ps, co
 }
 
 template<typename T>
-double ClosestPair(vector<Point<T>> &a, int l, int r){
+double ClosestPair(Polygon<T> &a, int l, int r){
   if(r - l <= 1) return numeric_limits<T>::max();
   int mid = (l + r)/2;
   double x =a[mid].x;
   double d = min(ClosestPair(a,l,mid),ClosestPair(a,mid,r));
   inplace_merge(a.begin()+l,a.begin()+mid,a.begin()+r,cmp_y<T>);
 
-  vector<Point<T>> b;
+  Polygon<T> b;
   for(int i = l; i < r; i++){
     if(abs(a[i].x-x) >= d) continue;
     for(int j = (int)b.size()-1; j >= 0; j--){
@@ -288,10 +346,30 @@ double ClosestPair(vector<Point<T>> &a, int l, int r){
 }
 
 template<typename T>
-double ClosestPair(vector<Point<T>> &a){
+double ClosestPair(Polygon<T> &a){
   sort(a.begin(), a.end());
   return ClosestPair(a, 0, a.size());
 }
 
-typedef Point<int> point;
-typedef vector<point> polygon;
+template<typename T>
+Circle<T> SmallestEnclosingCircle(Polygon<T> ps){
+  int n = ps.size();
+  if(n == 1) return Circle<T>(ps[0], 0);
+  random_device seed;
+  mt19937 rng(seed());
+  shuffle(ps.begin(), ps.end(), rng);
+  Circle<T> c(ps[0], ps[1]);
+  for(int i = 2; i < n; i++){
+    if(c.Contains(ps[i]) != 2) continue;
+    c = Circle<T>(ps[0], ps[i]);
+    for(int j = 1; j < i; j++){
+      if(c.Contains(ps[j]) != 2) continue;
+      c = Circle<T>(ps[i], ps[j]);
+      for(int k = 0; k < j; k++){
+        if(c.Contains(ps[k]) != 2) continue;
+        c = Circle<T>(ps[i], ps[j], ps[k]);
+      }
+    }
+  }
+  return c;
+}

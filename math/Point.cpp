@@ -56,6 +56,8 @@ template<class T> struct Point{
   }
 };
 
+template<typename T> using Polygon = vector<Point<T>>;
+
 template<class T> T Cross(const Point<T> &a, const Point<T> &b) { return a.x * b.y - a.y * b.x; }
 
 template<class T> T Dot(const Point<T> &a, const Point<T> &b) { return a.x * b.x + a.y * b.y; }
@@ -80,29 +82,28 @@ template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Poin
   return -1; // obtuse angle
 }
 
-template<typename T> T Area(const vector<Point<T>> &ps){
-  T res = Cross(ps.back(), ps.front())/2;
+template<typename T> T Area(const Polygon<T> &ps){
+  if((int)ps.size() < 3) return 0;
+  T res = Cross(ps.back(), ps.front());
   for(int i = 0; i < (int)ps.size()-1; i++){
-    res += Cross(ps[i], ps[i+1])/2;
+    res += Cross(ps[i], ps[i+1]);
   }
-  return res;
+  return res/2;
 }
 
-template<typename T> bool isConvex(vector<Point<T>> ps){
+template<typename T> bool isConvex(const Polygon<T> &ps){
   int n = ps.size();
-  ps.emplace_back(ps[0]);
-  ps.emplace_back(ps[1]);
   for(int i = 0; i < n; i++){
-    if(iSP(ps[i], ps[i+1], ps[i+2]) == -1) return false;
+    if(iSP(ps[i], ps[(i+1)%n], ps[(i+2)%n]) == -1) return false;
   }
   return true;
 }
 
 template<typename T>
-vector<Point<T>> ConvexHull(vector<Point<T>> ps, bool strict = true){
+Polygon<T> ConvexHull(Polygon<T> ps, bool strict = true){
   int n = ps.size(), k = 0;
   sort(ps.begin(), ps.end());
-  vector<Point<T>> res(2 * n);
+  Polygon<T> res(2 * n);
   auto check = [&](int i){
     if(strict) return Cross(res[k-1]-res[k-2], ps[i]-res[k-1]) <= 0;
     return Cross(res[k-1]-res[k-2], ps[i]-res[k-1]) < 0;
@@ -117,5 +118,25 @@ vector<Point<T>> ConvexHull(vector<Point<T>> ps, bool strict = true){
   return res;
 }
 
-typedef Point<int> point;
-typedef vector<point> polygon;
+template<typename T>
+double ConvexDiameter(const Polygon<T> &ps){
+  Polygon<T> qs = ConvexHull(ps);
+  int n = qs.size();
+  if(n == 2) return qs[0].dist(qs[1]);
+  int i=0, j=0;
+  for(int k = 0; k < n; k++){
+    if(!(qs[i] < qs[k])) i = k;
+    if(qs[j] < qs[k]) j = k;
+  }
+  double res = 0;
+  int si = i, sj = j;
+  while(i!=sj || j!=si){
+    res = max(res, qs[i].dist(qs[j]));
+    if(Cross(qs[(i+1)%n]-qs[i], qs[(j+1)%n]-qs[j]) < 0){
+      i = (i + 1)%n;
+    }else{
+      j = (j + 1)%n;
+    }
+  }
+  return res;
+}
