@@ -238,7 +238,8 @@ struct Triangle{
     return (a + b + c)/3;
   }
   Point<T> circumcenter() const {
-    return divpoint(sin(2*angle_a()), sin(2*angle_b()), sin(2*angle_c()));
+    Segment<T> s1(a, b), s2(a, c);
+    return s1.PerpBisector().Cross_Point(s2.PerpBisector());
   }
   Point<T> orthocenter() const {
     return centerofgravity()*3 - circumcenter()*2;
