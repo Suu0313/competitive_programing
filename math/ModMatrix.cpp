@@ -43,6 +43,18 @@ struct Matrix{
     return (*this);
   }
 
+  Matrix &operator*=(const T &c){
+    size_t n = height(), m = width();
+    for (size_t i = 0; i < n; i++)
+      for (size_t j = 0; j < m; j++)
+        (*this)[i][j] *= c;
+    return (*this);
+  }
+
+  Matrix &operator/=(const T &c){
+    return (*this) *= T(1)/c;
+  }
+
   Matrix &operator^=(long long k){
     Matrix B = Matrix::I(height());
     while(k > 0){
@@ -65,6 +77,29 @@ struct Matrix{
   }
   Matrix operator^(const long long k) const {
     return Matrix(*this) ^= k;
+  }
+  Matrix operator*(const T &c) const {
+    return Matrix(*this) *= c;
+  }
+  Matrix operator/(const T &c) const {
+    return Matrix(*this) /= c;
+  }
+  vector<T> operator*(const vector<T> &x) const {
+    size_t n = height(), m = width();
+    vector<T> res(n);
+    for (size_t i = 0; i < n; i++)
+      for (size_t j = 0; j < m; j++)
+        res[i] += (*this)[i][j] * x[j];
+    return res;
+  }
+
+  Matrix Transpose() const {
+    size_t n = height(), m = width();
+    Matrix res(m, n);
+    for (size_t i = 0; i < n; i++)
+      for (size_t j = 0; j < m; j++)
+        res[j][i] = (*this)[i][j];
+    return res;
   }
 
   friend istream &operator>>(istream &is, Matrix &p){

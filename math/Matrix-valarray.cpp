@@ -42,6 +42,10 @@ struct Matrix{
     return (*this);
   }
 
+  Matrix &operator/=(const T &c){
+    return (*this) *= T(1)/c;
+  }
+
   Matrix &operator^=(long long k){
     assert((*this).height() == (*this).width());
     Matrix b = Matrix::I(height());
@@ -68,6 +72,9 @@ struct Matrix{
   }
   Matrix operator^(const long long k) const {
     return Matrix(*this) ^= k;
+  }
+  Matrix operator/(const T &c) const {
+    return Matrix(*this) /= c;
   }
 
   Matrix Transpose() const {
@@ -107,18 +114,17 @@ struct Matrix{
     for(size_t col = 0; col < m; ++col){
       if(is_extended && col == m-1) break;
       int pivot = -1;
-      T ma = 1e-10;
       for(size_t row = 0; row < n; ++row){
-        if(abs((*this)[row][col]) > ma){
-          ma = abs((*this)[row][col]); pivot = row;
+        if((*this)[row][col] != T(0)){
+          pivot = row; break;
         }
       }
       if(pivot == -1) continue;
       swap((*this)[pivot], (*this)[rank]);
-      T fac = (*this)[rank][col];
-      (*this)[rank] /= fac;
+      T finv = T(1)/= (*this)[rank][col];
+      (*this)[rank] *= finv;
       for(size_t row = 0; row < n; ++row){
-        if(row != rank && abs((*this)[row][col]) > T(1e-10)){
+        if(row != rank && (*this)[row][col] != T(0)){
           T fac = (*this)[row][col];
           (*this)[row] -= (*this)[rank] * fac;
         }
@@ -132,23 +138,63 @@ struct Matrix{
     size_t n = height(), m = width();
     Matrix M(n, m+1);
     for (size_t i = 0; i < n; i++){
-      for (size_t j = 0; j < m; j++){
-        M[i][j] = (*this)[i][j];
-      }
+      for (size_t j = 0; j < m; j++) M[i][j] = (*this)[i][j];
       M[i][m] = b[i];
     }
     size_t rank = M.GaussJordan(true);
 
-    valarray<T> res; // it has bug! to fix!!
-    for(size_t row = rank; row < m; ++row){
-      if(abs(M[row][m]) > T(1e-10)) return res;
+    valarray<T> res;
+    for(size_t row = rank; row < n; ++row){
+      if(M[row][m] != T(0)) return res;
     }
     res.resize(m, 0);
     for(size_t i = 0; i < rank; ++i) res[i] = M[i][m];
     return res;
   }
 
-  T determinant(){
-    // ToDo
+  Matrix inv() const {
+    assert(height() == width());
+    size_t n = height();
+    Matrix M(n, n*2);
+    for (size_t i = 0; i < n; i++){
+      for (size_t j = 0; j < n; j++) M[i][j] = (*this)[i][j];
+      M[i][i+n] = 1;
+    }
+    size_t rank = M.GaussJordan();
+    assert(rank == n);
+    Matrix res(n);
+    for (size_t i = 0; i < n; i++){
+      for (size_t j = 0; j < n; j++){
+        res[i][j] = M[i][j+n];
+      }
+    }
+    return res;
+  }
+
+  T determinant() const {
+    Matrix M(*this);
+    assert(height() == width());
+    size_t n = height();
+    T res = 1;
+    for(size_t col = 0; col < n; ++col){
+      int pivot = -1;
+      for(size_t row = col; row < n; ++row){
+        if(M[row][col] != T(0)){
+          pivot = row; break;
+        }
+      }
+      if(pivot == -1) return 0;
+      if(col != pivot){
+        res *= -1; swap(M[col], M[pivot]);
+      }
+      res *= M[col][col];
+      T finv = T(1)/M[col][col];
+      M[col] *= finv;
+      for(size_t row = col+1; row < n; ++row){
+        T fac = M[row][col];
+        M[row] -= M[col] * fac;
+      }
+    }
+    return res;
   }
 };
