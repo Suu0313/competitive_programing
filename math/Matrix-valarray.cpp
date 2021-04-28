@@ -198,7 +198,7 @@ struct Matrix{
     return res;
   }
 
-  T minor(int i, int j) const {
+  T minordet(int i, int j) const {
     assert(height() == width());
     size_t n = height();
     if(n == 1) return 1;
