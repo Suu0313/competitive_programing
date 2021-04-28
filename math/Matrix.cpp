@@ -220,4 +220,18 @@ struct Matrix{
     }
     return res;
   }
+
+  T minor(int i, int j) const {
+    assert(height() == width());
+    size_t n = height();
+    if(n == 1) return 1;
+    Matrix M(n-1);
+    for(size_t row = 0; row < n; ++row){
+      for(size_t col = 0; col < n; ++col){
+        if(row == i || col == j) continue;
+        M[row-(row>i)][col-(col>j)] = (*this)[row][col];
+      }
+    }
+    return M.determinant() * ((i+j)%2 ? -1 : 1);
+  }
 };
