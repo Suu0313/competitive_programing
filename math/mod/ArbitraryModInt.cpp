@@ -38,6 +38,18 @@ struct ArbitraryModInt {
   ArbitraryModInt operator/(const ArbitraryModInt &p) const { return ArbitraryModInt(*this) /= p; }
   bool operator==(const ArbitraryModInt &p) const { return x == p.x; }
   bool operator!=(const ArbitraryModInt &p) const { return x != p.x; }
+  bool operator<(const ArbitraryModInt &p) const { return x < p.x; }
+
+  ArbitraryModInt& operator++() { (*this).x+=1; return (*this); }
+  ArbitraryModInt& operator--() { (*this).x-=1; return (*this); }
+  ArbitraryModInt operator++(int) {
+    ArbitraryModInt temp(*this); ++(*this);
+    return temp;
+  }
+  ArbitraryModInt operator--(int) {
+    ArbitraryModInt temp(*this); --(*this);
+    return temp;
+  }
 
   ArbitraryModInt inverse() const {
     int a = x, b = get_mod(), u = 1, v = 0, t;
