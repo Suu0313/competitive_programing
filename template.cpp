@@ -80,7 +80,7 @@ constexpr LL MOD = 1e9+7;
 constexpr LL MODD = 998244353;
 constexpr int MAX = 510000;
 constexpr LL TEN(int n) { return n? 10*TEN(n-1) : 1; }
-constexpr LL BitAll(int n) { return (1ll << n)-1; }
+constexpr LL MASK(int n) { return (1ll << n)-1; }
 
 #define ADD_OVERFLOW(a, b) __builtin_add_overflow_p (a, b, (decltype((a)+(b))) 0)
 #define SUB_OVERFLOW(a, b) __builtin_sub_overflow_p (a, b, (decltype((a)+(b))) 0)
