@@ -158,8 +158,10 @@ vector<tuple<T>> in_zip(vector<T> &v){
 template<typename T, typename... Ts>
 auto in_zip(vector<T> &v, Ts&&... vs){
   auto vt = in_zip(v); auto vts = in_zip(vs...);
-  vector res(v.size(), tuple_cat(vt[0], vts[0]));
-  for(size_t i = 1; i < v.size(); i++) res[i] = tuple_cat(vt[i], vts[i]);
+  size_t m = min(vt.size(), vts.size());
+  auto te = decltype(vt)(1)[0]; auto tse = decltype(vts)(1)[0];
+  vector res(m, tuple_cat(te, tse));
+  for(size_t i = 0; i < m; i++) res[i] = tuple_cat(vt[i], vts[i]);
   return res;
 }
 
@@ -219,6 +221,7 @@ constexpr int dx[] = {1,0,-1,0,1,1,-1,-1}, dy[] = {0,1,0,-1,1,-1,1,-1};
 int main(){
   // cin.tie(0); ios::sync_with_stdio(false);
   cout << fixed << setprecision(12);
+
 
 
   return 0;
