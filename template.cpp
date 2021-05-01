@@ -47,7 +47,6 @@ template<typename T> using prquer = priority_queue<T,vector<T>,greater<T>>;
 #define REVERSE(c) reverse((c).begin(),(c).end())
 #define AAI(a,b,c) (a).begin(),(a).end(), (b).begin(),(b).end(), inserter((c),(c).end())
 #define UNIQUE(v) (v).erase(unique((v).begin(),(v).end()), (v).end())
-#define IOTA(v) iota((v).begin(), (v).end(), 0)
 
 #define OVERLOAD4(a,b,c,d,name,...) name
 
@@ -81,6 +80,7 @@ constexpr LL MODD = 998244353;
 constexpr int MAX = 510000;
 constexpr LL TEN(int n) { return n? 10*TEN(n-1) : 1; }
 constexpr LL MASK(int n) { return (1ll << n)-1; }
+constexpr bool BITAT(LL bit, int n){ return (bit>>n) & 1; }
 
 #define ADD_OVERFLOW(a, b) __builtin_add_overflow_p (a, b, (decltype((a)+(b))) 0)
 #define SUB_OVERFLOW(a, b) __builtin_sub_overflow_p (a, b, (decltype((a)+(b))) 0)
@@ -174,6 +174,21 @@ template<typename T, typename... Ts>
 auto in_enumerate(vector<T> &v, Ts&&... vs){
   vector<int> idx(v.size()); iota(idx.begin(), idx.end(), 0);
   return in_zip(idx, v, vs...);
+}
+
+template<typename Container>
+Container Rev(const Container &c){
+  Container res(c); reverse(res.begin(), res.end());
+  return res;
+}
+vector<int> iota(int n, int e = 0){
+  vector<int> res(n); iota(res.begin(), res.end(), e);
+  return res;
+}
+template<typename T>
+vector<T> subvec(const vector<T> &v,  size_t pos = 0, size_t n = string::npos){
+  assert(pos <= v.size()); n = min(n, v.size() - pos);
+  return vector<T>(v.begin()+pos, v.begin()+pos+n);
 }
 
 bool cYN(bool fl=true,bool fl2=false){cout << (fl?"Yes":"No") << '\n'; if(fl2){ exit(0); } return fl; }
