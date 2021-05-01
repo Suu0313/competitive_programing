@@ -36,7 +36,7 @@ struct permutation{
     vector<int> idx; bool fl;
     bool operator!=([[maybe_unused]] monostate e){ return fl; }
     void operator++() { fl = next_permutation(idx.begin(), idx.end()); }
-    vector<int> operator*() { return idx; }
+    vector<int> &operator*() { return idx; }
   };
 
   int n;
