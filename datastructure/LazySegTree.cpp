@@ -32,6 +32,12 @@ struct LazySegTree{
     }
   }
 
+  void build(const vector<M> &v){
+    assert((int)v.size() == defn);
+    for(int k = 0; k < defn; k++) node[k+n] = v[k];
+    build();
+  }
+
   void change(int k, const M &x){
     k += n;
     for(int i = height; i>=1; --i) push(k >> i);
@@ -95,7 +101,7 @@ struct LazySegTree{
     return f(sl, sr);
   }
 
-  M all_query() { return node.at(1); }
+  M all_query() const { return node.at(1); }
 
   template<typename C>
   int max_right(int l, C &check){

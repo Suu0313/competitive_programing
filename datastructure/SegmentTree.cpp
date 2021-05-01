@@ -31,6 +31,12 @@ struct SegmentTree{
     }
   }
 
+  void build(const vector<T> &v){
+    assert((int)v.size() == defn);
+    for(int k = 0; k < defn; k++) node[k+n] = v[k];
+    build();
+  }
+
   void change(int k, T x){
     k += n;
     node.at(k) = x;
@@ -55,13 +61,17 @@ struct SegmentTree{
     for(int k = l; k < r; k++) update(k,c);
   }
 
-  T at(int k){
+  T at(int k) const {
     return node.at(k+n);
   }
 
   void add(int k, T a){
     T x = at(k)+a;
     change(k,x);
+  }
+
+  void add(int l, int r, T x){
+    for(int k = l; k < r; k++) add(k,x);
   }
 
   T query(int a, int b){
@@ -74,7 +84,7 @@ struct SegmentTree{
     return op(L, R);
   }
 
-  T all_query() { return node.at(1); }
+  T all_query() const { return node.at(1); }
 
   template<typename C>
   int max_right(int l, C &check){
