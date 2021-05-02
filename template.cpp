@@ -88,7 +88,7 @@ constexpr bool BITAT(LL bit, int n){ return (bit>>n) & 1; }
 
 template<class T> constexpr T Sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
-inline int Pcnt(uint64_t x) { return __builtin_popcountll(x); }
+inline int Pcnt(unsigned long long x) { return __builtin_popcountll(x); }
 template<class T> constexpr T Ceil(T x, T y) {
   if(y < 0) x = -x, y = -y;
   if(x >= 0) return (x + y - 1) / y;
@@ -139,7 +139,11 @@ T lcm(const vector<T> &v){ return reduce(v.begin(), v.end(), T(1), [](auto&&a, a
 
 template<typename T> T max(const vector<T> &v){ return *max_element(v.begin(), v.end()); }
 template<typename T> T min(const vector<T> &v){ return *min_element(v.begin(), v.end()); }
-template<typename T> void Vadd(vector<T> &v, T a=-1){ for(auto&& x : v) x += a; }
+
+template<typename T> vector<T> &operator++(vector<T> &v){ for(auto&&e : v){ ++e; } return v; }
+template<typename T> vector<T> operator++(vector<T> &v, int){ vector<T> tmp(v); ++v; return tmp; }
+template<typename T> vector<T> &operator--(vector<T> &v){ for(auto&&e : v){ --e; } return v; }
+template<typename T> vector<T> operator--(vector<T> &v, int){ vector<T> tmp(v); --v; return tmp; }
 
 template<typename T>
 vector<T> make_v(size_t a,T b){return vector<T>(a,b);}
@@ -236,6 +240,7 @@ constexpr int dx[] = {1,0,-1,0,1,1,-1,-1}, dy[] = {0,1,0,-1,1,-1,1,-1};
 int main(){
   // cin.tie(0); ios::sync_with_stdio(false);
   cout << fixed << setprecision(12);
+
 
 
 
