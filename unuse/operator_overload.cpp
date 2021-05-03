@@ -4,7 +4,7 @@ pair<T1, T2> &operator+=(pair<T1, T2> &a, const pair<T1, T2> &b){
 }
 template<typename T1, typename T2>
 pair<T1, T2> operator+(const pair<T1, T2> &a, const pair<T1, T2> &b){
-  pair<T1, T2> p(a); return (p += b);
+  return pair<T1, T2>(a) += b;
 }
 
 template<typename T>
@@ -35,9 +35,9 @@ vector<T> &operator-=(vector<T> &v, const T &x){
 
 template<typename T>
 vector<T> operator+(const vector<T> &v, const T &x){
-  vector<T> res(v); return (res += x);
+  return vector<T>(v) += x;
 }
 template<typename T>
 vector<T> operator-(const vector<T> &v, const T &x){
-  vector<T> res(v); return (res -= x);
+  return vector<T>(v) -= x;
 }
