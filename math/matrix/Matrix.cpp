@@ -17,6 +17,7 @@ struct Matrix{
   const vector<T> &at(int k) const { return A.at(k); }
 
   Matrix &operator+=(const Matrix &B){
+    assert(height() == B.height() && width() == B.width());
     size_t n = height(), m = width();
     for (size_t i = 0; i < n; i++)
       for (size_t j = 0; j < m; j++)
@@ -25,6 +26,7 @@ struct Matrix{
   }
 
   Matrix &operator-=(const Matrix &B){
+    assert(height() == B.height() && width() == B.width());
     size_t n = height(), m = width();
     for (size_t i = 0; i < n; i++)
       for (size_t j = 0; j < m; j++)
@@ -33,6 +35,7 @@ struct Matrix{
   }
 
   Matrix &operator*=(const Matrix &B){
+    assert(width() == B.height());
     size_t n = height(), m = B.width(), l = width();
     vector<vector<T>> C(n, vector<T>(m));
     for (size_t i = 0; i < n; i++)
@@ -56,6 +59,7 @@ struct Matrix{
   }
 
   Matrix &operator^=(long long k){
+    assert(height() == width());
     Matrix B = Matrix::I(height());
     while(k > 0){
       if(k&1) B *= *this;
@@ -66,25 +70,15 @@ struct Matrix{
     return (*this);
   }
 
-  Matrix operator+(const Matrix &B) const {
-    return Matrix(*this) += B;
-  }
-  Matrix operator-(const Matrix &B) const {
-    return Matrix(*this) -= B;
-  }
-  Matrix operator*(const Matrix &B) const {
-    return Matrix(*this) *= B;
-  }
-  Matrix operator^(const long long k) const {
-    return Matrix(*this) ^= k;
-  }
-  Matrix operator*(const T &c) const {
-    return Matrix(*this) *= c;
-  }
-  Matrix operator/(const T &c) const {
-    return Matrix(*this) /= c;
-  }
+  Matrix operator+(const Matrix &B) const { return Matrix(*this) += B; }
+  Matrix operator-(const Matrix &B) const { return Matrix(*this) -= B; }
+  Matrix operator*(const Matrix &B) const { return Matrix(*this) *= B; }
+  Matrix operator^(const long long k) const { return Matrix(*this) ^= k; }
+  Matrix operator*(const T &c) const { return Matrix(*this) *= c; }
+  Matrix operator/(const T &c) const { return Matrix(*this) /= c; }
+
   vector<T> operator*(const vector<T> &x) const {
+    assert(width() == x.size());
     size_t n = height(), m = width();
     vector<T> res(n);
     for (size_t i = 0; i < n; i++)
@@ -154,6 +148,7 @@ struct Matrix{
   }
 
   vector<T> linear_equation(vector<T> &b){
+    assert(height() == b.size());
     size_t n = height(), m = width();
     Matrix M(n, m+1);
     for (size_t i = 0; i < n; i++){
@@ -193,8 +188,8 @@ struct Matrix{
   }
 
   T determinant() const {
-    Matrix M(*this);
     assert(height() == width());
+    Matrix M(*this);
     size_t n = height();
     T res = 1, EPS = 1e-10;
     for(size_t col = 0; col < n; ++col){
