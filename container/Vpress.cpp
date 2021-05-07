@@ -9,10 +9,10 @@ vector<T> Vpress(vector<T> &X) {
     return vals;
 }
 template <typename T>
-vector<T> Vpress(vector<T> &C1, vector<T> &C2) {
+vector<T> Vpress(vector<T> &C1, vector<T> &C2, T sp = 1) {
     vector<T> vals;
     for(size_t i = 0; i < C1.size(); i++){
-        for (T d = 0; d < 1; d++) {  
+        for (T d = 0; d < sp; d++) {  
             T tc1 = C1[i] + d;
             T tc2 = C2[i] + d;
             vals.push_back(tc1);
