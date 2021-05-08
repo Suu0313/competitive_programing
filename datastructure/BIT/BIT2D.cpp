@@ -1,19 +1,19 @@
 template <typename T>
 struct BIT2D{
-  int H, W; //[1,H]*[1,W]
-  vector<vector<T>> node; //1-indexed
+  int H, W;
+  vector<vector<T>> node;
   
   BIT2D(int H_, int W_): H(H_+1),W(W_+1),node(H,vector<T>(W,0)){}
 
   void add(int h, int w, T x){
-    for(int i = h; i < H; i += (i&-i)){
-      for(int j = w; j < W; j += (j&-j)){
+    for(int i = h+1; i < H; i += (i&-i)){
+      for(int j = w+1; j < W; j += (j&-j)){
         node.at(i).at(j) += x;
       }
     }
   }
 
-  T sum(int h, int w){ //[1,h]*[1,w]
+  T sum(int h, int w) const { // [0,H)*[0,W)
     T s(0);
     for(int i = h; i > 0; i -= (i&-i)){
       for(int j = w; j > 0; j -= (j&-j)){
@@ -23,7 +23,7 @@ struct BIT2D{
     return s;
   }
 
-  T query(int h1, int w1, int h2, int w2){ //[h1,h2)*[w1,w2)
-    return sum(h2-1,w2-1)-sum(h2-1,w1-1)-sum(h1-1,w2-1)+sum(h1-1,w1-1);
+  T query(int h1, int w1, int h2, int w2) const { // [h1,h2)*[w1,w2)
+    return sum(h2,w2)-sum(h2,w1)-sum(h1,w2)+sum(h1,w1);
   }
 };
