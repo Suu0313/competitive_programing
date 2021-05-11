@@ -3,7 +3,7 @@ struct SuffixArray{
   vector<int> sa;
   const Container s;
 
-  SuffixArray(const Container &s, int alpha = 256): sa(s.size()), s(s) {
+  SuffixArray(const Container &s, int upper = 256, int lower = 0): sa(s.size()), s(s) {
     int n = s.size();
     if(n <= 1) return;
     if(n == 2){
@@ -13,7 +13,7 @@ struct SuffixArray{
     }
     if(n < 10){ sa_native(); return; }
     if(n < 40){ sa_doubling(); return; }
-    sa_is(s, alpha);
+    sa_is(s, upper, lower);
   }
 
   int operator[](int k) const { return sa[k]; }
@@ -58,7 +58,7 @@ struct SuffixArray{
   void dump() const {
     int n = s.size();
     for(int i = 0; i < n; i++){
-      cout << i << ", " << sa[i] << ": ";
+      cout << i << ": " << sa[i] << ", ";
       for(int j = sa[i]; j < n; j++) cout << s[j] << " ";
       cout << '\n';
     }
@@ -97,11 +97,17 @@ private:
     }
   }
   
-  void sa_is(const Container &s, int alpha){
+  void sa_is(const Container &s, int upper, int lower){
+    if(upper <= lower){
+      auto&&[l,r] = minmax_element(s.begin(), s.end());
+      lower = *l; upper = *r + 1;
+    }
+
     int n = s.size();
     vector<int> v(n);
-    for(int i = 0; i < n; i++) v[i] = s[i];
-    auto res = sa_is_sub(v, alpha);
+    for(int i = 0; i < n; i++) v[i] = s[i] - lower;
+    auto res = sa_is_sub(v, upper - lower);
+
     for(int i = 0; i < n; i++) sa[i] = res[i+1];
   }
 
