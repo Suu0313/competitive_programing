@@ -58,8 +58,9 @@ struct SuffixArray{
   void dump() const {
     int n = s.size();
     for(int i = 0; i < n; i++){
-      cout << i << ": " << sa[i] << " ";
-      for(int j = sa[i]; j < n; j++) cout << s[j] << " "; cout << '\n';
+      cout << i << ", " << sa[i] << ": ";
+      for(int j = sa[i]; j < n; j++) cout << s[j] << " ";
+      cout << '\n';
     }
   }
 
@@ -92,7 +93,7 @@ private:
       sort(sa.begin(), sa.end(), cmp);
       tmp[sa[0]] = 0;
       for(int i = 0; i < n-1; i++) tmp[sa[i+1]] = tmp[sa[i]] + cmp(sa[i], sa[i+1]);
-      swap(rank, tmp);
+      for(int i = 0; i < n; i++) rank[i] = tmp[i];
     }
   }
   
