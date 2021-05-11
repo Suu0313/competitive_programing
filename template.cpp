@@ -182,7 +182,7 @@ auto in_enumerate(vector<T> &v, Ts&&... vs){
 
 template<typename Container>
 Container Rev(const Container &c){
-  Container res(c); reverse(res.begin(), res.end());
+  Container res(c.size()); reverse_copy(c.begin(), c.end(), res.begin());
   return res;
 }
 vector<int> iota(int n, int e = 0){
