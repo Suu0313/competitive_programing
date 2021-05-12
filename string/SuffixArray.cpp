@@ -3,7 +3,7 @@ struct SuffixArray{
   vector<int> sa;
   const Container s;
 
-  SuffixArray(const Container &s, int upper = 256, int lower = 0): sa(s.size()), s(s) {
+  SuffixArray(const Container &s, int upper = 0, int lower = 0): sa(s.size()), s(s) {
     int n = s.size();
     if(n <= 1) return;
     if(n == 2){
@@ -58,9 +58,9 @@ struct SuffixArray{
   void dump() const {
     int n = s.size();
     for(int i = 0; i < n; i++){
-      cout << i << ": " << sa[i] << ", ";
+      cout << i << ": " << sa[i] << " [ ";
       for(int j = sa[i]; j < n; j++) cout << s[j] << " ";
-      cout << '\n';
+      cout << " ]\n";
     }
   }
 
