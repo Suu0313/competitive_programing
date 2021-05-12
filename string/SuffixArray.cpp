@@ -48,7 +48,7 @@ struct SuffixArray{
 
   bool contain(const Container &t) const {
     int idx = lower_bound(t);
-    return cmp_substr(t, idx) == 0;
+    return cmp_substr(t, sa[idx]) == 0;
   }
 
   pair<int, int> equal_range(const Container &t) const {
