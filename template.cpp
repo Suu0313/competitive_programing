@@ -41,14 +41,11 @@ template<typename T> using prquer = priority_queue<T,vector<T>,greater<T>>;
 #define ALL(a)  (a).begin(),(a).end()
 #define RALL(a) (a).rbegin(),(a).rend()
 #define SZ(a) (int)((a).size())
-#define EXIST(s,e) (find((s).begin(),(s).end(),(e))!=(s).end())
 #define SORT(c) sort((c).begin(),(c).end())
 #define SORTR(c) sort((c).rbegin(), (c).rend())
 #define REVERSE(c) reverse((c).begin(),(c).end())
 #define AAI(a,b,c) (a).begin(),(a).end(), (b).begin(),(b).end(), inserter((c),(c).end())
 #define UNIQUE(v) (v).erase(unique((v).begin(),(v).end()), (v).end())
-
-#define OVERLOAD4(a,b,c,d,name,...) name
 
 #define FOR(i,a,b) for(auto i = decltype(b){a}, i##_r=(b); i<i##_r; i++)
 #define REP(i,n) FOR(i,0,n)
@@ -63,6 +60,7 @@ template<typename T> using prquer = priority_queue<T,vector<T>,greater<T>>;
 #define BFOR(bit,a,b) for(long long bit=(a); bit<(1ll<<(b)); bit++)
 #define BREP(bit,n) BFOR(bit,0,n)
 
+#define OVERLOAD4(a,b,c,d,name,...) name
 #define EACH1(a, v) for(auto&&a : v)
 #define EACH2(a,b, v) for(auto&&[a,b] : v)
 #define EACH3(a,b,c, v) for(auto&&[a,b,c] : v)
@@ -82,9 +80,9 @@ constexpr LL TEN(int n) { return n? 10*TEN(n-1) : 1; }
 constexpr LL MASK(int n) { return (1ll << n)-1; }
 constexpr bool BITAT(LL bit, int n){ return (bit>>n) & 1; }
 
-#define ADD_OVERFLOW(a, b) __builtin_add_overflow_p (a, b, (decltype((a)+(b))) 0)
-#define SUB_OVERFLOW(a, b) __builtin_sub_overflow_p (a, b, (decltype((a)+(b))) 0)
-#define MUL_OVERFLOW(a, b) __builtin_mul_overflow_p (a, b, (decltype((a)+(b))) 0)
+#define ADD_OVERFLOW(a, b) __builtin_add_overflow_p (a, b, (decltype(a)) 0)
+#define SUB_OVERFLOW(a, b) __builtin_sub_overflow_p (a, b, (decltype(a)) 0)
+#define MUL_OVERFLOW(a, b) __builtin_mul_overflow_p (a, b, (decltype(a)) 0)
 
 template<class T> constexpr T Sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
@@ -145,12 +143,10 @@ template<typename T> vector<T> operator++(vector<T> &v, int){ vector<T> tmp(v); 
 template<typename T> vector<T> &operator--(vector<T> &v){ for(auto&&e : v){ --e; } return v; }
 template<typename T> vector<T> operator--(vector<T> &v, int){ vector<T> tmp(v); --v; return tmp; }
 
-template<typename T>
-vector<T> make_v(size_t a,T b){return vector<T>(a,b);}
+template<typename T> vector<T> make_v(size_t a,T b){ return vector<T>(a, b); }
 template<typename... Ts> auto make_v(size_t a,Ts... ts){ return vector(a,make_v(ts...)); }
 
-template<typename T>
-valarray<T> make_va(size_t a,T b){return valarray<T>(b,a);}
+template<typename T> valarray<T> make_va(size_t a,T b){ return valarray<T>(b, a); }
 template<typename... Ts> auto make_va(size_t a,Ts... ts){ return valarray(make_va(ts...), a); }
 
 template<typename T>
@@ -195,27 +191,34 @@ vector<T> subvec(const vector<T> &v,  size_t pos = 0, size_t n = string::npos){
   return vector<T>(v.begin()+pos, v.begin()+pos+n);
 }
 
+template<typename... Ts>
+string format(const string &fmt, Ts... ts){
+  size_t len = snprintf(nullptr, 0, fmt.c_str(), ts...);
+  vector<char> buf(len + 1);
+  snprintf(&buf[0], len + 1, fmt.c_str(), ts...);
+  return string(buf.begin(), buf.end()-1);
+}
+
 bool cYN(bool fl=true,bool fl2=false){cout << (fl?"Yes":"No") << '\n'; if(fl2){ exit(0); } return fl; }
 bool CYN(bool fl=true,bool fl2=false){cout << (fl?"YES":"NO") << '\n'; if(fl2){ exit(0); } return fl; }
 template<typename T = int>
 void error(T t=-1,bool fl=true){cout << t << '\n'; if(fl){ exit(0); } }
 template<class T> void COUT(T&& t){ cout << t << '\n'; }
-template<class T,class... Ts>
-void COUT(T&& t,Ts&&... ts){ cout << t << " "; COUT(ts...); }
+template<class T,class... Ts> void COUT(T&& t,Ts&&... ts){ cout << t << " "; COUT(ts...); }
 template<class... Ts> void CIN(Ts&&... ts){ (cin >> ... >> ts); }
 #define INPUT(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)
 
-template< typename T1, typename T2 > istream &operator>>(istream &is, pair< T1, T2 > &p) {
+template< typename T1, typename T2 > istream &operator>>(istream &is, pair<T1, T2> &p) {
   is >> p.first >> p.second; return is;
 }
-template< typename T1, typename T2 > ostream &operator<<(ostream &os, const pair< T1, T2 >& p) {
+template< typename T1, typename T2 > ostream &operator<<(ostream &os, const pair<T1, T2>& p) {
   os << p.first << " " << p.second; return os;
 }
-template< typename T > istream &operator>>(istream &is, vector< T > &v) {
+template< typename T > istream &operator>>(istream &is, vector<T> &v) {
   for(auto&&in : v) is >> in;
   return is;
 }
-template< typename T > ostream &operator<<(ostream &os, const vector< T > &v) {
+template< typename T > ostream &operator<<(ostream &os, const vector<T> &v) {
   for(size_t i = 0; i < v.size(); i++) os << v[i] << (i + 1 != v.size() ? " " : "");
   return os;
 }
