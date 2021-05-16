@@ -9,7 +9,7 @@ void split(const string& str, char delim, const F& f){
 vector<string> split(const string& str, char delim=' '){
   vector<string> tokens;
   split(str, delim, [&tokens](const string& token){
-    if(!token.empty()) tokens.EB(token);
+    if(!token.empty()) tokens.emplace_back(token);
   });
   return tokens;
 }
