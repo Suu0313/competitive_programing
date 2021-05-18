@@ -26,7 +26,7 @@ struct UnionFind {
     if(x == y) return false;
     cnt--;
 
-    if(data[x] < data[y]) swap(x,y);
+    if(data[x] > data[y]) swap(x,y);
     data[x] += data[y];
     smax = max(smax, -data[x]);
     data[y] = x;
