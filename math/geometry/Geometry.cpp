@@ -93,13 +93,14 @@ template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Poin
   return -1; // obtuse angle
 }
 
-template<typename T> T Area(const Polygon<T> &ps){
+template<typename T> T Area(const Polygon<T> &ps, bool harf = true){
   if((int)ps.size() < 3) return 0;
   T res = Cross(ps.back(), ps.front());
   for(int i = 0; i < (int)ps.size()-1; i++){
     res += Cross(ps[i], ps[i+1]);
   }
-  return res/2;
+  if(harf) res /= 2;
+  return res;
 }
 
 template<typename T> bool isConvex(const Polygon<T> &ps){
