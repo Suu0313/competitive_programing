@@ -3,7 +3,7 @@ struct SuffixArray{
   vector<int> sa;
   const Container s;
 
-  SuffixArray(const Container &s, int upper = 0, int lower = 0): sa(s.size()), s(s) {
+  SuffixArray(const Container &s): sa(s.size()), s(s) {
     int n = s.size();
     if(n <= 1) return;
     if(n == 2){
@@ -13,7 +13,7 @@ struct SuffixArray{
     }
     if(n < 10){ sa_native(); return; }
     if(n < 40){ sa_doubling(); return; }
-    sa_is(s, upper, lower);
+    sa_is(s);
   }
 
   int operator[](int k) const { return sa[k]; }
@@ -80,13 +80,12 @@ private:
     int n = s.size();
     vector<int> rank(n), tmp(n);
     for(int i = 0; i < n; i++) rank[i] = s[i];
+    auto m = *min_element(rank.begin(), rank.end());
 
     int k = 1;
     auto cmp = [&](int i, int j){
       if(rank[i] != rank[j]) return rank[i] < rank[j];
-      int ni = (i+k < n) ? rank[i+k] : -1;
-      int nj = (j+k < n) ? rank[j+k] : -1;
-      return ni < nj;
+      return ((i+k < n) ? rank[i+k] : m-1) < ((j+k < n) ? rank[j+k] : m-1);
     };
 
     for(; k < n; k <<= 1){
@@ -96,18 +95,33 @@ private:
       for(int i = 0; i < n; i++) rank[i] = tmp[i];
     }
   }
-  
-  void sa_is(const Container &s, int upper, int lower){
-    if(upper <= lower){
-      auto&&[l,r] = minmax_element(s.begin(), s.end());
-      lower = *l; upper = *r + 1;
-    }
 
+  void sa_is(const string &s){
     int n = s.size();
-    vector<int> v(n);
-    for(int i = 0; i < n; i++) v[i] = s[i] - lower;
-    auto res = sa_is_sub(v, upper - lower);
+    vector<int> v(s.begin(), s.end());
+    auto res = sa_is_sub(v, 256);
+    for(int i = 0; i < n; i++) sa[i] = res[i+1];
+  }
 
+  template<typename T>
+  void sa_is(const T &s){
+    int n = s.size();
+
+    auto&&[l,r] = minmax_element(s.begin(), s.end());
+    auto lower = *l; auto upper = *r + 1;
+    if(upper - lower < n * 20){
+      vector<int> v(n);
+      for(int i = 0; i < n; i++) v[i] = s[i] - lower;
+
+      auto res = sa_is_sub(v, upper - lower);
+      for(int i = 0; i < n; i++) sa[i] = res[i+1];
+      return;
+    }
+    vector<int> idx(n); iota(idx.begin(), idx.end(), 0);
+    sort(idx.begin(), idx.end(), [&](int i, int j){ return s[i] < s[j]; });
+    vector<int> rank(n);
+    for(int i = 1; i < n; i++) rank[idx[i]] = rank[idx[i-1]] + (s[idx[i-1]] < s[idx[i]]);
+    auto res = sa_is_sub(rank, rank[idx[n-1]] + 1);
     for(int i = 0; i < n; i++) sa[i] = res[i+1];
   }
 
@@ -165,8 +179,7 @@ private:
         }
         assert(false); return true;
       };
-      rmax += cmp();
-      rank[rev[r]] = rmax;
+      rmax += cmp(); rank[rev[r]] = rmax;
     }
 
     if(rmax+1 == (int)rank.size()){
@@ -174,14 +187,12 @@ private:
       for(int i = 0; i < m; i++) lms[rank[i]] = tmp[i];
     }else{
       auto rec_sa = sa_is_sub(rank, rmax+1);
-      vector<int> tmp(m);
-      for(int i = 0; i < m; i++) tmp[i] = lms[rec_sa[i+1]];
-      swap(tmp, lms);
+      vector<int> tmp(m); swap(tmp, lms);
+      for(int i = 0; i < m; i++) lms[i] = tmp[rec_sa[i+1]];
     }
 
     fill(nsa.begin(), nsa.end(), 0);
     induced_sort();
-    
     return nsa;
   }
 };
