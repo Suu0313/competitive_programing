@@ -82,6 +82,12 @@ struct LazySegTree{
     return node.at(k);
   }
 
+  M operator [](int k){
+    k += n;
+    for(int i = height; i>=1; --i) push(k >> i);
+    return node.at(k);
+  }
+
   M query(int l, int r){
     if(l == r) return m;
     l += n; r += n;
