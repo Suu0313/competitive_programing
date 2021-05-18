@@ -191,12 +191,12 @@ struct Matrix{
     assert(height() == width());
     Matrix M(*this);
     size_t n = height();
-    T res = 1, EPS = 1e-10;
+    T res = 1;
     for(size_t col = 0; col < n; ++col){
-      int pivot = -1;
+      int pivot = -1, ma = 1e-10;
       for(size_t row = col; row < n; ++row){
-        if(abs(M[row][col]) > EPS){
-          pivot = row; break;
+        if(abs(M[row][col]) > ma){
+          pivot = row; ma = abs(M[row][col]);
         }
       }
       if(pivot == -1) return 0;
