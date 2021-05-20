@@ -1,12 +1,11 @@
 template<typename T>
 struct CumulativeSum{
   int n, m;
-  using VVT = vector<vector<T>>;
-  VVT sum;
+  vector<vector<T>> sum;
   CumulativeSum(int n, int m) : n(n), m(m) {
     sum.assign(n+1, vector<T>(m+1, 0));
   }
-  CumulativeSum(const VVT &v, bool isbuilded = false){
+  CumulativeSum(const vector<vector<T>> &v, bool isbuilded = false){
     if(!isbuilded){
       n = v.size(); m = v.at(0).size();
       sum.assign(n+1, vector<T>(m+1, 0));
