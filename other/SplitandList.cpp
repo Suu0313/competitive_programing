@@ -1,6 +1,6 @@
 void SplitandList(vector<long long> &a, vector<long long> &b, vector<long long> &c){
   b.assign(1,0); c.assign(1,0);
-  auto merge = [&](LL x){
+  auto merge = [&](long long x){
     vector<long long> d;
     auto it = b.begin();
     for(auto&&y : b){
