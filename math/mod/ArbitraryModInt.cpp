@@ -83,3 +83,4 @@ struct ArbitraryModInt {
 using amint = ArbitraryModInt;
 using VMA = vector<amint>;
 using VVMA = vector<VMA>;
+amint operator""am(unsigned long long x) { return amint(x); }
