@@ -111,6 +111,19 @@ constexpr bool BITAT(LL bit, int n){ return (bit>>n) & 1; }
 #define SUB_OVERFLOW(a, b) __builtin_sub_overflow_p (a, b, (decltype(a)) 0)
 #define MUL_OVERFLOW(a, b) __builtin_mul_overflow_p (a, b, (decltype(a)) 0)
 
+template<typename T>
+T ADD(const T &a, const T &b, const T &lim = numeric_limits<T>::max()){
+  if(ADD_OVERFLOW(a,b)){ return lim; } return min(a+b, lim);
+}
+template<typename T>
+T SUB(const T &a, const T &b, const T &lim = numeric_limits<T>::lowest()){
+  if(SUB_OVERFLOW(a,b)){ return lim; } return max(a-b, lim);
+}
+template<typename T>
+T MUL(const T &a, const T &b, const T &lim = numeric_limits<T>::max()){
+  if(MUL_OVERFLOW(a,b)){ return lim; } return min(a*b, lim);
+}
+
 template<class T> constexpr T Sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
 inline int Pcnt(unsigned long long x) { return __builtin_popcountll(x); }
@@ -204,14 +217,9 @@ auto in_enumerate(vector<T> &v, Ts&&... vs){
 }
 
 template<typename Container>
-Container Rev(const Container &c){
-  Container res(c); reverse(res.begin(), res.end());
-  return res;
-}
-vector<int> iota(int n, int e = 0){
-  vector<int> res(n); iota(res.begin(), res.end(), e);
-  return res;
-}
+Container Rev(const Container &c){ Container res(c); reverse(res.begin(), res.end()); return res; }
+vector<int> iota(int n, int e = 0){ vector<int> res(n); iota(res.begin(), res.end(), e); return res; }
+
 template<typename T>
 vector<T> subvec(const vector<T> &v,  size_t pos = 0, size_t n = string::npos){
   assert(pos <= v.size()); n = min(n, v.size() - pos);
@@ -264,6 +272,8 @@ void Vcout(const vector<T> &v, const string &sep = "\n", const string &en = "\n"
 constexpr int dx[] = {1,0,-1,0,1,1,-1,-1}, dy[] = {0,1,0,-1,1,-1,1,-1};
 
 #pragma endregion
+
+
 
 
 
