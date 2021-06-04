@@ -30,3 +30,30 @@ struct Deque : deque<T>{
   T Popf(){ T res = this->front(); this->pop_front(); return res; }
   T Popb(){ T res = this->back(); this->pop_back(); return res; }
 };
+
+
+template<typename T>
+struct Set : set<T> {
+  using set<T>::set;
+  explicit operator bool() const { return !(*this).empty(); }
+  Set operator|(const Set &s) const {
+    Set res;
+    set_union((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
+    return res;
+  }
+  Set operator&(const Set &s) const {
+    Set res;
+    set_intersection((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
+    return res;
+  }
+  Set operator^(const Set &s) const {
+    Set res;
+    set_symmetric_difference((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
+    return res;
+  }
+  Set operator-(const Set &s) const {
+    Set res;
+    set_difference((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
+    return res;
+  }
+};
