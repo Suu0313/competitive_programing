@@ -72,7 +72,8 @@ struct ModInt {
   constexpr static int get_mod() { return mod; }
 };
 //constexpr int MOD = 1e9 + 7;
+//constexpr int MOD = 998244353;
 using mint = ModInt< MOD >;
 using VM = vector<mint>;
 using VVM = vector<VM>;
-constexpr mint operator""m(unsigned long long x) { return mint(x); }
+constexpr mint operator""_m(unsigned long long x) { return mint(x); }
