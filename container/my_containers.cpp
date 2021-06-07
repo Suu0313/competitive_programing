@@ -56,4 +56,7 @@ struct Set : set<T> {
     set_difference((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
     return res;
   }
+  bool exist(const T &x) const {
+    return (*this).find(x) != (*this).end();
+  }
 };
