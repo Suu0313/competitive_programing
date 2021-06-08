@@ -1,21 +1,19 @@
-vector<int> Zalg(const string &S){
+template<typename Container>
+vector<int> Zalgorithm(const Container &S){
   int N = S.size();
-  vector<int> Z(N);
-  Z.at(0) = N;
+  vector<int> Z(N); Z[0] = N;
   int i = 1, j = 0;
   
   while(i < N){
-    while(i+j < N && S.at(j) == S.at(i+j)) ++j;
-    Z.at(i) = j;
+    while(i+j < N && S[j] == S[i+j]) ++j;
+    Z[i] = j;
     if(j==0){i++; continue;}
     
     int k = 1;
-    while(k<j && k+Z.at(k) < j){
-      Z.at(i+k) = Z.at(k);
-      ++k;
+    while(k<j && k+Z[k] < j){
+      Z[i+k] = Z[k]; ++k;
     }
-    i += k;
-    j -= k;
+    i += k; j -= k;
   }
   return Z;
 }
