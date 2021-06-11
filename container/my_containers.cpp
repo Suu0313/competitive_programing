@@ -56,6 +56,10 @@ struct Set : set<T> {
     set_difference((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
     return res;
   }
+  const T operator[](int k) const {
+    if(k >= 0) return *std::next(this->begin(), k);
+    else return *std::prev(this->end(), -k);
+  }
   bool exist(const T &x) const {
     return (*this).find(x) != (*this).end();
   }
