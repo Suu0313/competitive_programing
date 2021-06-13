@@ -67,11 +67,11 @@ struct Combination{
   }
 
   T Catalan(int n){
-    return Catalan(n, n, 0);
+    return Catalan(n, n, 1);
   }
 
   T Catalan(int n, int k){
-    return Catalan(n, k, 0);
+    return Catalan(n, k, 1);
   }
 
   T Catalan(int n, int k, int m){
