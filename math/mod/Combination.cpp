@@ -66,6 +66,20 @@ struct Combination{
     return com(n+k-1, k);
   }
 
+  T Catalan(int n){
+    return Catalan(n, n, 0);
+  }
+
+  T Catalan(int n, int k){
+    return Catalan(n, k, 0);
+  }
+
+  T Catalan(int n, int k, int m){
+    if(k < m) return com(n+k, k);
+    if(k < n+m-1) return com(n+k, k) - com(n+k, k-m);
+    return 0;
+  }
+
 private:
   void append(int n){
     if(n < N) return;
