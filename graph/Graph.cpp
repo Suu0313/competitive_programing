@@ -8,7 +8,7 @@ struct Edge{
 template<typename T>
 using Edges = vector<Edge<T>>;
 
-template<typename T>
+template<typename T = bool>
 struct Graph {
   vector<vector<Edge<T>>> g;
   size_t es;
