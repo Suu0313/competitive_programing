@@ -264,10 +264,13 @@ auto Enumerate(vector<T> &v, Ts&&... vs){
 }
 
 template<typename Container>
-Container Rev(const Container &c){ Container res(c); reverse(res.begin(), res.end()); return res; }
+Container Rev(Container c){reverse(c.begin(), c.end()); return c; }
 template<typename T = int>
 vector<T> iota(int n, T e = 0){ vector<T> res(n); iota(res.begin(), res.end(), e); return res; }
-
+template<typename Container>
+Container Sort(Container c){ sort(c.begin(), c.end()); return c; }
+template<typename Container, class Compair>
+Container Sort(Container c, const Compair &cmp){ sort(c.begin(), c.end(), cmp); return c; }
 template<typename T>
 vector<T> subvec(const vector<T> &v,  size_t pos = 0, size_t n = string::npos){
   assert(pos <= v.size()); n = min(n, v.size() - pos);
