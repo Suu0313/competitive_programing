@@ -184,6 +184,9 @@ template<class T> constexpr T Floor(T x, T y) {
   if(x >= 0) return x / y;
   return (x - y + 1) / y;
 }
+template<class T> constexpr T Mid(T x, T y) {
+  return (x&y) + ((x^y) >> 1);
+}
 template<typename T>
 T ModInv(T a, T m){
   T b = m, u= 1, v = 0;
