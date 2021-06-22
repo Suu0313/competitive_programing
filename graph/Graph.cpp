@@ -29,10 +29,10 @@ struct Graph {
     g[src].emplace_back(src, to, cost, es++);
   }
 
-  void build(int m, int base = 1, bool weighted = false, bool directed = false){
+  void build(int m, int base = 1, bool weighted = false, bool directed = false, const T &id = 1){
     for (int i = 0; i < m; i++){
       int u, v; cin >> u >> v; u -= base; v -= base;
-      T c = T(1);
+      T c = id;
       if(weighted) cin >> c;
       if(directed) add_directed_edge(u, v, c);
       else add_edge(u, v, c);
