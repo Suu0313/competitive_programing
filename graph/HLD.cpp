@@ -32,6 +32,28 @@ struct HeavyLightDecomposition{
     return dist[u] + dist[v] - 2*dist[lca(u, v)];
   }
 
+  bool cmp_in(int u, int v) const {
+    return in[u] < in[v];
+  }
+
+  vector<pair<int, int>> auxiliary(vector<int> vs) const {
+    auto cmp = [&](int u, int v){ return in[u] < in[v]; };
+    sort(vs.begin(), vs.end(), cmp);
+    vs.erase(unique(vs.begin(), vs.end()), vs.end());
+    int k = vs.size();
+    for(int i = 1; i < k; i++) vs.emplace_back(lca(vs[i-1], vs[i]));
+    sort(vs.begin(), vs.end(), cmp);
+    vs.erase(unique(vs.begin(), vs.end()), vs.end());
+    vector<pair<int, int>> es;
+    stack<int> st;
+    for(auto&&v : vs){
+      while(!st.empty() && out[st.top()] <= in[v]) st.pop();
+      if(!st.empty()) es.emplace_back(st.top(), v);
+      st.emplace(v);
+    }
+    return es;
+  }
+
   template<typename Q>
   void update(int u, int v, const Q &q, bool isedge = false){
     for(;; v = par[branch[v]]){
