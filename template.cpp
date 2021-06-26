@@ -113,14 +113,10 @@ struct Set : set<T> {
 #define POB pop_back
 #define MP make_pair
 #define MT make_tuple
-#define ALL(a)  (a).begin(),(a).end()
-#define RALL(a) (a).rbegin(),(a).rend()
-#define SZ(a) (int)((a).size())
-#define SORT(c) sort((c).begin(),(c).end())
-#define SORTR(c) sort((c).rbegin(), (c).rend())
-#define REVERSE(c) reverse((c).begin(),(c).end())
-#define AAI(a,b,c) (a).begin(),(a).end(), (b).begin(),(b).end(), inserter((c),(c).end())
-#define UNIQUE(v) (v).erase(unique((v).begin(),(v).end()), (v).end())
+#define ALL(a)  begin(a), end(a)
+#define RALL(a) rbegin(a), rend(a)
+#define SORT(c) sort(begin(c), end(c))
+#define SORTR(c) sort(rbegin(c), rend(c))
 
 #define FOR(i,a,b) for(decay_t<decltype(b)> i=(a), i##_r=(b); i<i##_r; i++)
 #define REP(i,n) FOR(i,0,n)
@@ -152,6 +148,7 @@ constexpr LL MOD = 1e9+7;
 constexpr LL MODD = 998244353;
 constexpr LL TEN(int n) { return n? 10*TEN(n-1) : 1; }
 constexpr LL MASK(int n) { return (1ll << n)-1; }
+constexpr LL MASK(int l, int r) { return MASK(r) - MASK(l); }
 constexpr bool BITAT(LL bit, int n){ return (bit>>n) & 1; }
 
 #define ADD_OVERFLOW(a, b) __builtin_add_overflow_p (a, b, (decltype(a)) 0)
@@ -267,17 +264,25 @@ auto Enumerate(vector<T> &v, Ts&&... vs){
 }
 
 template<typename Container>
-Container Rev(Container c){reverse(c.begin(), c.end()); return c; }
-template<typename T = int>
-vector<T> iota(int n, T e = 0){ vector<T> res(n); iota(res.begin(), res.end(), e); return res; }
+constexpr int SZ(const Container &c){ return size(c); }
 template<typename Container>
-Container Sort(Container c){ sort(c.begin(), c.end()); return c; }
+Container Rev(Container c){ reverse(begin(c), end(c)); return c; }
+template<typename T = int>
+vector<T> iota(int n, T e = 0){ vector<T> v(n); iota(begin(v), end(v), e); return v; }
+template<typename Container>
+Container Sort(Container c){ sort(begin(c), end(c)); return c; }
 template<typename Container, class Compair>
-Container Sort(Container c, const Compair &cmp){ sort(c.begin(), c.end(), cmp); return c; }
+Container Sort(Container c, const Compair &cmp){ sort(begin(c), end(c), cmp); return c; }
 template<typename T>
 vector<T> subvec(const vector<T> &v,  size_t pos = 0, size_t n = string::npos){
   assert(pos <= v.size()); n = min(n, v.size() - pos);
   return vector<T>(v.begin()+pos, v.begin()+pos+n);
+}
+template<typename Container>
+Container Unique(Container c, bool sorted = false){
+  if(!sorted) sort(begin(c), end(c));
+  c.erase(unique(begin(c), end(c)), end(c));
+  return c;
 }
 
 template<typename... Ts>
