@@ -1,7 +1,6 @@
 template <class Cap>
 struct Dinic{
   int n;
-  const Cap LIM;
   struct edge{
     int to, rev;
     Cap cap;
@@ -10,8 +9,8 @@ struct Dinic{
   vector<pair<int,int>> pos;
   vector<vector<edge>> graph;
   
-  Dinic(): n(0), LIM(numeric_limits<Cap>::max()) {}
-  Dinic(int n): n(n), LIM(numeric_limits<Cap>::max()), graph(n) {}
+  Dinic(): n(0) {}
+  Dinic(int n): n(n), graph(n) {}
 
   int add_edge(int from, int to, Cap cap){
     int res = pos.size();
@@ -29,7 +28,7 @@ struct Dinic{
   }
 
   Cap flow(int s, int t){
-    return flow(s, t, LIM);
+    return flow(s, t, numeric_limits<Cap>::max());
   }
   Cap flow(int s, int t, Cap flow_limit){
     vector<int> level(n), iter(n);
@@ -39,11 +38,12 @@ struct Dinic{
       level.at(s) = 0;
       queue<int> que;
       que.push(s);
-      while(!que.empty() && level.at(t)==-1){
+      while(!que.empty()){
         int v = que.front(); que.pop();
         for(auto e : graph.at(v)){
           if(e.cap==0 || level.at(e.to)>=0) continue;
           level.at(e.to) = level.at(v)+1;
+          if(e.to == t) return;
           que.push(e.to);
         }
       }
@@ -55,15 +55,14 @@ struct Dinic{
       for(int i = iter.at(v); i < int(graph.at(v).size()); i++){
         edge &e = graph.at(v).at(i);
         if(lv<=level.at(e.to) || graph.at(e.to).at(e.rev).cap==0) continue;
-        Cap d = self(
-          self, e.to, min(up-res, graph.at(e.to).at(e.rev).cap)
-          );
+        Cap d = self(self, e.to, min(up-res, graph.at(e.to).at(e.rev).cap));
         if(d <= 0) continue;
         graph.at(v).at(i).cap += d;
         graph.at(e.to).at(e.rev).cap -= d;
         res += d;
-        if(res == up) break;
+        if(res == up) return res;
       }
+      level.at(v) = n;
       return res;
     };
 
@@ -72,11 +71,9 @@ struct Dinic{
       bfs();
       if(level.at(t) == -1) break;
       fill(iter.begin(), iter.end(), 0);
-      while(flow < flow_limit){
-        Cap f = dfs(dfs, t, flow_limit - flow);
-        if(!f) break;
-        flow += f;
-      }
+      Cap f = dfs(dfs, t, flow_limit - flow);
+      if(!f) break;
+      flow += f;
     }
     return flow;
   }
@@ -112,6 +109,7 @@ struct Dinic{
   vector<egdeinfo> edges(){
     vector<egdeinfo> res;
     int m = pos.size();
+    res.reserve(m);
     for(int i = 0; i < m; i++) res.emplace_back(get_edge(i));
     return res;
   }
