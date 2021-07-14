@@ -1,9 +1,9 @@
-template<typename T = int64_t>
+template<typename T = long long>
 T FloorSum(T n, T m, T a, T b){
   // sum[0,n) \floor((ai+b)/m)
   T res = 0;
   if (a >= m) {
-    res += (n - 1)*n*(a / m)/2;
+    res += (n - 1) * n / 2 * (a / m);
     a %= m;
   }
   if (b >= m) {
@@ -11,9 +11,10 @@ T FloorSum(T n, T m, T a, T b){
     b %= m;
   }
 
-  T y_max = (a*n + b)/m, x_max = (y_max*m - b);
-  if (y_max == 0) return res;
-  res += (n - (x_max + a - 1)/a) * y_max;
-  res += FloorSum(y_max, a, m, (a - x_max %a) % a);
+  T last = a * (n-1) + b;
+  if(last >= m){
+    T l_div = last / m, l_mod = last % m;
+    res += l_div + FloorSum(l_div, a, m, l_mod);
+  }
   return res;
 }
