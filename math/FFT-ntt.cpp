@@ -52,8 +52,8 @@ namespace FFT{
     static constexpr long long MOD2 = 167772161;
     static constexpr long long MOD3 = 469762049;
 
-    static const ModInt<MOD2> i1 = 95869806;
-    static const ModInt<MOD3> i2 = 104391568;
+    static const ModInt<MOD2> i1 = ModInt<MOD2>(MOD1).inverse();
+    static const ModInt<MOD3> i2 = ModInt<MOD3>(MOD1 * MOD2).inverse();
     static const ModInt<mod> M12 = MOD1 * MOD2;
 
     vector<long long> a2(n), b2(m);
