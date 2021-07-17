@@ -53,15 +53,19 @@ struct Formalpowerseries : vector<T> {
   }
   F operator-(const F &f) const { return F(*this) -= f; }
 
+  // F &operator*=(const F &f) {  (*this) = FFT::multiply((*this), f); return (*this); }
   F &operator*=(const F &f) {  (*this) = NTT::multiply((*this), f); return (*this); }
   F operator*(const F &f) const { return F(*this) *= f; }
 
   F operator/(const F &f) const {
-    if(this->size() < f.size()){ this->clear(); return (*this); }
+    if(this->size() < f.size()){ return F{}; }
     size_t n = this->size() - f.size() + 1;
-    return (rev().pre(n) * f.rev().inv(n)).pre(n).rev(n);
+    return (rev().pre(n) * f.rev().inv(n)).pre(n).rev();
   }
   F &operator/=(const F &f){ return (*this) = (*this) / f; }
+
+  F operator%(const F &f) const { return ((*this) - (*this) / f * f).pre(f.size()-1); }
+  F &operator%=(const F &f){ return (*this) = (*this) % f; }
 
   F &operator<<=(size_t d){ this->insert(this->begin(), d, T(0)); return (*this); }
   F operator<<(size_t d) const{ return F(*this) <<= d; }
