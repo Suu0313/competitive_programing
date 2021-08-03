@@ -82,7 +82,7 @@ struct LazySegTree{
     return node.at(k);
   }
 
-  M operator [](int k){
+  M operator[](int k){
     k += n;
     for(int i = height; i>=1; --i) push(k >> i);
     return node.at(k);
@@ -165,6 +165,7 @@ private:
     if(k < n) lazy.at(k) = h(lazy.at(k), x);
   }
   void push(int k){
+    // if(lazy.at(k) == om) return;
     all_apply(2*k, lazy.at(k));
     all_apply(2*k + 1, lazy.at(k));
     lazy.at(k) = om;
