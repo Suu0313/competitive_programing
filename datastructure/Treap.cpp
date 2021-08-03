@@ -35,11 +35,11 @@ private:
 
   struct Node{
     T key;
-    size_t priority, cnt;
+    size_t pri, cnt;
     Node *l, *r;
 
-    Node(const T &key, size_t priority)
-      : key(key), priority(priority), cnt(1), l(nullptr), r(nullptr) {}
+    Node(const T &key, size_t pri)
+      : key(key), pri(pri), cnt(1), l(nullptr), r(nullptr) {}
   } *root = nullptr;
   using np = Node*;
 
@@ -59,14 +59,14 @@ private:
 
   void merge(np &t, np l, np r){
     if(!l || !r) t = l ? l : r;
-    else if(l->priority > r->priority) merge(l->r, l->r, r), t = l;
+    else if(l->pri > r->pri) merge(l->r, l->r, r), t = l;
     else merge(r->l, l, r->l), t = r;
     update(t);
   }
 
   void insert(np &t, np x){
     if(!t) t = x;
-    else if(t->priority < x->priority) split(t, x->key, x->l, x->r), t = x;
+    else if(t->pri < x->pri) split(t, x->key, x->l, x->r), t = x;
     else insert(cmp(x->key, t->key) ? t->l : t->r, x);
     update(t);
   }
