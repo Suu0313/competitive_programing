@@ -14,7 +14,7 @@ struct ImplicitTreap{
 
   void erase(int k){ erase(root, tok(k)); }
 
-  void update(int l, int r, const E &x){ update(root, tok(l), tok(r), x); }
+  void update(int l, int r, const E &x){ if(x != l_id) update(root, tok(l), tok(r), x); }
   T query(int l, int r){ return query(root, tok(l), tok(r)); }
 
   void update(int k, const E &x){ update(k, k+1, x); }
@@ -30,7 +30,22 @@ struct ImplicitTreap{
   bool empty() const { return !root; }
   explicit operator bool() const { return !empty(); }
 
-  void dump() const { dump(root); cout << "\n"; }
+  void dump() { dump(root); cout << "\n"; }
+
+  template<typename C>
+  int find(int L, int R, const C &check, bool left = true){
+    L = tok(L), R = tok(R);
+    if(L > R) return -1;
+    if(!left) reverse(L, R);
+    np l, m, r;
+    split(root, L, l, m); split(m, R-L, m, r);
+    T cum = id;
+    int res = find(m, cum, check);
+    merge(m, m, r); merge(root, l, m);
+    if(left) res = L + res;
+    else reverse(L, R), res = R - res;
+    return res;
+  }
 
 private:
   size_t tok(int k) const {
@@ -129,55 +144,56 @@ private:
   T query(np t, size_t L, size_t R){
     if(L > R) return id;
     np l, m, r;
-    split(t, L, l, m);
-    split(m, R-L, m, r);
+    split(t, L, l, m); split(m, R-L, m, r);
     T res = m->acc;
-    merge(m, m, r);
-    merge(t, l, m);
+    merge(m, m, r); merge(t, l, m);
     return res;
   }
 
   void update(np t, size_t L, size_t R, const E &x){
     if(L > R) return;
     np l, m, r;
-    split(t, L, l, m);
-    split(m, R-L, m, r);
-    m->lazy = h(m->lazy, x);
+    split(t, L, l, m); split(m, R-L, m, r);
+    m->lazy = h(m->lazy, x); 
     m->acc = g(m->acc, x, size(m));
-    merge(m, m, r);
-    merge(t, l, m);
+    merge(m, m, r); merge(t, l, m);
   }
 
   void reverse(np t, size_t L, size_t R){
     if(L > R) return;
     np l, m, r;
-    split(t, L, l, m);
-    split(m, R-L, m, r);
+    split(t, L, l, m); split(m, R-L, m, r);
     m->rev ^= 1;
-    merge(m, m, r);
-    merge(t, l, m);
+    merge(m, m, r); merge(t, l, m);
   }
 
   void rotate(np t, size_t l, size_t m, size_t r){
-    reverse(t, l, r);
-    reverse(t, l, l + r - m);
-    reverse(t, l + r - m, r);
+    reverse(t, l, r); reverse(t, l, l+r-m); reverse(t, l+r-m, r);
   }
 
   T at(np t, size_t k){
     np l, m, r;
-    split(t, k, l, m);
-    split(m, 1, m, r);
+    split(t, k, l, m); split(m, 1, m, r);
     T res = m->acc;
-    merge(m, m, r);
-    merge(t, l, m);
+    merge(m, m, r); merge(t, l, m);
     return res;
   }
 
-  void dump(np t) const {
+  void dump(np t){
     if(!t) return;
+    push_down(t);
     dump(t->l);
     cout << t->value << " ";
     dump(t->r);
+  }
+
+  template<typename C>
+  int find(np t, T &cum, const C &check){
+    if(!t) return 0;
+    if(!check(f(cum, acc(t->l)))) return find(t->l, cum, check);
+    cum = f(cum, acc(t->l));
+    if(!check(f(cum, t->value))) return size(t->l);
+    cum = f(cum, t->value);
+    return size(t->l) + 1 + find(t->r, cum, check);
   }
 };
