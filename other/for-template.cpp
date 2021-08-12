@@ -88,7 +88,7 @@ struct product{
   monostate end() { return {}; }
 };
 
-struct patition{
+struct divide{
   struct itr{
     uint64_t s;
     int n;
@@ -104,7 +104,7 @@ struct patition{
     }
   };
   int n;
-  patition(int n): n(n) {}
+  divide(int n): n(n) {}
 
   itr begin(){ return {0, n-1}; }
   monostate end() { return {}; }
