@@ -275,6 +275,22 @@ struct Formalpowerseries : vector<T> {
     return res;
   }
 
+  F &operator+=(const T &c){
+    if(this->empty()) this->resize(1);
+    (*this)[0] += c;
+    return (*this);
+  }
+
+  F operator+(const T &c) const {return F(*this) += c; }
+
+  F &operator-=(const T &c){
+    if(this->empty()) this->resize(1);
+    (*this)[0] -= c;
+    return (*this);
+  }
+
+  F operator-(const T &c) const {return F(*this) -= c; }
+
   F &operator*=(const T &c){
     for(auto &&a : (*this)) a *= c;
     return (*this);
@@ -300,9 +316,9 @@ struct Formalpowerseries : vector<T> {
   }
   F operator-(const F &f) const { return F(*this) -= f; }
 
-  F &operator*=(const F &f) {  (*this) = FFT::multiply((*this), f); return (*this); }
+  // F &operator*=(const F &f) {  (*this) = FFT::multiply((*this), f); return (*this); }
   F &operator*=(const F &f) {  (*this) = NTT::multiply((*this), f); return (*this); }
-  // F operator*(const F &f) const { return F(*this) *= f; }
+  F operator*(const F &f) const { return F(*this) *= f; }
 
   F operator/(const F &f) const {
     if(this->size() < f.size()){ return F{}; }
@@ -334,6 +350,7 @@ struct Formalpowerseries : vector<T> {
 
   F inv(int d = -1) const {
     if(d == -1) d = this->size();
+    if((*this)[0] == T(0)) return F{};
     F res(1, T(1) / (*this)[0]);
     for(int i = 1; i < d; i <<= 1){
       res = (res+res - res*res*pre(i<<1)).pre(i << 1);
@@ -363,5 +380,36 @@ struct Formalpowerseries : vector<T> {
     F res(n + 1);
     for(int i = 0; i < n; i++) res[i+1] = (*this)[i] / T(i + 1);
     return res;
+  }
+
+  F log(int d = -1) const {
+    if(d == -1) d = this->size();
+    if((*this)[0] != T(1)) return F{};
+    return (this->diff() * this->inv(d)).pre(d-1).integral();
+  }
+
+  F exp(int d = -1) const {
+    if(d == -1) d = this->size();
+    if((*this)[0] != T(0)) return F{};
+    F res(1, T(1));
+    for(int i = 1; i < d; i <<= 1){
+      res = res*(pre(i<<1) + T(1) - res.log(i<<1)).pre(i<<1);
+    }
+    return res.pre(d);
+  }
+
+  F pow(int64_t k, int d = -1) const {
+    const int n = this->size();
+    if(d == -1) d = n;
+    for(int i = 0; i < n; ++i){
+      if((*this)[i] == T(0)) continue;
+      if(i*k > d) return F(d, T(0));
+      T inv = T(1) / (*this)[i];
+      F res = ((((*this)*inv) >> i).log() * k).exp() * ((*this)[i].pow(k));
+      res = (res << (i*k)).pre(d);
+      if(int(res.size()) < d) res.resize(d, T(0));
+      return res;
+    }
+    return (*this);
   }
 };
