@@ -85,6 +85,11 @@ struct HeavyLightDecomposition{
     return query(u, v, ui, q, f, f, isedge);
   }
 
+  template<typename U, typename F>
+  U query(int v, const F &f, bool isedge = false){
+    return f(in[v]+isedge, out[v]);
+  }
+
 private:
   void dfs0(int root){
     stack<pair<int, bool>> st;
