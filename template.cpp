@@ -24,83 +24,6 @@ typedef vector<PLL> VPLL;
 #define uset unordered_set
 #define umset unordered_multiset
 
-template<typename T> struct Queue : queue<T>{
-  using queue<T>::queue;
-  explicit operator bool() const { return !(*this).empty(); }
-  T Pop(){ T res = this->front(); this->pop(); return res; }
-  void clear(){ (*this) = Queue(); }
-};
-template<typename T> struct Stack : stack<T>{
-  using stack<T>::stack;
-  explicit operator bool() const { return !(*this).empty(); }
-  T Pop(){ T res = this->top(); this->pop(); return res; }
-  void clear(){ (*this) = Stack(); }
-};
-template<typename T, typename Container = vector<T>, typename Compare = less<typename Container::value_type>>
-struct prque : priority_queue<T, Container, Compare> {
-  using priority_queue<T, Container, Compare>::priority_queue;
-  explicit operator bool() const { return !(*this).empty(); }
-  T Pop(){ T res = this->top(); this->pop(); return res; }
-  void clear(){ (*this) = prque(); }
-};
-template<typename Container, typename Compare>
-prque(Compare, Container) -> prque<typename Container::value_type, Container, Compare>;
-template<typename T> using prquer = prque<T, vector<T>, greater<T>>;
-
-template<typename T> struct Deque : deque<T>{
-  using deque<T>::deque;
-  explicit operator bool() const { return !(*this).empty(); }
-  T Popf(){ T res = this->front(); this->pop_front(); return res; }
-  T Popb(){ T res = this->back(); this->pop_back(); return res; }
-};
-
-template<typename T>
-struct Set : set<T> {
-  using set<T>::set;
-  explicit operator bool() const { return !(*this).empty(); }
-  Set operator|(const Set &s) const {
-    Set res;
-    set_union((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
-    return res;
-  }
-  Set &operator|=(const Set &s){
-    for(auto&&e : s) this->insert(e);
-    return (*this);
-  }
-  Set operator&(const Set &s) const {
-    Set res;
-    set_intersection((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
-    return res;
-  }
-  Set operator&=(const Set &s){ return (*this) = (*this) & s; }
-  Set operator^(const Set &s) const {
-    Set res;
-    set_symmetric_difference((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
-    return res;
-  }
-  Set &operator^=(const Set &s){
-    for(auto&&e : s){
-      if(this->exist(e)) this->erase(e);
-      else this->insert(e);
-    }
-    return (*this);
-  }
-  Set operator-(const Set &s) const {
-    Set res;
-    set_difference((*this).begin(), (*this).end(), s.begin(), s.end(), inserter(res, res.end()));
-    return res;
-  }
-  Set &operator-=(const Set &s){
-    for(auto&&e : s) this->erase(e);
-    return (*this);
-  }
-  const T &operator[](int k) const {
-    if(k >= 0) return *std::next(this->begin(), k);
-    else return *std::prev(this->end(), -k);
-  }
-  bool exist(const T &x) const { return (*this).find(x) != (*this).end(); }
-};
-
 #define LB lower_bound
 #define UB upper_bound
 #define FI first
@@ -292,6 +215,8 @@ string format(const string &fmt, Ts... ts){
   snprintf(&buf[0], len + 1, fmt.c_str(), ts...);
   return string(buf.begin(), buf.end()-1);
 }
+
+#define WHOLE(some_of, n, i, ...) ([&]{ vector<int> index(n); iota(begin(index), end(index), 0); return some_of(begin(index), end(index) , [&](int i){ __VA_ARGS__; } );})()
 
 bool cYN(bool fl=true,bool fl2=false){cout << (fl?"Yes":"No") << '\n'; if(fl2){ exit(0); } return fl; }
 bool CYN(bool fl=true,bool fl2=false){cout << (fl?"YES":"NO") << '\n'; if(fl2){ exit(0); } return fl; }
