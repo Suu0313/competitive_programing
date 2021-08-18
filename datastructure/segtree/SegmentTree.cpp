@@ -87,7 +87,7 @@ struct SegmentTree{
   T all_query() const { return node.at(1); }
 
   template<typename C>
-  int max_right(int l, C &check){
+  int max_right(int l, const C &check){
     if(l == defn) return defn;
     l += n;
     T tm = t;
@@ -110,7 +110,7 @@ struct SegmentTree{
   }
 
   template<typename C>
-  int max_left(int r, C &check){
+  int min_left(int r, const C &check){
     if(r == 0) return 0;
     r += n;
     T tm = t;
