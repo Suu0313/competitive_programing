@@ -20,7 +20,7 @@ struct LazySegTree{
     height = 0;
     while(n<defn) n<<=1, height++;
     node.assign(2*n, m);
-    lazy.assign(2*n, om);
+    lazy.assign(n, om);
     sz.assign(2*n, 1);
     for(int k = n-1; k >= 0; k--) sz.at(k) = sz.at(2*k) + sz.at(2*k+1);
   }
@@ -113,7 +113,7 @@ struct LazySegTree{
   M all_query() const { return node.at(1); }
 
   template<typename C>
-  int max_right(int l, C &check){
+  int max_right(int l, const C &check){
     if(l == defn) return defn;
     l += n;
     for(int i = height; i>=1; --i) push(l >> i);
@@ -138,7 +138,7 @@ struct LazySegTree{
   }
 
   template<typename C>
-  int max_left(int r, C &check){
+  int min_left(int r, const C &check){
     if(r == 0) return 0;
     r += n;
     for(int i = height; i>=1; --i) push((r-1) >> i);
