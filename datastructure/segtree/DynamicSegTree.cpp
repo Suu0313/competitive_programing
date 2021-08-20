@@ -6,6 +6,7 @@ struct DynamicSegTree{
   const T id;
   const OP op;
 
+  DynamicSegTree() {}
   DynamicSegTree(uint64_t n_, const T &id, const OP &op) : n(1), n0(n_), id(id),op(op){
     while(n < n_) n<<=1;
   }
