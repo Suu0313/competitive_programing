@@ -1,13 +1,12 @@
-template<typename T>
+template<typename T, typename OP>
 struct SegmentTree{
-  using OP = function<T(T,T)>;
 
   int n, defn;
   vector<T> node;
   T t;
-  OP op;
+  const OP op;
 
-  SegmentTree(int n_, T t, OP op) : t(t),op(op){
+  SegmentTree(int n_, const T &t, const OP &op) : t(t),op(op){
     n = 1;
     defn = n_;
     while(n < n_) n<<=1;
@@ -21,7 +20,7 @@ struct SegmentTree{
     node.assign(2*n,t);
   }
 
-  void set(int k,T x){
+  void set(int k, const T &x){
     node.at(k+n) = x;
   }
 
@@ -37,7 +36,7 @@ struct SegmentTree{
     build();
   }
 
-  void change(int k, T x){
+  void change(int k, const T &x){
     k += n;
     node.at(k) = x;
     while(k >>= 1){
@@ -45,33 +44,32 @@ struct SegmentTree{
     }
   }
 
-  void change(int l, int r, T x){
+  void change(int l, int r, const T &x){
     for(int k = l; k < r; k++) change(k,x);
   }
 
   template<typename C>
-  void update(int k, C c){
+  void update(int k, const C &c){
     T x = node.at(k+n);
     T x2 = c(x);
     change(k, x2);
   }
 
   template<typename C>
-  void update(int l, int r, C c){
+  void update(int l, int r, const C &c){
     for(int k = l; k < r; k++) update(k,c);
   }
 
-  T at(int k) const {
-    return node.at(k+n);
-  }
+  T at(int k) const { return node.at(k+n); }
+  T operator[](int k) const { return node.at(k+n); }
 
-  void add(int k, T a){
+  void add(int k, const T &a){
     T x = at(k)+a;
     change(k,x);
   }
 
-  void add(int l, int r, T x){
-    for(int k = l; k < r; k++) add(k,x);
+  void add(int l, int r, const T &a){
+    for(int k = l; k < r; k++) add(k,a);
   }
 
   T query(int a, int b){
@@ -132,3 +130,15 @@ struct SegmentTree{
     return 0;
   }
 };
+
+template<typename T, typename OP>
+SegmentTree<T,OP> get_segtree(int n, const T &t, const OP &op){
+  return {n, t, op};
+}
+
+template<typename T, typename OP>
+SegmentTree<T,OP> get_segtree(int n, const T &t, const OP &op, const vector<T> &v){
+  SegmentTree<T,OP> seg(n, t, op);
+  seg.build(v);
+  return seg;
+}

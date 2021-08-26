@@ -1,9 +1,5 @@
-template<typename M, typename OM = M>
+template<typename M, typename OM, typename F, typename G, typename H>
 struct LazySegTree{
-  using F = function<M(M, M)>;
-  using G = function<M(M, OM, int)>;
-  using H = function<OM(OM, OM)>;
-
   int n, defn, height;
   vector<M> node;
   vector<OM> lazy;
@@ -14,7 +10,7 @@ struct LazySegTree{
   const M m;
   const OM om;
 
-  LazySegTree(int _n, const F f, const G g, const H h, const M m, const OM om): f(f), g(g), h(h), m(m), om(om){
+  LazySegTree(int _n, const F &f, const G &g, const H &h, const M &m, const OM &om): f(f), g(g), h(h), m(m), om(om){
     n = 1;
     defn = _n;
     height = 0;
@@ -25,14 +21,10 @@ struct LazySegTree{
     for(int k = n-1; k >= 0; k--) sz.at(k) = sz.at(2*k) + sz.at(2*k+1);
   }
 
-  void set(int k, const M &x){
-    node.at(k + n) = x;
-  }
+  void set(int k, const M &x){ node.at(k + n) = x; }
   
   void build(){
-    for(int k = n-1; k >= 0; k--){
-      node.at(k) = f(node.at(2*k), node.at(2*k+1));
-    }
+    for(int k = n-1; k >= 0; k--){ node.at(k) = f(node.at(2*k), node.at(2*k+1)); }
   }
 
   void build(const vector<M> &v){
@@ -47,6 +39,7 @@ struct LazySegTree{
     node.at(k) = x;
     for(int i=1; i <= height; i++) propagate(k >> i);
   }
+
   void update(int k, const OM &x){
     k += n;
     for(int i = height; i>=1; --i) push(k >> i);
@@ -113,7 +106,7 @@ struct LazySegTree{
   M all_query() const { return node.at(1); }
 
   template<typename C>
-  int max_right(int l, const C &check){
+  int max_right(int l, C &check){
     if(l == defn) return defn;
     l += n;
     for(int i = height; i>=1; --i) push(l >> i);
@@ -138,7 +131,7 @@ struct LazySegTree{
   }
 
   template<typename C>
-  int min_left(int r, const C &check){
+  int max_left(int r, C &check){
     if(r == 0) return 0;
     r += n;
     for(int i = height; i>=1; --i) push((r-1) >> i);
@@ -174,3 +167,15 @@ private:
     lazy.at(k) = om;
   }
 };
+
+template<typename M, typename OM, typename F, typename G, typename H>
+LazySegTree<M,OM,F,G,H> get_lazysegtree(int n, const F &f, const G &g, const H &h, const M &m, const OM &om){
+  return {n, f, g, h, m, om};
+}
+
+template<typename M, typename OM, typename F, typename G, typename H>
+LazySegTree<M,OM,F,G,H> get_lazysegtree(int n, const F &f, const G &g, const H &h, const M &m, const OM &om, const vector<M> &v){
+  LazySegTree<M,OM,F,G,H> seg(n, f, g, h, m, om);
+  seg.build(v);
+  return seg;
+}
