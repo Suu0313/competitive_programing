@@ -1,0 +1,162 @@
+General
+Ctrl+Shift+P	コマンドパレットを表示	
+Ctrl+P	ファイル名を指定して開く	workbench.action.quickOpen	
+Ctrl+Shift+N	新しいウィンドウを開く	workbench.action.newWindow	
+Ctrl+Shift+W	ウィンドウを閉じる	workbench.action.closeWindow	
+Ctrl+,	ユーザー設定を開く		
+Ctrl+K Ctrl+S	キーボードショートカット一覧を開く
+
+Basic Editing
+Ctrl+X	行の切り取り (未選択時)	editor.action.clipboardCutAction	
+Ctrl+C	行のコピー (未選択時)	editor.action.clipboardCopyAction	
+Alt+Down	カーソル行を下に移動	editor.action.moveLinesDownAction	
+Alt+Up	カーソル行を上に移動	editor.action.moveLinesUpAction	
+Shift+Alt+Down	カーソル行を下にコピー	editor.action.copyLinesDownAction	
+Shift+Alt+Up	カーソル行を上にコピー	editor.action.copyLinesUpAction	
+Ctrl+Shift+K	カーソル行削除	editor.action.deleteLines	
+Ctrl+Enter	下に行追加	editor.action.insertLineAfter	
+Ctrl+Shift+Enter	上に行追加	editor.action.insertLineBefore	
+Ctrl+Shift+\	次の対応する括弧に移動		
+Ctrl+]	行にインデントを追加	editor.action.indentLines	
+Ctrl+[	行のインデントを削除	editor.action.outdentLines	
+Ctrl+Shift+]	対応する括弧に移動	editor.action.jumpToBracket	
+Home	行の先頭に移動	cursorHome	
+End	行の末尾に移動	cursorEnd	
+Ctrl+Home	ファイルの先頭に移動	cursorTop	
+Ctrl+End	ファイルの末尾に移動	cursorBottom	
+Ctrl+Up	行を上にスクロール		
+Ctrl+Down	行を下にスクロール		
+Alt+PgUp	画面を上にスクロール		
+Alt+PgDown	画面を下にスクロール	
+
+Navigation
+Ctrl+T	すべてのシンボルを表示	workbench.action.showAllSymbols	
+Ctrl+G	指定行に移動	workbench.action.gotoLine	
+Ctrl+P	ファイルに移動	workbench.action.quickOpen	
+Ctrl+Shift+O	指定シンボルに移動	workbench.action.gotoSymbol	
+Ctrl+Shift+M	エラーと警告を表示	workbench.action.showErrorsWarnings	
+F8	次のエラーと警告に移動	editor.action.marker.next	
+Shift+F8	前のエラーと警告に移動	editor.action.marker.prev	
+F1	すべてのコマンドを表示	workbench.action.showCommands	
+Ctrl+Tab	ファイル履歴を表示	workbench.action.openPreviousEditor	
+Ctrl+PgUp	次のタブに移動	workbench.action.nextEditor	
+Ctrl+PgDown	前のタブに移動	workbench.action.previousEditor	
+Alt+Left	前に戻る	workbench.action.navigateBack	
+Alt+Right	次に進む	workbench.action.navigateForward	
+Ctrl+M	タブでフォーカス切り替えモードをトグル	editor.action.toggleTabFocusMode	
+
+Search and Replace
+Ctrl+F	検索	actions.find	
+Ctrl+H	置換	editor.action.startFindReplaceAction	
+F3	次を検索	editor.action.nextMatchFindAction	
+Shift+F3	前を検索	ditor.action.previousMatchFindAction	
+Ctrl+D	次のマッチを選択に追加	editor.action.addSelectionToNextFindMatch	
+Ctrl+K Ctrl+D	次のマッチに移動	editor.action.moveSelectionToNextFindMatch	
+Alt+C	ケースセンシティブのトグル		
+Alt+R	正規表現のトグル		
+Alt+W	ワード一致のトグル	
+
+Multi-cursor and Selection
+Alt+Click	カーソルの追加挿入		
+Ctrl+Alt+Down	カーソルを下に追加	editor.action.insertCursorBelow	
+Ctrl+Alt+Up	カーソルを上に追加	editor.action.insertCursorAbove	
+Ctrl+U	カーソル動作のUndo	cursorUndo	
+Ctrl+L	現在の行の選択		
+Ctrl+Shift+L	選択部分の全マッチを選択	editor.action.selectHighlights	
+Ctrl+F2	選択ワードの全マッチを選択	editor.action.changeAll	
+Shift+Alt+Right	選択範囲を広げる	editor.action.smartSelect.grow	
+Shift+Alt+Left	選択範囲を縮める	editor.action.smartSelect.shrink	
+Shift+Alt+マウスドラッグ	矩形選択		
+Ctrl+Shift+Alt+矢印	矩形選択	
+
+Rich Languages Editing
+Ctrl+Space	サジェストを表示	editor.action.triggerSuggest	
+Ctrl+Shift+Space	パラメーターヒントを表示	editor.action.triggerParameterHints	
+Shift+Alt+F	コードをフォーマット	editor.action.format	
+Ctrl+/	行コメント記号をトグル	editor.action.commentLine	
+F12	選択部分の定義に移動	editor.action.goToDeclaration	
+Alt+F12	選択部分の定義をプレビュー	editor.action.previewDeclaration	
+Ctrl+K F12	横に定義を表示		
+Ctrl+.	クイックフィックス	editor.action.quickFix	
+Shift+F12	リファレンスを表示	editor.action.referenceSearch.trigger	
+F2	シンボルをリネーム	editor.action.rename	
+Ctrl+K Ctrl+X	行末尾のスペースを削除	editor.action.trimTrailingWhitespace	
+Ctrl+K M	言語モードを変更	workbench.action.editor.changeLanguageMode
+
+Editor Management
+Ctrl+W	エディターを閉じる	workbench.action.closeActiveEditor	
+Ctrl+K F	フォルダーを閉じる	workbench.action.closeFolder	
+Ctrl+\	エディターを分割する	workbench.action.splitEditor	
+Ctrl+1	左のエディターにフォーカス	workbench.action.focusFirstEditor	
+Ctrl+2	サイドエディターにフォーカス	workbench.action.focusSecondEditor	
+Ctrl+3	右のエディターにフォーカス	workbench.action.focusThirdEditor	
+Ctrl+Alt+Left	左のエディターにタブを移す		
+Ctrl+Alt+Right	右のエディターにタブを移す		
+Ctrl+K Left	アクティブなエディターを左に移動	workbench.action.moveActiveEditorLeft	
+Ctrl+K Right	アクティブなエディターを右に移動	workbench.action.moveActiveEditorRight	
+Ctrl+K Up	アクティブなエディターを上に移動	workbench.action.moveActiveEditorUp	
+Ctrl+K Down	アクティブなエディターを下に移動	workbench.action.moveActiveEditorDown	
+
+File Management
+Ctrl+N	新しいファイル	workbench.action.files.newUntitledFile	
+Ctrl+O	ファイルを開く	workbench.action.files.openFile	
+Ctrl+S	保存	workbench.action.files.save	
+Ctrl+Shift+S	名前を付けて保存	workbench.action.files.saveAs	
+Ctrl+K S	すべて保存	workbench.action.files.saveAll	
+Ctrl+W	ファイルを閉じる	workbench.files.action.closeFile	
+Ctrl+K Ctrl+W	すべてのファイルを閉じる	workbench.files.action.closeAllFiles	
+Ctrl+K Enter	作業中ファイルに追加	workbench.files.action.addToWorkingFiles	
+Ctrl+K P	アクティブなファイルのパスをコピー	workbench.action.files.copyPathOfActiveFile	
+Ctrl+K R	アクティブなファイルをエクスプローラーで表示	workbench.action.files.revealActiveFileInWindows	
+Ctrl+K O	アクティブなファイルを新しいウィンドウで表示	workbench.action.files.showOpenedFileInNewWindow	
+
+Display
+F11	フルスクリーン表示のトグル	workbench.action.toggleFullScreen	
+Ctrl+Shift+=	ズームイン	workbench.action.zoomIn	
+Ctrl+Shift+-	ズームアウト	workbench.action.zoomOut	
+Ctrl+B	サイドバー表示のトグル	workbench.action.toggleSidebarVisibility	
+Ctrl+Shift+D	デバッグ画面の表示	workbench.view.debug	
+Ctrl+Shift+E	エクスプローラーの表示	workbench.view.explorer	
+Ctrl+Shift+G	Git画面の表示	workbench.view.git	
+Ctrl+Shift+F	検索画面の表示	workbench.view.search	
+Ctrl+Shift+J	詳細検索のトグル	workbench.action.search.toggleQueryDetails	
+Ctrl+Shift+C	新しいコマンドプロンプトを開く	workbench.action.terminal.openNativeConsole	
+Ctrl+Shift+U	アウトプット画面を開く	workbench.action.output.toggleOutput	
+Ctrl+Shift+V	マークダウンのプレビュー表示をトグル	workbench.action.markdown.togglePreview	
+Ctrl+K V	マークダウンのプレビューを横に表示	workbench.action.markdown.openPreviewSideBySide	
+Ctrl+K Z	禅モード (Escで抜ける)	
+
+Preferences
+未アサイン	ユーザー設定を開く	workbench.action.openGlobalSettings	
+未アサイン	ワークスペース設定を開く	workbench.action.openWorkspaceSettings	
+未アサイン	ショートカット設定を開く	workbench.action.openGlobalKeybindings	
+未アサイン	ユーザースニペットを開く	workbench.action.openSnippets	
+未アサイン	カラーテーマ設定を開く	workbench.action.selectTheme
+
+Debug
+F9	ブレークポイントのトグル	editor.debug.action.toggleBreakpoint	
+F5	コンティニュー	workbench.action.debug.continue	
+F5	スタート	workbench.action.debug.start	
+Shift+F5	ストップ	workbench.action.debug.stop	
+F11	ステップイン	workbench.action.debug.stepInto	
+Shift+F11	ステップアウト	workbench.action.debug.stepOut	
+F10	ステップオーバー	workbench.action.debug.stepOver	
+
+Integrated Terminal
+Ctrl+`	統合ターミナルを開く		
+Ctrl+Shift+`	統合ターミナルを新しく開く		
+Ctrl+C	選択範囲をコピー		
+Ctrl+V	表示してるターミナルにペースト		
+Ctrl+Up	上にスクロール		
+Ctrl+Down	下にスクロール		
+Shift+PgUp	ページを上にスクロール		
+Shift+PgDown	ページを下にスクロール		
+Ctrl+Home	一番上にスクロール		
+Ctrl+End	一番下にスクロール
+
+Tasks
+Ctrl+Shift+B	ビルドタスクの実行	workbench.action.tasks.build
+
+Extensions
+未アサイン	拡張のリスト表示	workbench.extensions.action.listExtensions	
+未アサイン	拡張のインストール	workbench.extensions.action.installExtension
