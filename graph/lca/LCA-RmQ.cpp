@@ -4,9 +4,10 @@ struct LCA{
 
   LCA() {}
   LCA(int n): g(n) {}
-  LCA(const Graph<T> g, int root = 0, bool cal = true): g(g) {
+  LCA(const Graph<T> &g, int root = 0, bool cal = true): g(g) {
     if(cal) build(root);
   }
+
   void build(int root = 0){
     size_t n = g.size();
     ord.reserve(n*2 - 1);
@@ -18,6 +19,11 @@ struct LCA{
     iota(idx.begin(), idx.end(), 0);
     auto f = [&](int a, int b){ return dep[a]<dep[b] ? a : b; };
     st = SparseTable<int>(idx, f);
+  }
+
+  void build(const Graph<T> &g, int root = 0){
+    this->g = g;
+    build(root);
   }
 
   void add_edge(int u, int v, T cost = 1){
