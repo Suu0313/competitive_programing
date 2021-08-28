@@ -11,7 +11,7 @@ struct LCA{
     size_t n = g.size();
     ord.reserve(n*2 - 1);
     dep.reserve(n*2 - 1);
-    in.reserve(n);
+    in.resize(n);
     dist.assign(n, 0);
     dfs(root, -1, 0);
     vector<int> idx(n*2 - 1);
