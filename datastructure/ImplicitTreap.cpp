@@ -6,7 +6,7 @@ struct ImplicitTreap{
 
   ImplicitTreap() {}
   ImplicitTreap(const T &id, const E &l_id, const F &f, const G &g, const H &h)
-  : seed_gen(), mt(seed_gen()), id(id), l_id(l_id), f(f), g(g), h(h) {}
+  : mt(random_device{}()), id(id), l_id(l_id), f(f), g(g), h(h) {}
 
   void insert(int k, const T &value){ insert(root, tok(k), new Node(value, mt(), id, l_id)); }
   void push_front(const T &value){ insert(0, value); }
@@ -53,7 +53,6 @@ private:
     return size() + k;
   }
 
-  random_device seed_gen;
   mt19937 mt;
 
   const T id;

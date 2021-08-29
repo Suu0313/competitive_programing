@@ -1,10 +1,10 @@
 template<typename T, typename Compair = less<T>>
 struct Treap{
 
-  Treap(const Compair &cmp = Compair()): seed_gen(), mt(seed_gen()), cmp(cmp) {}
+  Treap(const Compair &cmp = Compair()): mt(random_device{}()), cmp(cmp) {}
 
   Treap(initializer_list<T> il, const Compair &cmp = Compair())
-    : seed_gen(), mt(seed_gen()), cmp(cmp) {
+    : mt(random_device{}()), cmp(cmp) {
     for_each(begin(il), end(il), [&](const T &e){ insert(e); });
   }
 
@@ -29,7 +29,6 @@ struct Treap{
   size_t count(const T &key) const { return upper_bound(key) - lower_bound(key); }
 
 private:
-  random_device seed_gen;
   mt19937 mt;
   const Compair cmp;
 
