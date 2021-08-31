@@ -15,9 +15,13 @@ struct Date{
   constexpr Date operator-(int d) const { return Date(*this) -= d; }
 
   constexpr Date &operator++(){ this->G++; return (*this); }
-  constexpr Date &operator++(int){ this->G++; return (*this); }
+  constexpr Date operator++(int){ Date tmp(*this); this->G++; return tmp; }
   constexpr Date &operator--(){ this->G--; return (*this); }
-  constexpr Date &operator--(int){ this->G--; return (*this); }
+  constexpr Date operator--(int){ Date tmp(*this); this->G--; return tmp; }
+
+  constexpr bool operator==(const Date &d) const { return this->G == d.G; }
+  constexpr bool operator!=(const Date &d) const { return this->G != d.G; }
+  constexpr bool operator<(const Date &d) const { return this->G < d.G; }
 
   constexpr tuple<int,int,int> get_date() const {
     uint64_t J = G + (4*G + 146100) / 146097 * 3 / 4;
@@ -26,8 +30,12 @@ struct Date{
     if(m > 12) y++, m -= 12;
     return {y, m, d};
   }
-
-  constexpr int get_w() const { return (G + 3) % 7; }
+  constexpr int get_y() const { return get<0>(get_date()); }
+  constexpr int get_m() const { return get<1>(get_date()); }
+  constexpr int get_d() const { return get<2>(get_date()); }
+  constexpr int get_w() const { return (G + 3) % 7; } // Sun = 0
+  constexpr bool is_weelend() const { return get_w() == 0 || get_w() == 6; }
+  constexpr bool is_weekday() const { return !is_weelend(); }
 
   static constexpr uint64_t date_to_G(int y, int m, int d){
     if(m <= 2) y--, m += 12;
