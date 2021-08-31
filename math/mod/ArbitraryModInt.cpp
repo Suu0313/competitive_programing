@@ -42,14 +42,8 @@ struct ArbitraryModInt {
 
   ArbitraryModInt& operator++() { (*this).x+=1; return (*this); }
   ArbitraryModInt& operator--() { (*this).x-=1; return (*this); }
-  ArbitraryModInt operator++(int) {
-    ArbitraryModInt temp(*this); ++(*this);
-    return temp;
-  }
-  ArbitraryModInt operator--(int) {
-    ArbitraryModInt temp(*this); --(*this);
-    return temp;
-  }
+  ArbitraryModInt operator++(int) { ArbitraryModInt tmp(*this); ++(*this); return tmp; }
+  ArbitraryModInt operator--(int) { ArbitraryModInt tmp(*this); --(*this); return tmp; }
 
   ArbitraryModInt inverse() const {
     int a = x, b = get_mod(), u = 1, v = 0, t;
@@ -64,8 +58,7 @@ struct ArbitraryModInt {
     ArbitraryModInt ret(1), mul(x);
     while(n > 0) {
       if(n & 1) ret *= mul;
-      mul *= mul;
-      n >>= 1;
+      mul *= mul; n >>= 1;
     }
     return ret;
   }

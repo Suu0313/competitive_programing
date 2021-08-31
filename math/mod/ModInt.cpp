@@ -33,14 +33,8 @@ struct ModInt {
 
   constexpr ModInt& operator++() { (*this).x+=1; return (*this); }
   constexpr ModInt& operator--() { (*this).x-=1; return (*this); }
-  constexpr ModInt operator++(int) {
-    ModInt temp(*this); ++(*this);
-    return temp;
-  }
-  constexpr ModInt operator--(int) {
-    ModInt temp(*this); --(*this);
-    return temp;
-  }
+  constexpr ModInt operator++(int) { ModInt tmp(*this); ++(*this); return tmp; }
+  constexpr ModInt operator--(int) { ModInt tmp(*this); --(*this); return tmp; }
 
   constexpr ModInt inverse() const {
     int a = x, b = mod, u = 1, v = 0, t;
@@ -55,8 +49,7 @@ struct ModInt {
     ModInt ret(1), mul(x);
     while(n > 0) {
       if(n & 1) ret *= mul;
-      mul *= mul;
-      n >>= 1;
+      mul *= mul; n >>= 1;
     }
     return ret;
   }
