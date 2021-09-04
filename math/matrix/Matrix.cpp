@@ -104,7 +104,7 @@ struct Matrix{
     return (is);
   }
 
-  friend ostream &operator<<(ostream &os, Matrix &p){
+  friend ostream &operator<<(ostream &os, const Matrix &p){
     size_t n = p.height(), m = p.width();
     for (size_t i = 0; i < n; i++)
       for (size_t j = 0; j < m; j++)
@@ -130,7 +130,7 @@ struct Matrix{
           ma = abs(A[row][col]); pivot = row;
         }
       }
-      if(pivot == -1) continue;
+      if(pivot == -1) break;
       swap(A[pivot], A[rank]);
       T finv = T(1)/A[rank][col];
       for(size_t col2 = 0; col2 < m; ++col2) A[rank][col2] *= finv;
