@@ -1,23 +1,25 @@
-bool comp_y(const point &a, const point &b){
-  return a.y < b.y;
-}
-
-double ClosestPair(polygon &a, int l, int r){
-  // x で昇順ソートしてから渡す
-  if(r - l <= 1) return INF;
+template<typename T>
+double ClosestPair(Polygon<T> &a, int l, int r){
+  if(r - l <= 1) return numeric_limits<T>::max();
   int mid = (l + r)/2;
-  double x =a.at(mid).x;
+  double x =a[mid].x;
   double d = min(ClosestPair(a,l,mid),ClosestPair(a,mid,r));
-  inplace_merge(a.begin()+l,a.begin()+mid,a.begin()+r,comp_y);
+  inplace_merge(a.begin()+l,a.begin()+mid,a.begin()+r,cmp_y<T>);
 
-  polygon b;
-  FOR(i, l, r){
-    if(abs(a.at(i).x-x) >= d) continue;
-    REPR(j, SZ(b)){
-      if(abs(a.at(i).y-b.at(j).y) >= d) break;
-      chmin(d, (a.at(i)-b.at(j)).Abs());
+  Polygon<T> b;
+  for(int i = l; i < r; i++){
+    if(abs(a[i].x-x) >= d) continue;
+    for(int j = (int)b.size()-1; j >= 0; j--){
+      if(abs(a[i].y-b[j].y) >= d) break;
+      d = min(d, a[i].dist(b[j]));
     }
-    b.EB(a.at(i));
+    b.emplace_back(a[i]);
   }
   return d;
+}
+
+template<typename T>
+double ClosestPair(Polygon<T> &a){
+  sort(a.begin(), a.end());
+  return ClosestPair(a, 0, a.size());
 }
