@@ -60,12 +60,6 @@ template<typename T> Point<T> Polar(const T& rho, const T& theta = 0){
   return Point<T>(rho * cos(theta), rho * sin(theta));
 }
 
-template<typename T = double>
-tuple<Point<T>,Point<T>,Point<T>> ClockHands(const T& h, const T& m = 0, const T& s = 0){
-  const double PI  = 3.141592653589793238462643383279;
-  double ts = 2*PI / 60 * s, tm = 2*PI / 60 * m + ts / 60 ,th = 2*PI / 12 * h + tm / 12;
-  return make_tuple(Polar<T>(1, th), Polar<T>(1, tm), Polar<T>(1, ts));
-}
 
 template<typename T> using Polygon = vector<Point<T>>;
 
@@ -91,4 +85,16 @@ template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Poin
   if(v == 0) return 0; // right angle
   if(v > 0) return 1; // acute angle
   return -1; // obtuse angle
+}
+
+template<typename T>
+bool cmp_y(const Point<T>& p1, const Point<T> &p2){
+  if(p1.y == p2.y) return p1.x < p2.x;
+  return p1.y < p2.y;
+}
+
+template<typename T>
+bool cmp_arg(const Point<T>& p1, const Point<T> &p2){
+  if(p1.ort() != p2.ort()) return p1.ort() < p2.ort();
+  return iSP(Point<T>(0,0), p1, p2) > 0;
 }
