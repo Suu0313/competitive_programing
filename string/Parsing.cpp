@@ -7,7 +7,7 @@ struct Parsing{
       cerr << "expected : '" << expected << "'\n";
       cerr << "pos : '" << *pos << "'\n";
 
-      exit(0);
+      assert(false);
     }
   }
 
