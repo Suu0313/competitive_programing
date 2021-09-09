@@ -69,25 +69,43 @@ struct HeavyLightDecomposition{
     q(in[v]+isedge, out[v]);
   }
 
-  template<typename U, typename Q, typename F, typename S>
-  U query(int u, int v, const U &ui, const Q &q, const F &f, const S &s, bool isedge){
+  template<typename U, typename Q, typename F>
+  U query(int u, int v, const U &ui, const Q &q, const F &f, bool isedge = false){
     U l = ui, r = ui;
     for(;; v = par[branch[v]]){
       if(in[u] > in[v]) swap(u, v), swap(l, r);
       if(branch[u] == branch[v]) break;
       l = f(q(in[branch[v]], in[v] + 1), l);
     }
-    return s(f(q(in[u]+isedge, in[v] + 1), l), r);
-  }
-
-  template<typename U, typename Q, typename F>
-  U query(int u, int v, const U &ui, const Q &q, const F &f, bool isedge = false){
-    return query(u, v, ui, q, f, f, isedge);
+    return f(f(q(in[u]+isedge, in[v] + 1), l), r);
   }
 
   template<typename U, typename F>
   U query(int v, const F &f, bool isedge = false){
     return f(in[v]+isedge, out[v]);
+  }
+
+  vector<pair<int,int>> get_segments(int u, int v, bool isedge = false){
+    vector<pair<int,int>> l, r;
+    while(branch[u] != branch[v]){
+      if(in[u] > in[v]) l.emplace_back(in[u]+1, in[branch[u]]), u=par[branch[u]];
+      else r.emplace_back(in[branch[v]], in[v]+1), v=par[branch[v]];
+    }
+    if(in[u] > in[v])  l.emplace_back(in[u]+1, in[v]+isedge);
+    else r.emplace_back(in[u]+isedge, in[v]+1);
+    reverse(begin(r), end(r));
+    for(auto&e : r) l.push_back(e);
+    return l;
+  }
+
+  template<typename U, typename Q1, typename Q2, typename F>
+  U query(int u, int v, const U &ui, const Q1 &q1, const Q2 &q2, const F &f, bool isedge){
+    U res = ui;
+    for(auto&[a, b] : get_segments(u, v, isedge)){
+      if(a > b) res = f(res, q2(b, a));
+      else res = f(res, q1(a, b));
+    }
+    return res;
   }
 
 private:
