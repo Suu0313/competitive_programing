@@ -98,3 +98,8 @@ bool cmp_arg(const Point<T>& p1, const Point<T> &p2){
   if(p1.ort() != p2.ort()) return p1.ort() < p2.ort();
   return iSP(Point<T>(0,0), p1, p2) > 0;
 }
+
+template<typename T>
+void ArgSort(Polygon<T> &ps){
+  sort(begin(ps), end(ps), cmp_arg<T>);
+}

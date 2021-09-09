@@ -99,6 +99,10 @@ bool cmp_arg(const Point<T>& p1, const Point<T> &p2){
   return iSP(Point<T>(0,0), p1, p2) > 0;
 }
 
+template<typename T>
+void ArgSort(Polygon<T> &ps){
+  sort(begin(ps), end(ps), cmp_arg<T>);
+}
 
 template<class T> struct Line{
   Point<T> a, b;
