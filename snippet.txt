@@ -9,6 +9,20 @@
     ],
     "description": "long comment"
   },
+  "using namespace std":{
+    "prefix": "std",
+    "scope": "cpp",
+    "body": [
+      "using namespace std;"
+    ],
+    "description": "using namespace std"
+  },
+  "type template":{
+    "prefix": "type",
+    "scope": "cpp",
+    "body": "template<typename T>",
+    "description": "type template"
+  },
   "brep support":{
     "scope": "cpp",
     "prefix": "BREP",
@@ -69,7 +83,7 @@
     "scope": "cpp",
     "prefix": "seg",
     "body": [
-      "SegmentTree<${type}> seg(",
+      "SegmentTree ${seg} = get_segtree<${type}>(",
       "  ${N},",
       "  ${e},",
       "  [](${type} ${a}, ${type} ${b}) { return ${fuga}; }",
@@ -81,30 +95,16 @@
     "scope": "cpp",
     "prefix": "lazy",
     "body": [
-      "LazySegTree<${M},${OM}> ${seg}(",
+      "LazySegTree ${seg} = get_lazysegtree<${M},${OM}>(",
       "  ${N},",
       "  [](${M} ${a}, ${M} ${b}) { return ${hoge}; },",
-      "  [](${M} ${c}, ${OM} ${d}) { return ${fuga}; },",
-      "  [](${OM} ${e}, ${OM} ${f}) { return ${fugafuga}; },",
+      "  [](${M} ${c}, ${OM} ${d}, int ${e}) { return ${fuga}; },",
+      "  [](${OM} ${f}, ${OM} ${g}) { return ${fugafuga}; },",
       "  ${me},",
       "  ${ome}",
       ");"
     ],
     "description": "Lazy Segment Tree Constructor"
-  },
-  "Range Add Init":{
-    "scope": "cpp",
-    "prefix": "raq",
-    "body": [
-      "LazySegTree<pair<${M1}, ${M2}>,${OM}> seg(",
-      "  ${N},",
-      "  [](pair<${M1}, ${M2}> ${a}, pair<${M1}, ${M2}> ${b}) { return make_pair(${a}.first+${b}.first, ${a}.second+${b}.second); },",
-      "  [](pair<${M1}, ${M2}> ${c}, ${OM} ${d}) { return make_pair(${c}.first+${d}*${c}.second, ${c}.second); },",
-      "  [](${OM} ${e}, ${OM} ${f}) { return ${e}+${f}; },",
-      "  ${me},",
-      "  ${ome}",
-      ");"
-    ]
   },
   "find roop":{
     "scope": "cpp",
@@ -156,46 +156,11 @@
     ],
     "description": "more faster more danger"
   },
-  "int input":{
-    "scope": "python",
-    "prefix": "int",
-    "body": [
-      "int(input())"
-    ],
-    "description": "int input"
-  },
-  "map input":{
-    "scope": "python",
-    "prefix": "map",
-    "body": [
-      "map(int, input().split())"
-    ],
-    "description": "map input"
-  },
-  "create_array":{
-    "scope": "python",
-    "prefix": "array",
-    "body": [
-      "def create_array(*dims, initial=0):",
-      "    n = len(dims)",
-      "    code = \"[\" * n + \"{}] * {}\" + \" for _ in range({})]\" * (n - 1)",
-      "    return eval(code.format(initial, *reversed(dims)))"
-    ],
-    "description": "create_array"
-  },
-  "list input":{
-    "scope": "python",
-    "prefix": "list",
-    "body": [
-      "list(map(int, input().split()))"
-    ],
-    "description": "list input"
-  },
   "priority_queue":{
     "scope": "cpp",
     "prefix": "priority",
     "body": [
-      "priority_queue<${T},vector<${T}>,decltype(${f})> pq{${f}};"
+      "priority_queue pq{${f}, vector<${T}>()};"
     ],
     "description": "priority_queue"
   },
@@ -206,63 +171,6 @@
       "numeric_limits<${T}>::${max}();"
     ],
     "description": "numeric_limits"
-  },
-  "range for":{
-    "scope": "cpp",
-    "prefix": "fore",
-    "body": [
-      "for(auto&&${x} : ${v}){",
-      "  ${0}",
-      "}"
-    ],
-    "description": "range based for"
-  },
-  "subset for":{
-    "scope": "cpp",
-    "prefix": "forin",
-    "body": [
-      "for(int ${T} = 0; ; ${T} = (${T}-${S})&${S}){",
-      "  ${0}",
-      "  ",
-      "  if(${T} == ${S}) break;",
-      "}"
-    ],
-    "description": "enumerate subset in ascending order"
-  },
-  "subset forr":{
-    "scope": "cpp",
-    "prefix": "forrin",
-    "body": [
-      "for(int ${T} = ${S}; ; ${T} = (${T}-1)&${S}){",
-      "  ${0}",
-      "  ",
-      "  if(${T} == 0) break;",
-      "}"
-    ],
-    "description": "enumerate subset in descending order"
-  },
-  "superset for":{
-    "scope": "cpp",
-    "prefix": "forex",
-    "body": [
-      "for(int ${T} = ${S}; ${S} < (1<<${n}); ${T} = (${T}+1)|${S}){",
-      "  ${0}",
-      "}"
-    ],
-    "description": "enumerate subset (contained in 2^n)"
-  },
-  "nCk": {
-    "scope": "cpp",
-    "prefix": "fork",
-    "body": [
-      "for(int ${s} = (1<<${k})-1; ${s} < (1<<${n}); ){",
-      "  ${0}",
-      "  ",
-      "  int ${t} = ${s} | (${s}-1);",
-      "  ${s} = (${t}+1) | (((~ ${t} & - ~ ${t}) - 1) >> (__builtin_ctz(${s}) + 1));",
-      "}"
-    ],
-    "description": "enumerate subset popcnt==k in 2^n"
   },
   "serch on adjacency matrix": {
     "scope": "cpp",
