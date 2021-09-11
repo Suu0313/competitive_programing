@@ -20,11 +20,11 @@ struct PersistentDynamicLiChaoTree{
 
   static Node *get_root(){ return nullptr; }
 
-  Node * add_line(Node *root, const T &a, const T &b, int idx){
+  Node *add_line(Node *root, const T &a, const T &b, int idx){
     Line f(a, b, idx);
     return add_line(root, f, low, high, f.get(low), f.get(high));
   }
-  void add_segment(Node *root, const T &a, const T &b, const T &l, const T &r, int idx){
+  Node *add_segment(Node *root, const T &a, const T &b, const T &l, const T &r, int idx){
     Line f(a, b, idx);
     return add_segment(root, f, l, r-1, low, high, f.get(low), f.get(high));
   }
