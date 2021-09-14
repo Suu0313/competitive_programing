@@ -3,11 +3,11 @@ struct CycleDetection{
   Graph<T> g;
   bool directed;
   vector<int> used;
-  vector<pair<int, int>> pre, cycle;
+  vector<Edge<T>> pre, cycle;
   CycleDetection(const Graph<T> &g, bool directed = true)
     : g(g), directed(directed), used(g.size()), pre(g.size()) {}
 
-  vector<pair<int, int>> find(){
+  vector<Edge<T>> find(){
     for(int i = 0; i < (int)g.size(); i++){
       if(used[i]==0 && dfs(i)){
         reverse(cycle.begin(), cycle.end());
@@ -23,15 +23,15 @@ private:
     for(auto&&e : g[v]){
       if(e == q && !directed) continue;
       if(used[e] == 0){
-        pre[e] = make_pair(v, e);
+        pre[e] = e;
         if(dfs(e, v)) return true;
       }else if(used[e] == 1){
         int p = v;
         while(p != e){
           cycle.emplace_back(pre[p]);
-          p = pre[p].first;
+          p = pre[p].src;
         }
-        cycle.emplace_back(v, e);
+        cycle.emplace_back(e);
         return true;
       }
     }
