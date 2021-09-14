@@ -3,7 +3,7 @@ struct Enumerate{
   struct itr{
     int idx;
     typename Container::iterator it;
-    bool operator!=(typename Container::iterator e){ return it != e; }
+    bool operator!=(const typename Container::iterator &e) const { return it != e; }
     void operator++(){ ++idx; ++it; }
     pair<int, typename Container::value_type> operator*(){ return {idx, *it}; }
   };
