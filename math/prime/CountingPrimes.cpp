@@ -1,13 +1,11 @@
-int64_t CountingPrimes(int64_t n){
-  int64_t y = pow(n, 0.36);
+int64_t CountPrimes(int64_t n){
+  int64_t y = pow(n, 0.38);
   if(n < 100) y = 1;
   int64_t iy = n / y;
 
-  vector<int64_t> min_factor(iy + 1), primes;
-  iota(begin(min_factor), end(min_factor), 0);
-  
+  vector<int64_t> min_factor(iy + 1, -1), primes;
   for(int64_t i = 2; i <= iy; ++i){
-    if(min_factor[i] == i){
+    if(min_factor[i] == -1){
       min_factor[i] = primes.size();
       primes.push_back(i);
     }
@@ -48,10 +46,18 @@ int64_t CountingPrimes(int64_t n){
   sort(begin(rem), end(rem));
   
   int cur = 2;
-  BIT<int> fw(pi_iy);
+  vector<int> fw(pi_iy + 1);
   for(auto&&[m, a, sign] : rem){
-    for( ; cur <= m; ++cur) fw.add(min_factor[cur], 1);
-    ans += (m - fw.sum(a)) * sign;
+    for( ; cur <= m; ++cur){
+      for(int idx = min_factor[cur]+1; idx <= pi_iy; idx += (idx & -idx)){
+        fw[idx] += 1;
+      }
+    }
+    int sum = 0;
+    for(int idx = a; idx > 0; idx -= (idx & -idx)){
+      sum += fw[idx];
+    }
+    ans += (m - sum) * sign;
   }
   return ans;
 };
