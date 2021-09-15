@@ -1,5 +1,14 @@
 template<typename T, typename Compair = less<T>>
 struct Treap{
+  struct Node{
+    T key;
+    size_t pri, cnt;
+    Node *l, *r;
+
+    Node(const T &key, size_t pri)
+      : key(key), pri(pri), cnt(1), l(nullptr), r(nullptr) {}
+  } *root = nullptr;
+  using np = Node*;
 
   Treap(const Compair &cmp = Compair()): mt(random_device{}()), cmp(cmp) {}
 
@@ -28,19 +37,20 @@ struct Treap{
   size_t upper_bound(const T &key) const { return upper_bound(root, key); }
   size_t count(const T &key) const { return upper_bound(key) - lower_bound(key); }
 
+  vector<T> enumerate(const T &l, const T &r) const {
+    vector<T> res; enumerate(root, l, r, res); return res;
+  }
+
+  template<typename F>
+  void enumerate(const T &l, const T &r, const F &f) const {
+    enumerate(root, l, r, f);
+  }
+
+  np find(const T &key){ return find(root, key); }
+
 private:
   mt19937 mt;
   const Compair cmp;
-
-  struct Node{
-    T key;
-    size_t pri, cnt;
-    Node *l, *r;
-
-    Node(const T &key, size_t pri)
-      : key(key), pri(pri), cnt(1), l(nullptr), r(nullptr) {}
-  } *root = nullptr;
-  using np = Node*;
 
   size_t size(np t) const { return !t ? 0 : t->cnt; }
   
@@ -106,5 +116,22 @@ private:
     if(!t) return 0;
     if(!cmp(key, t->key)) return size(t->l) + 1 + upper_bound(t->r, key);
     return upper_bound(t->l, key);
+  }
+
+  void enumerate(np t, const T &l, const T &r, vector<T> &res) const {
+    if(!t) return;
+    bool fl = !cmp(t->key, l), fr = cmp(t->key, r);
+    if(fl) enumerate(t->l, l, r, res);
+    if(fl && fr) res.emplace_back(t->key);
+    if(fr) enumerate(t->r, l, r, res);
+  }
+
+  template<typename F>
+  void enumerate(np t, const T &l, const T &r, const F &f) const {
+    if(!t) return;
+    bool fl = !cmp(t->key, l), fr = cmp(t->key, r);
+    if(fl) enumerate(t->l, l, r, f);
+    if(fl && fr) f(t->key);
+    if(fr) enumerate(t->r, l, r, f);
   }
 };
