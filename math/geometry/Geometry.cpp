@@ -114,11 +114,11 @@ template<class T> struct Line{
     else{ a = Point<T>(0, C/B); b = Point<T>(C/A, 0); }
   }
   //Line(const Segment<T> &s): a(s.a), b(s.b) {}
-  Point<T> flip(const Point<T> &p) const {
-    return (p - a).flip((b-a).arg()) + a;
-  }
   Point<T> projection(const Point<T> &p) const {
-    return (p + flip(p))/2;
+    return a + (b-a)*Dot(p-a, b-a)/(b-a).Norm();
+  }
+  Point<T> reflection(const Point<T> &p) const {
+    return p + (projection(p) - p)*2;
   }
   int angletype(const Line &l) const {
     if(Cross(b-a, l.b-l.a) == 0) return 1;
