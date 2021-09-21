@@ -245,6 +245,11 @@ template<class T> struct Circle{
     if(od == r*r) return 1; // on
     return (od > r*r) ? 2 : 0; // out/in
   }
+  pair<Point<T>, Point<T>> Cross_Point(const Line<T> &l) const {
+    Point<T> p = l.projection(o), d = (l.b - l.a)/l.a.dist(l.b);
+    double base = sqrt(r*r - (p - o).Norm());
+    return {p+d*base, p-d*base};
+  }
   friend ostream &operator<<(ostream &os, const Circle &c) {
     return os << c.o << " " << c.r;
   }
