@@ -27,6 +27,10 @@ struct TwoSat{
     scc.addEdge(rev(u),u);
   }
 
+  void add_if_then(int u, int v, bool f=true, bool g=true){
+    add_or(u, v, !f, g);
+  }
+
   vector<int> answer(){
     scc.build();
     vector<int> res(n);
