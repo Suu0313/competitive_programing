@@ -1,10 +1,10 @@
 template<typename T1, typename T2>
-pair<T1, T2> &operator+=(pair<T1, T2> &a, const pair<T1, T2> &b){
-  a.first += b.first; a.second += b.second; return a;
+pair<T1, T2> operator+(const pair<T1, T2> &a, const pair<T1, T2> &b){
+  return {a.first + b.first, a.second + b.second};
 }
 template<typename T1, typename T2>
-pair<T1, T2> operator+(const pair<T1, T2> &a, const pair<T1, T2> &b){
-  return pair<T1, T2>(a) += b;
+pair<T1, T2> &operator+=(pair<T1, T2> &a, const pair<T1, T2> &b){
+  return a = a+b;
 }
 
 template<typename T>

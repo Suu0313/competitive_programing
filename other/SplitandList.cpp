@@ -1,7 +1,8 @@
-void SplitandList(vector<long long> &a, vector<long long> &b, vector<long long> &c){
-  b.assign(1,0); c.assign(1,0);
-  auto merge = [&](long long x){
-    vector<long long> d;
+template<typename T>
+pair<vector<T>, vector<T>> SplitAndList(const vector<T> &a){
+  vector<T> b(1, T{}), c(1, T{});
+  auto merge = [&](T x){
+    vector<T> d;
     auto it = b.begin();
     for(auto&&y : b){
       while(x+*it < y) d.emplace_back(x + *it++);
@@ -13,4 +14,5 @@ void SplitandList(vector<long long> &a, vector<long long> &b, vector<long long> 
   for(auto&&x : a){
     merge(x); swap(b, c);
   }
+  return {b, c};
 }
