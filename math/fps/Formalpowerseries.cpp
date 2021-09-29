@@ -69,8 +69,8 @@ struct Formalpowerseries : vector<T> {
   }
   F operator-(const F &f) const { return F(*this) -= f; }
 
-  // F &operator*=(const F &f) {  (*this) = FFT::multiply((*this), f); return (*this); }
-  F &operator*=(const F &f) {  (*this) = NTT::multiply((*this), f); return (*this); }
+  F &operator*=(const F &f) {  (*this) = FFT::multiply((*this), f); return (*this); }
+  //F &operator*=(const F &f) {  (*this) = NTT::multiply((*this), f); return (*this); }
   F operator*(const F &f) const { return F(*this) *= f; }
 
   F operator/(const F &f) const {
