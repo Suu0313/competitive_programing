@@ -1,13 +1,12 @@
 template <typename T>
-vector<T> Vpress(vector<T> &X) {
-    vector<T> vals = X;
-    sort(vals.begin(), vals.end());
-    vals.erase(unique(vals.begin(), vals.end()), vals.end());
-    for(size_t i = 0; i < X.size(); i++){
-        X.at(i) = lower_bound(vals.begin(), vals.end(), X.at(i)) - vals.begin();
-    }
-    return vals;
+vector<T> Vpress(vector<T> &x) {
+    vector<T> vs = x;
+    sort(begin(vs), end(vs));
+    vs.erase(unique(begin(vs), end(vs)), end(vs));
+    for(auto&e : x) e = lower_bound(begin(vs), end(vs), e) - begin(vs);
+    return vs;
 }
+
 template <typename T>
 vector<T> Vpress(vector<T> &C1, vector<T> &C2, T sp = 1) {
     vector<T> vals;
