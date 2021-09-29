@@ -48,6 +48,10 @@ namespace FFT{
     int n = int(a.size()), m = int(b.size());
     if (!n || !m) return {};
 
+    for(int md : {998244353, 2, 167772161, 469762049, 754974721}){
+      if(mod == md) return NTT::multiply(a, b);
+    }
+
     static constexpr long long MOD1 = 754974721;
     static constexpr long long MOD2 = 167772161;
     static constexpr long long MOD3 = 469762049;
