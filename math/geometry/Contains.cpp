@@ -6,7 +6,7 @@ int Contains(const Polygon<T> &ps, const Point<T>& p){
     Point<T> a = ps[i] - p, b = ps[(i+1)%n] - p;
     if(a.y > b.y) swap(a, b);
     if(a.y <= 0 && 0 < b.y && Cross(a,b) < 0) in = !in;
-    if(Cross(a, b) == 0 && Dot(a, b) <= 0) return 1; // on
+    if(geometry::is_zero(Cross(a, b)) && geometry::le(Dot(a, b), T(0))) return 1; // on
   }
   return in? 2 : 0; // out/in
 }
