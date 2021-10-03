@@ -1,4 +1,3 @@
-
 namespace NTT{
 
   int bsf(unsigned int n) { return __builtin_ctz(n); }
@@ -415,5 +414,37 @@ struct Formalpowerseries : vector<T> {
       return res;
     }
     return (*this);
+  }
+
+  F sqrt(const function< T(T) > &get_sqrt, int d = -1) const {
+    const int n = this->size();
+    if(d == -1) d = n;
+
+    if((*this)[0] == T(0)){
+      if(all_of(begin(*this), end(*this), [](T x){ return x == T(0); })){
+        return F(d, 0);
+      }
+      for(int i = 1; i < n; ++i){
+        if((*this)[i] != T(0)){
+          if(i & 1) return F{};
+          if(d - (i>>1) <= 0) return F(d, 0);
+          auto res = (*this >> i).sqrt(get_sqrt ,d - (i>>1));
+          if(res.empty()) return F{};
+          res <<= (i >> 1);
+          if(int(res.size()) < d) res.resize(d, T(0));
+          return res;
+        }
+      }
+      return F{};
+    }
+
+    T c = get_sqrt((*this)[0]);
+    if(c*c != (*this)[0]) return F{};
+    T inv2 = T(1) / T(2);
+    F res(1, c);
+    for(int i = 1; i < d; i <<= 1){
+      res = (res + pre(i << 1)* res.inv(i << 1)) * inv2;
+    }
+    return res.pre(d);
   }
 };
