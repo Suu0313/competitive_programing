@@ -72,6 +72,10 @@ struct ArbitraryModInt {
     return (is);
   }
 };
+ArbitraryModInt operator+(const int &p, const ArbitraryModInt &m){ return ArbitraryModInt(p) + m; };
+ArbitraryModInt operator-(const int &p, const ArbitraryModInt &m){ return ArbitraryModInt(p) - m; };
+ArbitraryModInt operator*(const int &p, const ArbitraryModInt &m){ return ArbitraryModInt(p) * m; };
+ArbitraryModInt operator/(const int &p, const ArbitraryModInt &m){ return ArbitraryModInt(p) / m; };
 
 using amint = ArbitraryModInt;
 using VMA = vector<amint>;
