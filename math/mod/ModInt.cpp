@@ -64,6 +64,11 @@ struct ModInt {
   }
   constexpr static int get_mod() { return mod; }
 };
+template< int mod > constexpr ModInt<mod> operator+(const int &p, const ModInt<mod> &m){ return ModInt<mod>(p) + m; };
+template< int mod > constexpr ModInt<mod> operator-(const int &p, const ModInt<mod> &m){ return ModInt<mod>(p) - m; };
+template< int mod > constexpr ModInt<mod> operator*(const int &p, const ModInt<mod> &m){ return ModInt<mod>(p) * m; };
+template< int mod > constexpr ModInt<mod> operator/(const int &p, const ModInt<mod> &m){ return ModInt<mod>(p) / m; };
+
 //constexpr int MOD = 1e9 + 7;
 //constexpr int MOD = 998244353;
 using mint = ModInt< MOD >;
