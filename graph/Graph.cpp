@@ -14,7 +14,8 @@ struct Graph {
   size_t es;
   Graph() {};
   Graph(size_t n): g(n), es(0) {}
-  size_t size() const{ return g.size(); }
+  size_t size() const { return g.size(); }
+  int deg(int v) const { return int(g[v].size()); }
 
   vector<Edge<T>> &operator[](int k) { return g.at(k); }
   const vector<Edge<T>> &operator[](int k) const { return g.at(k); }
