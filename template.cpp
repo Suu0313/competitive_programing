@@ -94,19 +94,7 @@ T MUL(const T &a, const T &b, const T &lim = numeric_limits<T>::max()){
 template<class T> constexpr T Sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
 inline int Pcnt(unsigned long long x) { return __builtin_popcountll(x); }
-template<class T> constexpr T Ceil(T x, T y) {
-  if(y < 0) x = -x, y = -y;
-  if(x >= 0) return (x + y - 1) / y;
-  return x / y;
-}
-template<class T> constexpr T Floor(T x, T y) {
-  if(y < 0) x = -x, y = -y;
-  if(x >= 0) return x / y;
-  return (x - y + 1) / y;
-}
-template<class T> constexpr T Mid(T x, T y) {
-  return (x&y) + ((x^y) >> 1);
-}
+
 template<typename T>
 T ModInv(T a, T m){
   T b = m, u= 1, v = 0;
@@ -123,15 +111,6 @@ T Pow(T a, LL n, T m = 0, T e = 1){
   if(n < 0){ assert(m != 0); return ModInv(Pow(a, -n, m, e), m); }
   T res = e;
   while(n > 0){ if(n&1){ res *= a; if(m) res %= m; } a *= a; n >>= 1; if(m) a %= m; }
-  return res;
-}
-uint64_t Sqrt(uint64_t x){
-  uint64_t res = 0, over = 1;
-  while(over*over <= x) over <<= 1;
-  while(over-res > 1){
-    uint64_t wj = res + ((over-res) >> 1);
-    ((wj*wj <= x) ? res : over) = wj;
-  }
   return res;
 }
 
