@@ -1,10 +1,4 @@
-template<typename T>
-vector<T> Concat(const vector<T> &a, const vector<T> &b){
-  vector<T> res = a;
-  res.reserve(a.size() + b.size());
-  res.insert(end(res), begin(b), end(b));
-  return res;
-}#pragma region mytemplates
+#pragma region mytemplates
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -187,6 +181,22 @@ template<typename T>
 vector<T> Concat(const vector<T> &a, const vector<T> &b){
   vector<T> res = a; res.reserve(a.size() + b.size());
   res.insert(end(res), begin(b), end(b));
+  return res;
+}
+template<typename T, class Compair = less<T>>
+vector<int> KeySort(const vector<T> &a, vector<int> idx, const Compair &cmp = Compair{}){
+  sort(begin(idx), end(idx), [&](int i, int j){ return cmp(a[i], a[j]); });
+  return idx;
+}
+template<typename T, class Compair = less<T>>
+vector<int> KeySort(const vector<T> &a, const Compair &cmp = Compair{}){
+  vector<int> idx(a.size()); iota(begin(idx), end(idx), 0);
+  return KeySort<T, Compair>(a, idx, cmp);
+}
+template<typename T>
+vector<T> Reorder(const vector<T> &a, const vector<int> &idx){
+  int n = int(a.size());
+  vector<T> res(n); for(int i = 0; i < n; ++i) res[i] = a[idx[i]];
   return res;
 }
 template<typename... Ts>
