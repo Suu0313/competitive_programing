@@ -94,6 +94,8 @@ T MUL(const T &a, const T &b, const T &lim = numeric_limits<T>::max()){
 template<class T> constexpr T Sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
 inline int Pcnt(unsigned long long x) { return __builtin_popcountll(x); }
+inline int LSB(unsigned long long x){ return __builtin_ctzll(x); }
+inline int BWidth(unsigned long long x){ return 64 - __builtin_clzll(x); }
 
 template<typename T>
 T ModInv(T a, T m){
@@ -233,6 +235,7 @@ constexpr int dx[] = {1,0,-1,0,1,1,-1,-1}, dy[] = {0,1,0,-1,1,-1,1,-1};
 int main(){
   // cin.tie(0); ios::sync_with_stdio(false);
   cout << fixed << setprecision(12);
+
 
 
 
