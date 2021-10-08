@@ -265,16 +265,38 @@ template<class T> struct Circle{
     if(geometry::eq(rs, od)) return 1;
     return 0;
   }
+
+  int Intersect(const Line<T> &l) const {
+    double d = l.dist(o);
+    if(geometry::lt<double>(d, r)) return 2;
+    return geometry::eq(d, r);
+  }
+
   int Contains(const Point<T> &p) const {
     auto od = (o - p).Norm();
     if(geometry::eq(od, r*r)) return 1; // on
     return (od > r*r) ? 2 : 0; // out/in
   }
-  pair<Point<T>, Point<T>> Cross_Point(const Line<T> &l) const {
-    Point<T> p = l.projection(o), d = (l.b - l.a)/l.a.dist(l.b);
+
+  Polygon<T> Cross_Points(const Line<T> &l) const {
+    int k = this->Intersect(l);
+    if(k == 0) return {};
+    Point<T> p = l.projection(o);
+    if(k == 1) return {p};
+    Point<T> d = (l.b - l.a)/l.a.dist(l.b);
     double base = sqrt(r*r - (p - o).Norm());
     return {p + d*base, p - d*base};
   }
+
+  Polygon<T> Cross_Points(const Circle &c) const {
+    int k = this->Intersect(c);
+    if(k == 0 || k == 4) return {};
+    double t = (c.o - o).arg();
+    if(k == 1 || k == 3) return {o + Polar<T>(r, t)};
+    double d = o.dist(c.o), a = acos((r*r + d*d - c.r*c.r) / (r * d * 2));
+    return {o + Polar<T>(r, t + a), o + Polar<T>(r, t - a)};
+  }
+
   friend ostream &operator<<(ostream &os, const Circle &c) {
     return os << c.o << " " << c.r;
   }
