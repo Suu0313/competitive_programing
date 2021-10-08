@@ -43,6 +43,12 @@ template<class T> struct Point{
   double dist(const Point &b) const { return hypot<double>(x - b.x, y - b.y); }
   double arg() const { return atan2<double>(y, x); }
   
+  Point ArgVec() const {
+    if((*this) == Point(0, 0)) return (*this);
+    if(geometry::is_zero(x)) return Point(0, -1);
+    return (*this) / gcd(x, y) * (x < 0 ? -1 : 1);
+  }
+
   int ort() const {
     if(geometry::is_zero(x) && geometry::is_zero(y)) return 0;
     if(geometry::is_zero(y)) return x > 0 ? 1 : 3;
