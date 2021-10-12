@@ -1,14 +1,16 @@
+template<class Container = vector<int>>
 struct permutation{
   struct itr{
-    vector<int> idx; bool fl;
-    bool operator!=([[maybe_unused]] monostate e){ return fl; }
-    void operator++() { fl = next_permutation(idx.begin(), idx.end()); }
-    vector<int> &operator*() { return idx; }
+    Container c; bool fl;
+    bool operator!=([[maybe_unused]] monostate e) const { return fl; }
+    void operator++() { fl = next_permutation(std::begin(c), std::end(c)); }
+    Container &operator*() { return c; }
   };
 
-  int n;
-  permutation(int n): n(n) {}
+  Container c;
+  permutation(int n): c(n) { iota(std::begin(c), std::end(c), 0); }
+  permutation(const Container &c): c(c) {}
 
-  itr begin(){ vector<int> idx(n); iota(idx.begin(), idx.end(), 0); return {idx, true}; }
+  itr begin(){ return {c, true}; }
   monostate end() { return {}; }
 };
