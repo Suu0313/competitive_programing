@@ -19,3 +19,11 @@ T convert_base_bto10(const vector<T> &a, T2 b) {
   for(auto&e : a) (ret *= b) += e;
   return ret;
 }
+
+template<typename T>
+vector<T> stovt(const string &s){
+  int n = int(s.size());
+  vector<T> res(n);
+  for(int i = 0; i < n; ++i) res[i] = s[i] - '0';
+  return res;
+}
