@@ -1,4 +1,4 @@
-vector<int> SubsetSum(const vector<int> &a, int x){ // O(n*max(|a|))
+vector<int> SubsetSum(const vector<int> &a, int x){
   int n = int(a.size()), s = 0;
   vector<int> b(a), d(n), idx(n);
   for(auto&e : b){
@@ -21,32 +21,31 @@ vector<int> SubsetSum(const vector<int> &a, int x){ // O(n*max(|a|))
   // i,kが同じならjはtrueの中で最も左のものを選ぶのが最適なので
   // dp[i][k] = min(j)
 
-  vector<vector<int>> dp(n+1);
-  for(int i = si; i <= n; ++i) dp[i] = vector<int>(m2, si+1);
-  dp[si][m+x] = 0;
+  vector<vector<int>> dp(n-si+1, vector<int>(m2, si+1));
+  dp[0][m+x] = 0;
 
   for(int i = si; i <= n; ++i){
     /*
     まずiはそのままjの選択 今のjを使ってよりよくできるなら更新
     下から回して累積的に更新する
     //*/
-    for(int k = 0; k < m; ++k) if(dp[i][k] != si+1){
-      int r = min(si, (i>si) ? dp[i-1][k] : si);
-      for(int j = dp[i][k]; j < r; ++j){
-        dp[i][k+d[j]] = min(dp[i][k+d[j]], j+1);
+    for(int k = 0; k < m; ++k) if(dp[i-si][k] != si+1){
+      int r = min(si, (i>si) ? dp[i-1-si][k] : si);
+      for(int j = dp[i-si][k]; j < r; ++j){
+        dp[i-si][k+d[j]] = min(dp[i-si][k+d[j]], j+1);
       }
     }
     // early return
-    if(dp[i][m] != si+1){
+    if(dp[i-si][m] != si+1){
       vector<int> buf(n), res(n); fill(begin(buf), begin(buf)+si, 1);
 
       for(int k = m; i != si || k != m+x; ){
-        int j = dp[i][k] - 1;
-        if(j>=0 && k>=d[j] && dp[i][k-d[j]] <= j){
+        int j = dp[i-si][k] - 1;
+        if(j>=0 && k>=d[j] && dp[i-si][k-d[j]] <= j){
           buf[j] = 0; k -= d[j];
         }else{
           --i;
-          if(dp[i][k] != j + 1){
+          if(dp[i-si][k] != j + 1){
             buf[i] = 1; k += d[i];
           }
         }
@@ -60,11 +59,11 @@ vector<int> SubsetSum(const vector<int> &a, int x){ // O(n*max(|a|))
     if(i < n){
       // iを使って進める (元々使ってことにしてあるのでそのまま)
       for(int k = 0; k < m2; ++k){
-        dp[i+1][k] = min(dp[i+1][k], dp[i][k]);
+        dp[i+1-si][k] = min(dp[i+1-si][k], dp[i-si][k]);
       }
       // iを使わず進める (m未満からさらに減らすのは禁止)
       for(int k = m; k < m2; ++k){
-        dp[i+1][k-d[i]] = min(dp[i+1][k-d[i]], dp[i][k]);
+        dp[i+1-si][k-d[i]] = min(dp[i+1-si][k-d[i]], dp[i-si][k]);
       }
     }
   }
