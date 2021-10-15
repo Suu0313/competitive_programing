@@ -1,8 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <set>
-
 template<typename T, class Compair = less<T>>
 struct RedBlackTree{
 private:
@@ -131,6 +126,11 @@ private:
       transplant(t, t->leftP);
     }else{
       y = minimum(y->rightP);
+      Np m = y->parentP;
+      while(m != t){
+        m->sz -= 1;
+        m = m->parentP;
+      }
       color = y->color;
       x = y->rightP;
       if(y->parentP == t) x->parentP = y;
@@ -345,9 +345,13 @@ public:
     return select(root, k)->key;
   }
 
-  T pop(int k){
-    T key = at(k); erase(key); return key;
+  T operator[](int k) const {
+    if(k < 0) k += (int)size();
+    assert(0 <= k && k < (int)size());
+    return select(root, k)->key;
   }
+
+  T pop(int k){ T key = at(k); erase(key); return key; }
 
   size_t size() const { return root->sz; }
 
@@ -366,14 +370,3 @@ public:
   itr begin(){ return {minimum(root), *this}; }
   itr end(){ return {get_nil(), *this}; }
 };
-
-
-int main() {
-  RedBlackTree<int> rbt;
-  int q; cin >> q;
-  while(q--){
-    int t, x; cin >> t >> x;
-    if(t == 1) rbt.insert(x);
-    else cout << rbt.pop(--x) << "\n";
-  }
-}
