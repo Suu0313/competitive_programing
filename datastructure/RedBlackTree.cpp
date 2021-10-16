@@ -267,6 +267,26 @@ private:
     dump(t->rightP);
   }
 
+  size_t rank(Np t) const {
+    if(t->is_nil()) return size();
+    size_t r = t->leftP->sz;
+    Np y = t;
+    while(!y->is_root()){
+      if(y->is_right()) r += y->parentP->leftP->sz + 1;
+      y = y->parentP;
+    }
+    return r;
+  }
+
+  Np find(const T &key) const {
+    Np t = root;
+    while(t->is_valid() && t->key != key){
+      if(cmp(key, t->key)) t = t->leftP;
+      else t = t->rightP;
+    }
+    return t;
+  }
+
 public:
 
   RedBlackTree(const Compair &cmp = Compair{}): cmp(cmp) {}
@@ -274,7 +294,7 @@ public:
     for(auto&e : v) insert(e);
   }
 
-  Np insert(const T &key){
+  size_t insert(const T &key){
     Np t = new Node(key, RED);
     t->leftP = t->rightP = get_nil();
 
@@ -292,7 +312,7 @@ public:
     else y->rightP = t;
 
     insert_fixup(t);
-    return t;
+    return rank(t);
   }
 
   bool erase(const T &key){
@@ -308,36 +328,15 @@ public:
     return true;
   }
 
-  Np find(const T &key) const {
-    Np t = root;
-    while(t->is_valid() && t->key != key){
-      if(cmp(key, t->key)) t = t->leftP;
-      else t = t->rightP;
-    }
-    return t;
-  }
-
-  bool exist(const T &key) const {
-    return find(key)->is_valid();
-  }
-
-  size_t rank(Np t) const {
-    size_t r = t->leftP->sz;
-    Np y = t;
-    while(!y->is_root()){
-      if(y->is_right()) r += y->parentP->leftP->sz + 1;
-      y = y->parentP;
-    }
-    return r;
-  }
+  bool exist(const T &key) const { return find(key)->is_valid(); }
 
   void dump() const {
     dump(root);
     cout << endl;
   }
 
-  Np lower_bound(const T &key) const { return lower_bound(root, key); }
-  Np upper_bound(const T &key) const { return upper_bound(root, key); }
+  size_t lower_bound(const T &key) const { return rank(lower_bound(root, key)); }
+  size_t upper_bound(const T &key) const { return rank(upper_bound(root, key)); }
 
   T at(int k) const {
     if(k < 0) k += (int)size();
@@ -367,6 +366,20 @@ public:
     T operator*() const { return t->key; }
   };
 
+  struct ritr{
+    Np t;
+    RedBlackTree<T> &tree;
+    bool operator!=(const ritr &it) const { return t != it.t; }
+    void operator++(){ t = tree.predecessor(t); }
+    void operator--(){
+      if(t->is_nil()) t = tree.minimum(root);
+      else t = tree.successor(t);
+    }
+    T operator*() const { return t->key; }
+  };
+
   itr begin(){ return {minimum(root), *this}; }
   itr end(){ return {get_nil(), *this}; }
+  ritr rbegin(){ return {maximum(root), *this}; }
+  ritr rend(){ return {get_nil(), *this}; }
 };
