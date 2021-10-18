@@ -7,7 +7,7 @@ private:
     T key;
     Color color;
     size_t sz = 0;
-    Node *parentP = nullptr, *leftP = nullptr, *rightP = nullptr;
+    Node *parentP = nullptr, *leftP = nullptr, *rightP = nullptr, *nextP = nullptr, *prevP = nullptr;
 
     constexpr Node(): key{}, color(NIL) {}
     constexpr Node(const T &key, Color color): key(key), color(color), sz(1) {}
@@ -125,7 +125,7 @@ private:
       x = t->leftP;
       transplant(t, t->leftP);
     }else{
-      y = minimum(y->rightP);
+      y = y->nextP;
       Np m = y->parentP;
       while(m != t){
         m->sz -= 1;
@@ -147,6 +147,8 @@ private:
     }
 
     if(color == BLACK) erase_fixup(x);
+    t->nextP->prevP = t->prevP;
+    t->prevP->nextP = t->nextP;
     delete t;
   }
 
@@ -218,23 +220,12 @@ private:
     return t;
   }
 
-  Np successor(Np t) const {
-    if(t->rightP->is_valid()) return minimum(t->rightP);
-    Np y = t->parentP;
-    while(y->is_valid() && t->is_right()){
-      t = y; y = y->parentP;
-    }
-    return y;
-  }
+  Np minimum() const { return get_nil()->nextP; }
+  Np maximum() const { return get_nil()->prevP; }
 
-  Np predecessor(Np t) const {
-    if(t->leftP->is_valid()) return maximum(t->leftP);
-    Np y = t->parentP;
-    while(y->is_valid() && t->is_left()){
-      t = y; y = y->parentP;
-    }
-    return y;
-  }
+  Np successor(Np t) const { return t->nextP; }
+
+  Np predecessor(Np t) const { return t->prevP; }
 
   Np lower_bound(Np t, const T &key) const {
     if(t->is_nil()) return t;
@@ -289,14 +280,17 @@ private:
 
 public:
 
-  RedBlackTree(const Compair &cmp = Compair{}): cmp(cmp) {}
+  RedBlackTree(const Compair &cmp = Compair{}): cmp(cmp) {
+    root->nextP = root->prevP = get_nil();
+  }
   RedBlackTree(initializer_list<T> v ,const Compair &cmp = Compair{}): cmp(cmp) {
+    root->nextP = root->prevP = get_nil();
     for(auto&e : v) insert(e);
   }
 
   size_t insert(const T &key){
     Np t = new Node(key, RED);
-    t->leftP = t->rightP = get_nil();
+    t->leftP = t->rightP = t->nextP = t->prevP = get_nil();
 
     Np x = root, y = get_nil();
     while(x->is_valid()){
@@ -307,9 +301,13 @@ public:
     }
     assert(!!y);
     t->parentP = y;
-    if(y->is_nil()) root = t;
-    else if(cmp(key, y->key)) y->leftP = t;
-    else y->rightP = t;
+    if(y->is_nil()){
+      root->nextP = root->prevP = t;  root = t;
+    }else if(cmp(key, y->key)){
+      y->leftP = t; y->prevP->nextP = t; t->nextP = y; t->prevP = y->prevP; y->prevP = t; 
+    }else{
+      y->rightP = t; y->nextP->prevP = t; t->prevP = y; t->nextP = y->nextP; y->nextP = t;
+    }
 
     insert_fixup(t);
     return rank(t);
@@ -359,10 +357,7 @@ public:
     RedBlackTree<T> &tree;
     bool operator!=(const itr &it) const { return t != it.t; }
     void operator++(){ t = tree.successor(t); }
-    void operator--(){
-      if(t->is_nil()) t = tree.maximum(root);
-      else t = tree.predecessor(t);
-    }
+    void operator--(){ tree.predecessor(t); }
     T operator*() const { return t->key; }
   };
 
@@ -371,15 +366,13 @@ public:
     RedBlackTree<T> &tree;
     bool operator!=(const ritr &it) const { return t != it.t; }
     void operator++(){ t = tree.predecessor(t); }
-    void operator--(){
-      if(t->is_nil()) t = tree.minimum(root);
-      else t = tree.successor(t);
+    void operator--(){ t = tree.successor(t);
     }
     T operator*() const { return t->key; }
   };
 
-  itr begin(){ return {minimum(root), *this}; }
+  itr begin(){ return {minimum(), *this}; }
   itr end(){ return {get_nil(), *this}; }
-  ritr rbegin(){ return {maximum(root), *this}; }
+  ritr rbegin(){ return {maximum(), *this}; }
   ritr rend(){ return {get_nil(), *this}; }
 };
