@@ -16,7 +16,6 @@ private:
     constexpr bool is_nil() const { return color == NIL; }
     constexpr bool is_red() const { return color == RED; }
     constexpr bool is_black() const { return color != RED; }
-
     constexpr bool is_left() const { return parentP->leftP == this; }
     constexpr bool is_right() const { return parentP->rightP == this; }
     constexpr bool is_root() const { return parentP->is_nil(); }
@@ -26,6 +25,9 @@ private:
       if(is_red()) color = BLACK;
       else color = RED;
     }
+
+    constexpr Node *successor() const { return nextP; }
+    constexpr Node *predecessor() const { return prevP; }
   };
   using Np = Node*;
 
@@ -49,9 +51,7 @@ private:
     else if(t->is_left()) t->parentP->leftP = y;
     else t->parentP->rightP = y;
 
-    y->leftP = t;
-    t->parentP = y;
-
+    y->leftP = t; t->parentP = y;
     y->sz = t->sz;
     t->sz = t->leftP->sz + t->rightP->sz + 1;
   }
@@ -68,9 +68,7 @@ private:
     else if(t->is_left()) t->parentP->leftP = y;
     else t->parentP->rightP = y;
 
-    y->rightP = t;
-    t->parentP = y;
-
+    y->rightP = t; t->parentP = y;
     y->sz = t->sz;
     t->sz = t->leftP->sz + t->rightP->sz + 1;
   }
@@ -86,10 +84,7 @@ private:
           t->parentP->parentP->flip_color();
           t = t->parentP->parentP;
         }else{
-          if(t->is_right()){
-            t = t->parentP;
-            rotate_left(t);
-          }
+          if(t->is_right()){ t = t->parentP; rotate_left(t); }
           t->parentP->flip_color();
           t->parentP->parentP->flip_color();
           rotate_right(t->parentP->parentP);
@@ -102,10 +97,7 @@ private:
           t->parentP->parentP->flip_color();
           t = t->parentP->parentP;
         }else{
-          if(t->is_left()){
-            t = t->parentP;
-            rotate_right(t);
-          }
+          if(t->is_left()){ t = t->parentP; rotate_right(t); }
           t->parentP->flip_color();
           t->parentP->parentP->flip_color();
           rotate_left(t->parentP->parentP);
@@ -126,13 +118,10 @@ private:
       transplant(t, t->leftP);
     }else{
       y = y->nextP;
+      assert(y->is_valid());
       Np m = y->parentP;
-      while(m != t){
-        m->sz -= 1;
-        m = m->parentP;
-      }
-      color = y->color;
-      x = y->rightP;
+      while(m != t){ m->sz -= 1; m = m->parentP; }
+      color = y->color; x = y->rightP;
       if(y->parentP == t) x->parentP = y;
       else{
         transplant(y, y->rightP);
@@ -223,9 +212,6 @@ private:
   Np minimum() const { return get_nil()->nextP; }
   Np maximum() const { return get_nil()->prevP; }
 
-  Np successor(Np t) const { return t->nextP; }
-
-  Np predecessor(Np t) const { return t->prevP; }
 
   Np lower_bound(Np t, const T &key) const {
     if(t->is_nil()) return t;
@@ -301,27 +287,19 @@ public:
     }
     assert(!!y);
     t->parentP = y;
-    if(y->is_nil()){
-      root->nextP = root->prevP = t;  root = t;
-    }else if(cmp(key, y->key)){
-      y->leftP = t; y->prevP->nextP = t; t->nextP = y; t->prevP = y->prevP; y->prevP = t; 
-    }else{
-      y->rightP = t; y->nextP->prevP = t; t->prevP = y; t->nextP = y->nextP; y->nextP = t;
-    }
+    if(y->is_nil()){ root->nextP = root->prevP = t;  root = t; }
+    else if(cmp(key, y->key)){ y->leftP = t; y->prevP->nextP = t; t->nextP = y; t->prevP = y->prevP; y->prevP = t; }
+    else{ y->rightP = t; y->nextP->prevP = t; t->prevP = y; t->nextP = y->nextP; y->nextP = t; }
 
     insert_fixup(t);
     return rank(t);
   }
 
   bool erase(const T &key){
-    Np t = find(key);
+    Np t = find(key), y = t;
     if(t->is_nil()) return false;
     assert(t->key == key);
-    Np y = t;
-    while(y->is_valid()){
-      y->sz -= 1;
-      y = y->parentP;
-    }
+    while(y->is_valid()){ y->sz -= 1; y = y->parentP; }
     erase_impl(t);
     return true;
   }
@@ -352,27 +330,68 @@ public:
 
   size_t size() const { return root->sz; }
 
+  vector<T> enumerate() const {
+    vector<T> res(size());
+    Np t = minimum();
+    for(auto&e : res){ e = t->key; t = t->nextP; }
+    return res;
+  }
+
+  vector<T> enumerate_by_key(const T &l, const T &r) const {
+    vector<T> res;
+    Np t = lower_bound(root, l);
+    while(t->is_valid() && cmp(t->key, r)){ res.push_back(t->key);  t = t->nextP; }
+    return res;
+  }
+
+  vector<T> enumerate_by_idx(int l, int r) const {
+    if(l < 0) l += (int)size();
+    if(r < 0) r += (int)size();
+    if(l < 0 || int(size()) < r || r <= l) return {};
+    vector<T> res(r - l);
+    Np t = select(root, l);
+    for(auto&e : res){ e = t->key; t = t->nextP; }
+    return res;
+  }
+
   struct itr{
     Np t;
-    RedBlackTree<T> &tree;
     bool operator!=(const itr &it) const { return t != it.t; }
-    void operator++(){ t = tree.successor(t); }
-    void operator--(){ tree.predecessor(t); }
+    void operator++(){ t = t->successor(); }
+    void operator--(){ t = t->predecessor(); }
     T operator*() const { return t->key; }
+    itr &operator=(const itr &it){ t = it.t; return (*this); }
   };
 
   struct ritr{
     Np t;
-    RedBlackTree<T> &tree;
     bool operator!=(const ritr &it) const { return t != it.t; }
-    void operator++(){ t = tree.predecessor(t); }
-    void operator--(){ t = tree.successor(t);
-    }
+    void operator++(){ t = t->predecessor(); }
+    void operator--(){ t = t->successor(); }
     T operator*() const { return t->key; }
+    ritr &operator=(const ritr &it){ t = it.t; return (*this); }
   };
 
-  itr begin(){ return {minimum(), *this}; }
-  itr end(){ return {get_nil(), *this}; }
-  ritr rbegin(){ return {maximum(), *this}; }
-  ritr rend(){ return {get_nil(), *this}; }
+  itr begin(){ return {minimum()}; }
+  itr end(){ return {get_nil()}; }
+  ritr rbegin(){ return {maximum()}; }
+  ritr rend(){ return {get_nil()}; }
+
+  itr erase(itr it){
+    Np t = it.t, y = t;
+    assert(t->is_valid());
+    itr res = it; ++res;
+    while(y->is_valid()){ y->sz -= 1; y = y->parentP; }
+    erase_impl(t);
+    return res;
+  }
+
+  ritr erase(ritr it){
+    Np t = it.t, y = t;
+    assert(t->is_valid());
+    ritr res = it; ++res;
+    while(y->is_valid()){ y->sz -= 1; y = y->parentP; }
+    erase_impl(t);
+    return res;
+  }
 };
