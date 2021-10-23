@@ -1,5 +1,5 @@
 namespace geometry{
-  constexpr double eps = 1e-9;
+  constexpr double eps = 1e-10;
   bool eq(double a, double b){ return fabs(a - b) < eps; }
   template<typename T>  bool eq(T a, T b){ return a == b; }
   bool is_zero(double a){ return fabs(a) < eps; }
@@ -8,6 +8,9 @@ namespace geometry{
   template<typename T> bool le(T a, T b){ return a <= b; }
   bool lt(double a, double b){ return a < b - eps; }
   template<typename T> bool lt(T a, T b){ return a < b; }
+  int sgn(double a){ return is_zero(a) ? 0 : ((a < 0) ? -1 : 1); }
+  template<typename T> int sgn(T a){ return (a<0) ? -1 : ((a > 0) ? 1 : 0); }
+  template<typename T> double psqrt(T a){ return sqrt(max(T(0), a)); }
 };
 
 
@@ -92,10 +95,6 @@ template<class T> T Cross(const Point<T> &a, const Point<T> &b) { return a.x * b
 
 template<class T> T Dot(const Point<T> &a, const Point<T> &b) { return a.x * b.x + a.y * b.y; }
 
-template<class T> bool Intersect(const Point<T> &a, const Point<T> &b, const Point<T> &c, const Point<T> &d) {
-  return (iSP(a, b, c)*iSP(a, b, d) <= 0) && (iSP(c, d, a)*iSP(c, d, b) <= 0);
-}
-
 template<class T> int iSP(const Point<T> &a, const Point<T> &b, const Point<T> &c){
   T fl = Cross(b-a, c-a);
   if(geometry::lt(T(0), fl)) return 1; // CCW
@@ -103,6 +102,10 @@ template<class T> int iSP(const Point<T> &a, const Point<T> &b, const Point<T> &
   if(geometry::lt(T(0), Dot(b-a, c-b))) return 2; //abc
   if(geometry::lt(T(0), Dot(a-b, c-a))) return -2; //bac
   return 0; // acb
+}
+
+template<class T> bool Intersect(const Point<T> &a, const Point<T> &b, const Point<T> &c, const Point<T> &d) {
+  return (iSP(a, b, c)*iSP(a, b, d) <= 0) && (iSP(c, d, a)*iSP(c, d, b) <= 0);
 }
 
 template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Point<T> &c){
@@ -278,23 +281,58 @@ template<class T> struct Circle{
     return (od > r*r) ? 2 : 0; // out/in
   }
 
-  Polygon<T> Cross_Points(const Line<T> &l) const {
+  Polygon<T> CrossPoints(const Line<T> &l) const {
     int k = this->Intersect(l);
     if(k == 0) return {};
     Point<T> p = l.projection(o);
     if(k == 1) return {p};
     Point<T> d = (l.b - l.a)/l.a.dist(l.b);
-    double base = sqrt(r*r - (p - o).Norm());
+    double base = geometry::psqrt(r*r - (p - o).Norm());
     return {p + d*base, p - d*base};
   }
 
-  Polygon<T> Cross_Points(const Circle &c) const {
+  Polygon<T> CrossPoints(const Circle &c) const {
     int k = this->Intersect(c);
     if(k == 0 || k == 4) return {};
-    double t = (c.o - o).arg();
-    if(k == 1 || k == 3) return {o + Polar<T>(r, t)};
-    double d = o.dist(c.o), a = acos((r*r + d*d - c.r*c.r) / (r * d * 2));
-    return {o + Polar<T>(r, t + a), o + Polar<T>(r, t - a)};
+    double d = o.dist(c.o), h = (r*r - c.r*c.r + d*d) / (d*2);
+    Point<T> v = (c.o - o) / d;
+    if(k == 1 || k == 3) return {o + v*Point<T>(h, 0) };
+    double s = geometry::psqrt(r*r - h*h);
+    return {o + v*Point<T>(h, s), o + v*Point<T>(h, -s) };
+  }
+
+  Polygon<T> TangentPoints(const Point<T> &p) const {
+    int t = this->Contains(p);
+    if(t == 0) return {};
+    if(t == 1) return {p};
+    double d = p.dist(o), h = r*r/d, s = geometry::psqrt(r*r - h*h);
+    Point<T> v = (p - o) / d;
+    return {o + v*h + v.rotate90()*s, o + v*h + v.rotate270()*s};
+  }
+
+  Polygon<T> TangentPoints(const Circle &c) const {
+    int k = this->Intersect(c);
+    if(k == 0) return {};
+    Polygon<T> ps; 
+    Point<T> p = c.o - o;
+
+    if(k == 1) return { p*r*(r - c.r)/p.Norm() + o };
+
+    double d = geometry::psqrt(p.Norm() - (r - c.r)*(r - c.r));
+    ps.push_back((p*(r - c.r) + p.rotate90()*d)*r/p.Norm() + o);
+    ps.push_back((p*(r - c.r) + p.rotate270()*d)*r/p.Norm() + o);
+    if(k == 2) return ps;
+
+    if(k == 3){
+      ps.push_back(p*r*(r + c.r)/p.Norm() + o);
+      return ps;
+    }
+
+    d = geometry::psqrt(p.Norm() - (r + c.r)*(r + c.r));
+    ps.push_back((p*(r + c.r) + p.rotate90()*d)*r/p.Norm() + o);
+    ps.push_back((p*(r + c.r) + p.rotate270()*d)*r/p.Norm() + o);
+    
+    return ps;
   }
 
   friend ostream &operator<<(ostream &os, const Circle &c) {

@@ -1,5 +1,5 @@
 namespace geometry{
-  constexpr double eps = 1e-9;
+  constexpr double eps = 1e-10;
   bool eq(double a, double b){ return fabs(a - b) < eps; }
   template<typename T>  bool eq(T a, T b){ return a == b; }
   bool is_zero(double a){ return fabs(a) < eps; }
@@ -8,6 +8,9 @@ namespace geometry{
   template<typename T> bool le(T a, T b){ return a <= b; }
   bool lt(double a, double b){ return a < b - eps; }
   template<typename T> bool lt(T a, T b){ return a < b; }
+  int sgn(double a){ return is_zero(a) ? 0 : ((a < 0) ? -1 : 1); }
+  template<typename T> int sgn(T a){ return (a<0) ? -1 : ((a > 0) ? 1 : 0); }
+  template<typename T> double psqrt(T a){ return sqrt(max(T(0), a)); }
 };
 
 
@@ -85,16 +88,11 @@ template<typename T> Point<T> Polar(const T& rho, const T& theta = 0){
   return Point<T>(rho * cos(theta), rho * sin(theta));
 }
 
-
 template<typename T> using Polygon = vector<Point<T>>;
 
 template<class T> T Cross(const Point<T> &a, const Point<T> &b) { return a.x * b.y - a.y * b.x; }
 
 template<class T> T Dot(const Point<T> &a, const Point<T> &b) { return a.x * b.x + a.y * b.y; }
-
-template<class T> bool Intersect(const Point<T> &a, const Point<T> &b, const Point<T> &c, const Point<T> &d) {
-  return (iSP(a, b, c)*iSP(a, b, d) <= 0) && (iSP(c, d, a)*iSP(c, d, b) <= 0);
-}
 
 template<class T> int iSP(const Point<T> &a, const Point<T> &b, const Point<T> &c){
   T fl = Cross(b-a, c-a);
@@ -103,6 +101,10 @@ template<class T> int iSP(const Point<T> &a, const Point<T> &b, const Point<T> &
   if(geometry::lt(T(0), Dot(b-a, c-b))) return 2; //abc
   if(geometry::lt(T(0), Dot(a-b, c-a))) return -2; //bac
   return 0; // acb
+}
+
+template<class T> bool Intersect(const Point<T> &a, const Point<T> &b, const Point<T> &c, const Point<T> &d) {
+  return (iSP(a, b, c)*iSP(a, b, d) <= 0) && (iSP(c, d, a)*iSP(c, d, b) <= 0);
 }
 
 template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Point<T> &c){
