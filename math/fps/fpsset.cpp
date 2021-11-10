@@ -168,10 +168,21 @@ namespace NTT{
 
 
 namespace FFT{
-  template<int mod>
-  vector<ModInt<mod>> tovMint(const vector<long long> &a){
+  template<int mod, typename T>
+  vector<ModInt<mod>> tovMint(const vector<T> &a){
     vector<ModInt<mod>> res(a.size());
     for (size_t i = 0; i < a.size(); i++) res[i] = a[i];
+    return res;
+  }
+
+  vector<int> multiply(const vector<int> &a, const vector<int> &b){
+    // must be less than mod
+    int n = int(a.size()), m = int(b.size());
+    if (!n || !m) return {};
+    static constexpr int MOD1 = 998244353;
+    auto c = NTT::multiply(tovMint<MOD1>(a), tovMint<MOD1>(b));
+    vector<int> res(n+m-1);
+    for(int i = 0; i < n+m-1; ++i) res[i] = c[i].x;
     return res;
   }
 
@@ -194,8 +205,6 @@ namespace FFT{
     auto c1 = NTT::multiply(tovMint<MOD1>(a), tovMint<MOD1>(b));
     auto c2 = NTT::multiply(tovMint<MOD2>(a), tovMint<MOD2>(b));
     auto c3 = NTT::multiply(tovMint<MOD3>(a), tovMint<MOD3>(b));
-
-    
     
     vector<long long> c(n + m - 1);
 
