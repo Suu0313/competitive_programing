@@ -23,6 +23,25 @@ struct TreeDecomposition{
     for(auto&&[e,s] : subtrees) solve(e, s);
 
     // がんばる
+
+     used[c] = false;
+  }
+
+  vector<int> bfs(int r){
+    queue<tuple<int,int,int>> qu;
+    qu.emplace(r, 1, -1);
+    vector<int> ds;
+
+    while(!qu.empty()){
+      auto[v, d, p] = qu.front(); qu.pop();
+      ds.push_back(d);
+      for(auto&&e : tree[v]){
+        if(e == p || used[e]) continue;
+        qu.emplace(e, d+1, v);
+      }
+    }
+
+    return ds;
   }
 
 
