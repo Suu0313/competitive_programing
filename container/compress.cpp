@@ -1,8 +1,8 @@
-template<typename T>
-pair<vector<int>, vector<T>> compress(const vector<T> &v, int base = 0){
+template<typename T, class Compair = less<T>>
+pair<vector<int>, vector<T>> compress(const vector<T> &v, int base = 0, const Compair &cmp = Compair{}){
   int n = v.size();
   vector<int> idx(n); iota(idx.begin(), idx.end(), 0);
-  sort(idx.begin(), idx.end(), [&](int i, int j){ return v[i] < v[j]; });
+  sort(idx.begin(), idx.end(), [&](int i, int j){ return cmp(v[i], v[j]); });
   vector<int> res(n, base);
   vector<T> dict(1, v[idx[0]]);
 
