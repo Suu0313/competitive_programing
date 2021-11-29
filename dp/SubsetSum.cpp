@@ -69,3 +69,10 @@ vector<int> SubsetSum(const vector<int> &a, int x){
   }
   return {};
 }
+
+vector<int> pmsum(const vector<int> &a, int x){
+  // sum (-1)^t ai = x
+  for(auto&e : a) x += e;
+  if(x & 1) return {};
+  return SubsetSum(a, x >> 1);
+}
