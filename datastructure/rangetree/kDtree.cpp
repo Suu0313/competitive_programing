@@ -53,7 +53,7 @@ struct kDTree{
 
   vector<int> find(const array<T, D> &l, const array<T, D> &r) const {
     vector<int> res;
-    find(root, 0, l, r, res);
+    find(root, l, r, res);
     return res;
   }
 
