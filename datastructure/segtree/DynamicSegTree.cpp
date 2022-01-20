@@ -3,8 +3,8 @@ struct DynamicSegTree{
 
   using OP = function<T(T,T)>;
   uint64_t n, n0;
-  const T id;
-  const OP op;
+  T id;
+  OP op;
 
   DynamicSegTree() {}
   DynamicSegTree(uint64_t n_, const T &id, const OP &op) : n(1), n0(n_), id(id),op(op){
