@@ -20,10 +20,10 @@ T convert_base_bto10(const vector<T> &a, T2 b) {
   return ret;
 }
 
-template<typename T>
-vector<T> stovt(const string &s){
+template<typename T = int>
+vector<T> stov(const string &s, char c = '0'){
   int n = int(s.size());
   vector<T> res(n);
-  for(int i = 0; i < n; ++i) res[i] = s[i] - '0';
+  for(int i = 0; i < n; ++i) res[i] = s[i] - c;
   return res;
 }
