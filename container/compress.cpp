@@ -1,19 +1,37 @@
 template<typename T, class Compair = less<T>>
-pair<vector<int>, vector<T>> compress(const vector<T> &v, int base = 0, const Compair &cmp = Compair{}){
-  int n = v.size();
-  vector<int> idx(n); iota(idx.begin(), idx.end(), 0);
-  sort(idx.begin(), idx.end(), [&](int i, int j){ return cmp(v[i], v[j]); });
-  vector<int> res(n, base);
-  vector<T> dict(1, v[idx[0]]);
+struct Compress{
+  vector<T> a;
+  Compair cmp;
+  Compress(const vector<T> &a, const Compair &cmp = Compair{}, bool bd = true, int base = 0)
+  : a(a), cmp(cmp) { if(bd) build(base); }
 
-  for(int i = 1; i < n; i++){
-    int a = idx[i-1], b = idx[i];
-    if(v[a] == v[b]) res[b] = res[a];
-    else{
-      res[b] = res[a] + 1;
-      dict.emplace_back(v[b]);
+  void add(const T &x){ a.emplace_back(x); }
+  void add(const vector<T> &xs){ for(auto&&x : xs ) a.emplace_back(x); }
+
+  vector<T> dict;
+  vector<int> res;
+  void build(int base = 0){
+    int n = int(a.size());
+    if(n == 0) return;
+
+    vector<int> idx(n); iota(idx.begin(), idx.end(), 0);
+    sort(idx.begin(), idx.end(), [&](int i, int j){ return cmp(a[i], a[j]); });
+    
+    res.assign(n, base); dict.assign(1, a[idx[0]]);
+    for(int i = 1; i < n; i++){
+      int x = idx[i-1], y = idx[i];
+      if(a[x] == a[y]) res[y] = res[x];
+      else{
+        res[y] = res[x] + 1;
+        dict.emplace_back(a[y]);
+      }
     }
   }
 
-  return {res, dict};
-}
+  int get(const T &x) const {
+    return lower_bound(begin(dict), end(dict), x) - begin(dict);
+  }
+  const int &operator[](int k) const { return res[k]; }
+
+  size_t size() const { return dict.size(); }
+};
