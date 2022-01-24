@@ -20,9 +20,6 @@ typedef vector<char> VC;
 typedef vector<VC> VVC;
 typedef vector<PII> VPII;
 typedef vector<PLL> VPLL;
-#define umap unordered_map
-#define uset unordered_set
-#define umset unordered_multiset
 
 #define LB lower_bound
 #define UB upper_bound
@@ -137,6 +134,12 @@ template<class T1, class T2> pair<T1,T2> &operator--(pair<T1, T2> &p){ --p.first
 template<typename T> vector<T> make_v(size_t a,T b){ return vector<T>(a, b); }
 template<typename... Ts> auto make_v(size_t a,Ts... ts){ return vector(a,make_v(ts...)); }
 
+template<typename T = int> vector<T> stov(const string &s, char c = '0'){
+  vector<T> res(s.size());
+  for(size_t i = 0; i < s.size(); ++i) res[i] = s[i] - c;
+  return res;
+}
+
 template<typename Container>
 constexpr int SZ(const Container &c){ return size(c); }
 template<typename Container>
@@ -239,6 +242,6 @@ int main(){
 
 
 
-
+  
   return 0;
 }
