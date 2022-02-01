@@ -6,10 +6,10 @@ void split(const string& str, char delim, const F& f){
     f(token);
   }
 }
-vector<string> split(const string& str, char delim=' '){
+vector<string> split(const string& str, char delim=' ', bool rmsp = true){
   vector<string> tokens;
-  split(str, delim, [&tokens](const string& token){
-    if(!token.empty()) tokens.emplace_back(token);
+  split(str, delim, [&tokens, &rmsp](const string& token){
+    if(!(rmsp && token.empty())) tokens.emplace_back(token);
   });
   return tokens;
 }
