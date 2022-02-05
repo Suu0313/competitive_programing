@@ -24,6 +24,16 @@ struct Sieve{
     return res;
   }
 
+  vector<int> vfactor(int a){
+    vector<int> ps;
+    while(~a&1 && a > 1){ ps.push_back(2); a >>= 1; }
+    while(a > 1){
+      ps.push_back(min_factor[a>>1]);
+      a /= min_factor[a>>1];
+    }
+    return ps;
+  }
+
   bool isPrime(int p){
     if(p<=1) return false;
     if(p==2) return true;
