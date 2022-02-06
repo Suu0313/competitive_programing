@@ -9,7 +9,7 @@ struct Sieve{
     for(int i = 1; i < sni; ++i){
       if(min_factor[i] < 2*i+1) continue;
       for(int j = 2*i*(i+1); j < ni; j += 2*i+1){
-        min_factor[j] = 2*i + 1;
+        if(min_factor[j] > 2*i + 1) min_factor[j] = 2*i + 1;
       }
     }
   }
