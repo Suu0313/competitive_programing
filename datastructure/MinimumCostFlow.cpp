@@ -10,22 +10,20 @@ struct PrimalDual{
 
   int n;
   vector<vector<Edge>> g;
+  vector<cost_t> min_cost, potential;
   
-  PrimalDual(int n): n(n), g(n) {}
+  PrimalDual(int n): n(n), g(n), min_cost(n), potential(n) {}
 
   void add_edge(int from, int to, cap_t cap, cost_t cost){
     g[from].emplace_back((Edge){to, cap, cost, g[to].size(), false});
     g[to].emplace_back((Edge){from, 0, -cost, g[from].size()-1, true});
   }
 
-  cost_t flow(int s, int t, cap_t flow_limit, bool has_negative = false){
+  cost_t flow(int s, int t, cap_t flow_limit){
     using P = pair<cost_t, int>;
     priority_queue<P, vector<P>, greater<P>> pq;
-    vector<cost_t> min_cost(n), potential(n);
     cost_t res = 0, inf = numeric_limits<cost_t>::max();
     vector<pair<int, int>> pre(n);
-
-    if(has_negative) potential = remove_negative();
 
     while(flow_limit > 0){
       pq.emplace(0, s);
@@ -64,10 +62,5 @@ struct PrimalDual{
       res += min_cap * potential[t];
     }
     return res;
-  }
-
-  vector<cost_t> remove_negative(){
-    // ToDo
-    return {};
   }
 };
