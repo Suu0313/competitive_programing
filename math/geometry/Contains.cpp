@@ -8,5 +8,5 @@ int Contains(const Polygon<T> &ps, const Point<T>& p){
     if(a.y <= 0 && 0 < b.y && Cross(a,b) < 0) in = !in;
     if(geometry::is_zero(Cross(a, b)) && geometry::le(Dot(a, b), T(0))) return 1; // on
   }
-  return in? 2 : 0; // out/in
+  return in? 2 : 0; // in/out
 }
