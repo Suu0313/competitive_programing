@@ -79,6 +79,15 @@ struct Combination{
     if(k < n+m-1) return com(n+k, k) - com(n+k, k-m);
     return 0;
   }
+  
+  T random_walk(int n, int x){
+    if(n < abs(x) || n%2 != abs(x)%2) return 0;
+    return com(n, (n + x)/2);
+  }
+
+  T random_walk(int n, int x, int y){
+    return random_walk(n, x+y) * random_walk(n, x-y);
+  }
 
 private:
   void append(int n){
