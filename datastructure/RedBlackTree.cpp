@@ -31,12 +31,9 @@ private:
   };
   using Np = Node*;
 
-  static Np get_nil(){
-    static Node nil = Node{};
-    return &nil;
-  }
+  Np nil = new Node{};
 
-  Np root = get_nil();
+  Np root = nil;
   const Compair cmp;
 
   void rotate_left(Np t){
@@ -108,7 +105,7 @@ private:
   }
 
   void erase_impl(Np t){
-    Np x = get_nil(), y = t;
+    Np x = nil, y = t;
     Color color = y->color;
     if(t->leftP->is_nil()){
       x = t->rightP;
@@ -209,8 +206,8 @@ private:
     return t;
   }
 
-  Np minimum() const { return get_nil()->nextP; }
-  Np maximum() const { return get_nil()->prevP; }
+  Np minimum() const { return nil->nextP; }
+  Np maximum() const { return nil->prevP; }
 
 
   Np lower_bound(Np t, const T &key) const {
@@ -267,18 +264,18 @@ private:
 public:
 
   RedBlackTree(const Compair &cmp = Compair{}): cmp(cmp) {
-    root->nextP = root->prevP = get_nil();
+    root->nextP = root->prevP = nil;
   }
   RedBlackTree(initializer_list<T> v ,const Compair &cmp = Compair{}): cmp(cmp) {
-    root->nextP = root->prevP = get_nil();
+    root->nextP = root->prevP = nil;
     for(auto&e : v) insert(e);
   }
 
   size_t insert(const T &key){
     Np t = new Node(key, RED);
-    t->leftP = t->rightP = t->nextP = t->prevP = get_nil();
+    t->leftP = t->rightP = t->nextP = t->prevP = nil;
 
-    Np x = root, y = get_nil();
+    Np x = root, y = nil;
     while(x->is_valid()){
       y = x;
       if(cmp(key, x->key)) x = x->leftP;
@@ -373,9 +370,9 @@ public:
   };
 
   itr begin(){ return {minimum()}; }
-  itr end(){ return {get_nil()}; }
+  itr end(){ return {nil}; }
   ritr rbegin(){ return {maximum()}; }
-  ritr rend(){ return {get_nil()}; }
+  ritr rend(){ return {nil}; }
 
   itr erase(itr it){
     Np t = it.t, y = t;
