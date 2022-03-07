@@ -1,9 +1,13 @@
 template<typename T = unsigned,  int B = 32>
 struct BinaryTrie{
   vector<array<int, 2>> to;
-  vector<size_t> sz;
+  vector<size_t> sz, cnt;
 
-  BinaryTrie(): to(1, {0, 0}), sz(1) {}
+  BinaryTrie(): to(1, {0, 0}), sz(1), cnt(1) {}
+
+  BinaryTrie(int n): to(1, {0, 0}), sz(1), cnt(1) {
+    to.reserve(n); sz.reserve(n); cnt.reserve(n);
+  }
 
   size_t size() const { return sz[0]; }
 
@@ -16,7 +20,7 @@ struct BinaryTrie{
       if(to[pos][j] == 0) return 0;
       pos = to[pos][j];
     }
-    return sz[pos];
+    return cnt[pos];
   }
 
   int insert(T x){
@@ -26,6 +30,7 @@ struct BinaryTrie{
       if(to[pos][j] == 0) to[pos][j] = add_node();
       ++sz[pos = to[pos][j]];
     }
+    ++cnt[pos];
     return pos;
   }
 
@@ -37,11 +42,14 @@ struct BinaryTrie{
       pos = to[pos][j];
     }
 
+    if(!cnt[pos]) return -1;
+
     pos = 0; --sz[pos];
     for(int i = B-1; i >= 0; --i){
       int j = x >> i & 1;
       --sz[pos = to[pos][j]];
     }
+    --cnt[pos];
     return pos;
   }
 
@@ -67,6 +75,7 @@ private:
     size_t i = to.size();
     to.push_back({0, 0});
     sz.push_back(0);
+    cnt.push_back(0);
     return i;
   }
 };
