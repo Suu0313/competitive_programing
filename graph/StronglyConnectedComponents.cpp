@@ -20,7 +20,7 @@ struct StronglyConnectedComponents{
 
   int at(int k){return compo.at(k);}
 
-  void addEdge(int u, int v){
+  void add_edge(int u, int v){
     G[u].emplace_back(v);
     rG[v].emplace_back(u);
   }
@@ -74,22 +74,22 @@ private:
   void dfs(int now){
     if(used[now]) return;
 
-    stack<pair<int, bool>> st;
-    st.emplace(now, true);
+    stack<int> st;
+    st.emplace(now);
 
     while(!st.empty()){
-      auto[v,f] = st.top(); st.pop();
-      if(f){
+      auto v = st.top(); st.pop();
+      if(v < N){
         if(used[v]) continue;
         used[v] = true;
 
-        st.emplace(v, false);
+        st.emplace(v + N);
         for(auto&&e : G[v]){
           if(used[e]) continue;
-          st.emplace(e, true);
+          st.emplace(e);
         }
       }else{
-        order.emplace_back(v);
+        order.emplace_back(v - N);
       }
     }
   }
