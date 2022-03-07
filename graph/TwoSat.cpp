@@ -11,20 +11,20 @@ struct TwoSat{
   void add_or(int u, int v, bool f=true, bool g=true){
     if(!f) u = rev(u);
     if(!g) v = rev(v);
-    scc.addEdge(rev(u), v);
-    scc.addEdge(rev(v), u);
+    scc.add_edge(rev(u), v);
+    scc.add_edge(rev(v), u);
   }
 
   void add_nand(int u, int v, bool f=true, bool g=true){
     if(!f) u = rev(u);
     if(!g) v = rev(v);
-    scc.addEdge(u, rev(v));
-    scc.addEdge(v, rev(u));
+    scc.add_edge(u, rev(v));
+    scc.add_edge(v, rev(u));
   }
 
   void add_one(int u, bool f=true){
     if(!f) u = rev(u);
-    scc.addEdge(rev(u),u);
+    scc.add_edge(rev(u),u);
   }
 
   void add_if_then(int u, int v, bool f=true, bool g=true){
