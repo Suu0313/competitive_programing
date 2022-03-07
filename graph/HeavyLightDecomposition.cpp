@@ -12,7 +12,7 @@ struct HeavyLightDecomposition{
     dfs0(root); dfs(root);
   }
 
-  int la(int v, int k){
+  int level_ancestor(int v, int k){
     while(1){
       int u = branch[v];
       if(in[v]-k >= in[u]) return rev[in[v] - k];
@@ -54,8 +54,34 @@ struct HeavyLightDecomposition{
     return es;
   }
 
+  int to_vertex(int k) const { return rev[k]; }
+
+  int to_idx(int v) const { return in[v]; }
+
+
+  int to_idx(int u, int v) const {
+    if(in[u] > in[v]) swap(u, v);
+    assert(par[v] == u);
+    return in[v];
+  }
+  
   template<typename Q>
-  void update(int u, int v, const Q &q, bool isedge = false){
+  void update_vertex(int v, const Q &q) const { q(in[v]); }
+
+  template<typename Q>
+  void update_edge(int u, int v, const Q &q) const {
+    if(in[u] > in[v]) swap(u, v);
+    assert(par[v] == u);
+    q(in[v]);
+  }
+
+  template<typename Q>
+  void update_subtree(int v, const Q &q, bool isedge = false) const {
+    q(in[v]+isedge, out[v]);
+  }
+
+  template<typename Q>
+  void update_path(int u, int v, const Q &q, bool isedge = false) const {
     for(;; v = par[branch[v]]){
       if(in[u] > in[v]) swap(u, v);
       if(branch[u] == branch[v]) break;
@@ -64,28 +90,7 @@ struct HeavyLightDecomposition{
     q(in[u]+isedge, in[v] + 1);
   }
 
-  template<typename Q>
-  void update(int v, const Q &q, bool isedge = false){
-    q(in[v]+isedge, out[v]);
-  }
-
-  template<typename U, typename Q, typename F>
-  U query(int u, int v, const U &ui, const Q &q, const F &f, bool isedge = false){
-    U l = ui, r = ui;
-    for(;; v = par[branch[v]]){
-      if(in[u] > in[v]) swap(u, v), swap(l, r);
-      if(branch[u] == branch[v]) break;
-      l = f(q(in[branch[v]], in[v] + 1), l);
-    }
-    return f(f(q(in[u]+isedge, in[v] + 1), l), r);
-  }
-
-  template<typename U, typename F>
-  U query(int v, const F &f, bool isedge = false){
-    return f(in[v]+isedge, out[v]);
-  }
-
-  vector<pair<int,int>> get_segments(int u, int v, bool isedge = false){
+  vector<pair<int,int>> get_segments(int u, int v, bool isedge = false) const {
     vector<pair<int,int>> l, r;
     while(branch[u] != branch[v]){
       if(in[u] > in[v]) l.emplace_back(in[u]+1, in[branch[u]]), u=par[branch[u]];
@@ -98,25 +103,41 @@ struct HeavyLightDecomposition{
     return l;
   }
 
+  template<typename U, typename Q, typename F>
+  U query_path(int u, int v, const U &id, const Q &get_val, const F &prod, bool isedge = false) const {
+    U l = id, r = id;
+    for(;; v = par[branch[v]]){
+      if(in[u] > in[v]) swap(u, v), swap(l, r);
+      if(branch[u] == branch[v]) break;
+      l = prod(get_val(in[branch[v]], in[v] + 1), l);
+    }
+    return prod(prod(get_val(in[u]+isedge, in[v] + 1), l), r);
+  }
+
+  template<typename U, typename F>
+  U query_subtree(int v, const F &f, bool isedge = false) const {
+    return f(in[v]+isedge, out[v]);
+  }
+
   template<typename U, typename Q1, typename Q2, typename F>
-  U query(int u, int v, const U &ui, const Q1 &q1, const Q2 &q2, const F &f, bool isedge){
-    U res = ui;
+  U query_path(int u, int v, const U &id, const Q1 &get_val1, const Q2 &get_val2, const F &prod, bool isedge) const {
+    U res = id;
     for(auto&[a, b] : get_segments(u, v, isedge)){
-      if(a > b) res = f(res, q2(b, a));
-      else res = f(res, q1(a, b));
+      if(a > b) res = prod(res, get_val2(b, a));
+      else res = prod(res, get_val1(a, b));
     }
     return res;
   }
 
 private:
   void dfs0(int root){
-    stack<pair<int, bool>> st;
-    st.emplace(root, true);
+    stack<int> st;
+    st.emplace(root);
     par[root] = -1;
     while(!st.empty()){
-      auto[v, f] = st.top(); st.pop();
-      if(f){
-        sz[v] = 1; st.emplace(v, false);
+      auto v = st.top(); st.pop();
+      if(v < n){
+        sz[v] = 1; st.emplace(v + n);
         if(g[v].size() && g[v][0] == par[v]) swap(g[v].front(), g[v].back());
         
         for(auto&&to : g[v]){
@@ -124,9 +145,10 @@ private:
           depth[to] = depth[v] + 1;
           dist[to] = dist[v] + to.cost;
           par[to] = v;
-          st.emplace(to, true);
+          st.emplace(to);
         }
       }else{
+        v -= n;
         for(auto&&to : g[v]){
           sz[v] += sz[to];
           if(sz[g[v].front()] < sz[to]) swap(g[v].front(), to);
@@ -136,23 +158,23 @@ private:
   }
 
   void dfs(int root){
-    stack<pair<int, bool>> st;
-    st.emplace(root, true);
+    stack<int> st;
+    st.emplace(root);
     int t = 0;
     while(!st.empty()){
-      auto[v, f] = st.top(); st.pop();
-      if(f){
+      auto v = st.top(); st.pop();
+      if(v < n){
         in[v] = t++; rev[in[v]] = v;
-        st.emplace(v, false);
+        st.emplace(v + n);
         for(int i = (int)g[v].size()-1; i >= 0; i--){
           auto&&to = g[v][i];
           if(to == par[v]) continue;
           if(g[v].front() == to) branch[to] = branch[v];
           else branch[to] = to;
-          st.emplace(to, true);
+          st.emplace(to);
         }
       }else{
-        out[v] = t;
+        out[v - n] = t;
       }
     }
   }
