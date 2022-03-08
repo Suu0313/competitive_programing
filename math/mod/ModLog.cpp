@@ -35,6 +35,7 @@ T ModLog(T x, T y, T m){ // x^k = y mod m
 
   unordered_map<T, T> bs;
   for(T s = 0, b = 1; s < h; ++s){
+    if(bs.count(b)) break;
     bs[b] = s; (b *= x) %= m;
   }
   
