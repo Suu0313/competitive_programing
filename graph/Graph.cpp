@@ -5,8 +5,7 @@ struct Edge{
   Edge(int src, int to, T cost = -1, int idx = -1): src(src), to(to), cost(cost), idx(idx) {}
   operator int() const { return to; }
 };
-template<typename T>
-using Edges = vector<Edge<T>>;
+template<typename T> using Edges = vector<Edge<T>>;
 
 template<typename T = bool>
 struct Graph {
