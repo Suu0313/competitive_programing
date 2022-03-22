@@ -91,8 +91,9 @@ T MUL(const T &a, const T &b, const T &lim = numeric_limits<T>::max()){
 template<class T> constexpr T Sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
 inline int Pcnt(unsigned long long x) { return __builtin_popcountll(x); }
-inline int LSB(unsigned long long x){ return __builtin_ctzll(x); }
-inline int BWidth(unsigned long long x){ return 64 - __builtin_clzll(x); }
+inline int FFS(unsigned long long x){ return __builtin_ffsll(x); }
+inline int LSB(unsigned long long x){ return x==0 ? -1 :  __builtin_ctzll(x); }
+inline int BWidth(unsigned long long x){ return x==0 ? 0 : (64 - __builtin_clzll(x)); }
 
 template<typename T>
 T ModInv(T a, T m){
@@ -191,6 +192,13 @@ string format(const string &fmt, Ts... ts){
   return string(buf.begin(), buf.end()-1);
 }
 
+template<typename Container>
+string join(const Container&v, const string &sep = "", const string &en = ""){
+  stringstream s;
+  for(size_t i = 0; i < size(v); i++) s << v[i] << (i+1 != size(v) ? sep : en);
+  return s.str();
+}
+
 #define WHOLE(some_of, n, i, ...) ([&]{ vector<int> index(n); iota(begin(index), end(index), 0); return some_of(begin(index), end(index) , [&](int i){ __VA_ARGS__; } );})()
 
 bool cYN(bool fl=true,bool fl2=false){cout << (fl?"Yes":"No") << '\n'; if(fl2){ exit(0); } return fl; }
@@ -200,6 +208,11 @@ template<class T> void COUT(T&& t){ cout << t << '\n'; }
 template<class T,class... Ts> void COUT(T&& t,Ts&&... ts){ cout << t << " "; COUT(ts...); }
 template<class... Ts> void CIN(Ts&&... ts){ (cin >> ... >> ts); }
 #define INPUT(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)
+
+struct input{
+  template<typename T> operator T(){ T e; cin >> e; return e; }
+};
+#define I =input{}
 
 template< typename T1, typename T2 > istream &operator>>(istream &is, pair<T1, T2> &p) {
   is >> p.first >> p.second; return is;
