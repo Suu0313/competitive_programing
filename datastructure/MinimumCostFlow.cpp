@@ -63,4 +63,28 @@ struct PrimalDual{
     }
     return res;
   }
+
+  void remove_minus_dag(){
+    queue<int> qu;
+    vector<int> in(n);
+    for(int i = 0; i < n; ++i){
+      for(auto&&e : g[i]){
+        if(e.is_rev) continue;
+        ++in[e.to];
+      }
+    }
+
+    for(int i = 0; i < n; ++i){
+      if(in[i] == 0) qu.push(i);
+    }
+
+    while(!qu.empty()){
+      int v = qu.front(); qu.pop();
+      for(auto&&e : g[v]){
+        if(e.is_rev) continue;
+        potential[e.to] = min(potential[e.to], potential[v] + e.cost);
+        if(--in[e.to] == 0) qu.push(e.to);
+      }
+    }
+  }
 };
