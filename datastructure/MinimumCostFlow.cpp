@@ -64,9 +64,12 @@ struct PrimalDual{
     return res;
   }
 
-  void remove_minus_dag(){
+  void remove_minus_dag(int s){
     queue<int> qu;
     vector<int> in(n);
+    cost_t inf = numeric_limits<cost_t>::max();
+    potential.assign(n, inf); potential[s] = 0;
+
     for(int i = 0; i < n; ++i){
       for(auto&&e : g[i]){
         if(e.is_rev) continue;
@@ -74,15 +77,15 @@ struct PrimalDual{
       }
     }
 
-    for(int i = 0; i < n; ++i){
-      if(in[i] == 0) qu.push(i);
-    }
+    for(int i = 0; i < n; ++i) if(in[i] == 0) qu.push(i);
 
     while(!qu.empty()){
       int v = qu.front(); qu.pop();
       for(auto&&e : g[v]){
         if(e.is_rev) continue;
-        potential[e.to] = min(potential[e.to], potential[v] + e.cost);
+        if(potential[v] != inf){
+          potential[e.to] = min(potential[e.to], potential[v] + e.cost);
+        }
         if(--in[e.to] == 0) qu.push(e.to);
       }
     }
