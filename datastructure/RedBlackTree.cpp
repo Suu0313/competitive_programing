@@ -369,10 +369,10 @@ public:
     ritr &operator=(const ritr &it){ t = it.t; return (*this); }
   };
 
-  itr begin(){ return {minimum()}; }
-  itr end(){ return {nil}; }
-  ritr rbegin(){ return {maximum()}; }
-  ritr rend(){ return {nil}; }
+  itr begin() const { return {minimum()}; }
+  itr end() const { return {nil}; }
+  ritr rbegin() const { return {maximum()}; }
+  ritr rend() const { return {nil}; }
 
   itr erase(itr it){
     Np t = it.t, y = t;
@@ -391,4 +391,19 @@ public:
     erase_impl(t);
     return res;
   }
+
+  void swap(RedBlackTree &tree){
+    Np tmp = this->root;
+    this->root = tree.root;
+    tree.root = tmp;
+    tmp = this->nil;
+    this->nil = tree.nil;
+    tree.nil = tmp;
+  }
+
+  void merge(const RedBlackTree &tree){
+    for(auto&&e : tree) this->insert(e);
+  }
 };
+template<typename T, class Compair>
+void swap(RedBlackTree<T, Compair> &t1, RedBlackTree<T, Compair> &t2){ t1.swap(t2); }
