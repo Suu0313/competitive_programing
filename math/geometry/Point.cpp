@@ -37,6 +37,9 @@ template<class T> struct Point{
   bool operator==(const Point &b) const {
     return geometry::eq(x, b.x) && geometry::eq(y, b.y);
   }
+  bool operator!=(const Point &b) const {
+    return !(geometry::eq(x, b.x) && geometry::eq(y, b.y));
+  }
   bool operator<(const Point &b) const { 
     if(geometry::eq(x, b.x)) return y < b.y;
     return x < b.x;
