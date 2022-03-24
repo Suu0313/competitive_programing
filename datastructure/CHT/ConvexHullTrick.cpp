@@ -69,14 +69,14 @@ struct ConvexHullTrick{
 
   T query_inc(T x){
     assert(!empty());
-    while(SZ(Lines)>=2 && comp(Lines.front(),Lines[1],x)) Lines.pop_front();
+    while(int(Lines.size())>=2 && comp(Lines.front(),Lines[1],x)) Lines.pop_front();
     if(isMin) return get_y(Lines.front(), x);
     return -get_y(Lines.front(), x);
   }
 
   T query_dec(T x){
     assert(!empty());
-    while(SZ(Lines)>=2 && comp(Lines.back(),Lines[SZ(Lines)-2],x)) Lines.pop_back();
+    while(int(Lines.size())>=2 && comp(Lines.back(),Lines[int(Lines.size())-2],x)) Lines.pop_back();
     if(isMin) return get_y(Lines.back(), x);
     return -get_y(Lines.back(), x);
   }
