@@ -37,9 +37,7 @@ struct BIT{
   }
   /*
   //invension number
-  REP(i,N){
-    ans += i - bit.sum(a.at(i));
-    bit.add(a.at(i),1);
-  }
+  ans += i - bit.sum(a[i]+1);
+  bit.add(a[i],1);
   */
 };
