@@ -80,4 +80,6 @@ ArbitraryModInt operator/(const int64_t &p, const ArbitraryModInt &m){ return Ar
 using amint = ArbitraryModInt;
 using VMA = vector<amint>;
 using VVMA = vector<VMA>;
-amint operator""_am(unsigned long long x) { return amint(x); }
+
+namespace amintliteral{ amint operator""_am(unsigned long long x) { return amint(x); } }
+using namespace amintliteral;

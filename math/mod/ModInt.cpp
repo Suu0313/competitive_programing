@@ -78,4 +78,6 @@ constexpr ModInt<mod> operator/(const int64_t &p, const ModInt<mod> &m){ return 
 using mint = ModInt< MOD >;
 using VM = vector<mint>;
 using VVM = vector<VM>;
-constexpr mint operator""_m(unsigned long long x) { return mint(x); }
+
+namespace mintliteral{ constexpr mint operator""_m(unsigned long long x) { return mint(x); } }
+using namespace mintliteral;
