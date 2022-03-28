@@ -4,5 +4,5 @@ vector<T> bitwise_and_convolution(vector<T> f, vector<T> g){
   g = superset_fast_zeta_transform(g);
   int n = min(f.size(), g.size());
   for(int i = 0; i < n; ++i) f[i] *= g[i];
-  return superset_fast_moebius_transform(f);
+  return superset_fast_mobius_transform(f);
 }

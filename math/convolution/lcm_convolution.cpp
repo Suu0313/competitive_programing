@@ -5,5 +5,5 @@ vector<T> lcm_convolution(vector<T> f, vector<T> g){
   f = divisor_fast_zeta_transform(f);
   g = divisor_fast_zeta_transform(g);
   for(int i = 0; i < n; ++i) f[i] *= g[i];
-  return divisor_fast_moebius_transform(f);
+  return divisor_fast_mobius_transform(f);
 }
