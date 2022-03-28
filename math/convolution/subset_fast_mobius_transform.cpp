@@ -1,5 +1,5 @@
 template<typename T, class Minus = minus<T>>
-vector<T> subset_fast_moebius_transform(vector<T> f, const Minus &op = Minus{}){
+vector<T> subset_fast_mobius_transform(vector<T> f, const Minus &op = Minus{}){
   int n = int(f.size());
   for(int i = 1; i < n; i <<= 1){
     for(int j = 0; j < n; ++j){

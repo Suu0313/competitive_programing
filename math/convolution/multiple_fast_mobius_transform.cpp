@@ -1,5 +1,5 @@
 template<typename T, class Minus = minus<T>>
-vector<T> multiple_fast_moebius_transform(vector<T> f, const Minus &op = Minus{}){
+vector<T> multiple_fast_mobius_transform(vector<T> f, const Minus &op = Minus{}){
   int n = int(f.size());
   vector<bool> sieve(n, true);
   for(int p = 2; p < n; ++p){
