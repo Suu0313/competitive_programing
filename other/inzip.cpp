@@ -3,9 +3,9 @@ template<class Container> auto myref(Container &&c, size_t i){ return c[i]; }
 
 template<class... Cs>
 auto inzip(Cs&&... cs){
-  vector v(1, make_tuple(myref(std::forward<Cs>(cs), 0)...));
-  size_t n = min({size(cs)...});
-  for(size_t i = 1; i < n; i++) v.push_back(make_tuple(myref(std::forward<Cs>(cs), i)...));
+  vector<tuple<conditional_t<is_lvalue_reference_v<Cs>, add_lvalue_reference_t<typename remove_reference_t<Cs>::value_type>, typename remove_reference_t<Cs>::value_type>...>> v;
+  size_t n = min({size(cs)...}); v.reserve(n);
+  for(size_t i = 0; i < n; i++) v.emplace_back(myref(std::forward<Cs>(cs), i)...);
   return v;
 }
 
