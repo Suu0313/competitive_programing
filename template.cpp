@@ -4,22 +4,14 @@
 using namespace std;
 
 typedef long long LL;
-typedef pair<int, int> PII;
-typedef pair<LL,LL> PLL;
-typedef vector<int> VI;
-typedef vector<VI> VVI;
-typedef vector<LL> VLL;
-typedef vector<VLL> VVLL;
-typedef vector<bool> VB;
-typedef vector<VB> VVB;
-typedef vector<double> VD;
-typedef vector<VD> VVD;
-typedef vector<string> VS;
-typedef vector<VS> VVS;
-typedef vector<char> VC;
-typedef vector<VC> VVC;
-typedef vector<PII> VPII;
-typedef vector<PLL> VPLL;
+typedef pair<int, int> PII; typedef pair<LL,LL> PLL;
+typedef vector<int> VI; typedef vector<VI> VVI;
+typedef vector<LL> VLL; typedef vector<VLL> VVLL;
+typedef vector<bool> VB; typedef vector<VB> VVB;
+typedef vector<double> VD; typedef vector<VD> VVD;
+typedef vector<string> VS; typedef vector<VS> VVS;
+typedef vector<char> VC; typedef vector<VC> VVC;
+typedef vector<PII> VPII; typedef vector<PLL> VPLL;
 
 #define LB lower_bound
 #define UB upper_bound
@@ -71,23 +63,6 @@ constexpr LL MASK(int n) { return (1ll << n)-1; }
 constexpr LL MASK(int l, int r) { return MASK(r) - MASK(l); }
 constexpr bool BITAT(LL bit, int n){ return (bit>>n) & 1; }
 
-#define ADD_OVERFLOW(a, b) __builtin_add_overflow_p (a, b, (decltype(a)) 0)
-#define SUB_OVERFLOW(a, b) __builtin_sub_overflow_p (a, b, (decltype(a)) 0)
-#define MUL_OVERFLOW(a, b) __builtin_mul_overflow_p (a, b, (decltype(a)) 0)
-
-template<typename T>
-T ADD(const T &a, const T &b, const T &lim = numeric_limits<T>::max()){
-  if(ADD_OVERFLOW(a,b)){ return lim; } return min(a+b, lim);
-}
-template<typename T>
-T SUB(const T &a, const T &b, const T &lim = numeric_limits<T>::lowest()){
-  if(SUB_OVERFLOW(a,b)){ return lim; } return max(a-b, lim);
-}
-template<typename T>
-T MUL(const T &a, const T &b, const T &lim = numeric_limits<T>::max()){
-  if(MUL_OVERFLOW(a,b)){ return lim; } return min(a*b, lim);
-}
-
 template<class T> constexpr T Sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
 inline int Pcnt(unsigned long long x) { return __builtin_popcountll(x); }
@@ -98,11 +73,7 @@ inline int BWidth(unsigned long long x){ return x==0 ? 0 : (64 - __builtin_clzll
 template<typename T>
 T ModInv(T a, T m){
   T b = m, u= 1, v = 0;
-  while(b){
-    T t = a/b;
-    a -= t*b; swap(a,b);
-    u -= t*v; swap(u,v);
-  }
+  while(b){ T t = a/b; a -= t*b; swap(a,b); u -= t*v; swap(u,v); }
   u %= m; if(u<0) u+= m;
   return u;
 }
@@ -117,8 +88,7 @@ T Pow(T a, LL n, T m = 0, T e = 1){
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 
-template<typename T>
-T Sum(const vector<T> &v){ return reduce(v.begin(),v.end()); }
+template<typename T> T Sum(const vector<T> &v){ return reduce(v.begin(),v.end()); }
 template<typename T>
 T gcd(const vector<T> &v){ return reduce(v.begin(),v.end(),T(0),[](auto&&a, auto&&b){ return gcd(a,b); }); }
 template<typename T>
@@ -141,14 +111,10 @@ template<typename T = int> vector<T> stov(const string &s, char c = '0'){
   return res;
 }
 
-template<typename Container>
-constexpr int SZ(const Container &c){ return size(c); }
-template<typename Container>
-Container Rev(Container c){ reverse(begin(c), end(c)); return c; }
-template<typename T = int>
-vector<T> iota(int n, T e = 0){ vector<T> v(n); iota(begin(v), end(v), e); return v; }
-template<typename Container>
-Container Sort(Container c){ sort(begin(c), end(c)); return c; }
+template<typename Container> constexpr int SZ(const Container &c){ return size(c); }
+template<typename Container> Container Rev(Container c){ reverse(begin(c), end(c)); return c; }
+template<typename T = int> vector<T> iota(int n, T e = 0){ vector<T> v(n); iota(begin(v), end(v), e); return v; }
+template<typename Container> Container Sort(Container c){ sort(begin(c), end(c)); return c; }
 template<typename Container, class Compair>
 Container Sort(Container c, const Compair &cmp){ sort(begin(c), end(c), cmp); return c; }
 template<typename T>
@@ -199,7 +165,22 @@ string join(const Container&v, const string &sep = "", const string &en = ""){
   return s.str();
 }
 
-#define WHOLE(some_of, n, i, ...) ([&]{ vector<int> index(n); iota(begin(index), end(index), 0); return some_of(begin(index), end(index) , [&](int i){ __VA_ARGS__; } );})()
+template<class Container> auto myref(Container &c, size_t i){ return ref(c[i]); }
+template<class Container> auto myref(Container &&c, size_t i){ return c[i]; }
+
+template<class... Cs>
+auto inzip(Cs&&... cs){
+  vector<tuple<conditional_t<is_lvalue_reference_v<Cs>, add_lvalue_reference_t<typename remove_reference_t<Cs>::value_type>, typename remove_reference_t<Cs>::value_type>...>> v;
+  size_t n = min({size(cs)...}); v.reserve(n);
+  for(size_t i = 0; i < n; i++) v.emplace_back(myref(std::forward<Cs>(cs), i)...);
+  return v;
+}
+
+template<class... Cs>
+auto enumerate(Cs&&... cs){
+  auto iota_impl = [&]{ vector<int> idx(min({size(cs)...})); iota(begin(idx), end(idx), 0); return idx; };
+  return inzip(iota_impl(), cs...);
+}
 
 bool cYN(bool fl=true,bool fl2=false){cout << (fl?"Yes":"No") << '\n'; if(fl2){ exit(0); } return fl; }
 bool CYN(bool fl=true,bool fl2=false){cout << (fl?"YES":"NO") << '\n'; if(fl2){ exit(0); } return fl; }
@@ -209,10 +190,6 @@ template<class T,class... Ts> void COUT(T&& t,Ts&&... ts){ cout << t << " "; COU
 template<class... Ts> void CIN(Ts&&... ts){ (cin >> ... >> ts); }
 #define INPUT(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)
 
-struct input{
-  template<typename T> operator T(){ T e; cin >> e; return e; }
-};
-#define I =input{}
 
 template< typename T1, typename T2 > istream &operator>>(istream &is, pair<T1, T2> &p) {
   is >> p.first >> p.second; return is;
@@ -221,17 +198,26 @@ template< typename T1, typename T2 > ostream &operator<<(ostream &os, const pair
   os << p.first << " " << p.second; return os;
 }
 template< typename T > istream &operator>>(istream &is, vector<T> &v) {
-  for(auto&&in : v) is >> in;
-  return is;
+  for(auto&&in : v){ is >> in; } return is;
 }
 template< typename T > ostream &operator<<(ostream &os, const vector<T> &v) {
   for(size_t i = 0; i < v.size(); i++) os << v[i] << (i + 1 != v.size() ? " " : "");
   return os;
 }
 
+template<typename... Ts, size_t... Is>
+ostream &tuple_output_impl(ostream &os, const tuple<Ts...> &tp, index_sequence<Is...>){
+  [[maybe_unused]] bool a[] = {(os << get<Is>(tp) << " ", false)...};
+  return os << get<tuple_size<tuple<Ts...>>::value-1>(tp);
+}
+
+template<typename... Ts>
+ostream &operator<<(ostream &os, const tuple<Ts...> &tp){
+  return tuple_output_impl(os, tp, make_index_sequence<tuple_size<tuple<Ts...>>::value-1>());
+}
+
 void Vcin([[maybe_unused]] size_t i) {}
-template<class T, class... Ts>
-void Vcin(size_t i, vector<T> &v, Ts&&... vs){ cin >> v[i]; Vcin(i, vs...); }
+template<class T, class... Ts> void Vcin(size_t i, vector<T> &v, Ts&&... vs){ cin >> v[i]; Vcin(i, vs...); }
 template<class T, class... Ts>
 void Vcin(vector<T> &v,Ts&&... vs){ for(size_t i = 0; i < v.size(); i++) Vcin(i, v, vs...); }
 
