@@ -27,7 +27,7 @@ struct LCA{
   }
 
   void add_edge(int u, int v, T cost = 1){
-    g.add_directed_edge(u, v, cost);
+    g.add_edge(u, v, cost);
   }
 
   int lca(int u, int v){
