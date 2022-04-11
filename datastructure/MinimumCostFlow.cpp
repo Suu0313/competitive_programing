@@ -64,6 +64,59 @@ struct PrimalDual{
     return res;
   }
 
+  vector<cost_t> slope(int s, int t, cap_t flow_limit){
+    using P = pair<cost_t, int>;
+    priority_queue<P, vector<P>, greater<P>> pq;
+    cost_t inf = numeric_limits<cost_t>::max();
+    vector<pair<int, int>> pre(n);
+
+    vector<cost_t> ret(1, 0);
+
+    while(flow_limit > 0){
+      pq.emplace(0, s);
+      min_cost.assign(n, inf);
+      min_cost[s] = 0;
+
+      while(!pq.empty()){
+        auto[cost, v] = pq.top(); pq.pop();
+        if(min_cost[v] < cost) continue;
+        for(int i = 0, m = int(g[v].size()); i < m; ++i){
+          Edge &e = g[v][i];
+          cost_t ncost = cost + e.cost + potential[v] - potential[e.to];
+          
+          if(e.cap > 0 && min_cost[e.to] > ncost){
+            assert(ncost >= 0);
+            min_cost[e.to] = ncost;
+            pq.emplace(ncost, e.to);
+            pre[e.to] = make_pair(v, i);
+          }
+        }
+      }
+
+      if(min_cost[t] == inf) return ret;
+      for(int v = 0; v < n; ++v) if(min_cost[v] != inf) potential[v] += min_cost[v];
+      cap_t min_cap = flow_limit;
+      for(int v = t; v != s; v = pre[v].first){
+        auto[i, j] = pre[v];
+        min_cap = min(min_cap, g[i][j].cap);
+      }
+      for(int v = t; v != s; v = pre[v].first){
+        auto[i, j] = pre[v];
+        g[i][j].cap -= min_cap;
+        g[v][g[i][j].rev_idx].cap += min_cap;
+      }
+      flow_limit -= min_cap;
+      for(cap_t i = 0; i < min_cap; ++i){
+        ret.push_back(ret.back() + potential[t]);
+      }
+    }
+    return ret;
+  }
+
+  vector<pair<cap_t, cost_t>> slope_sparse(int s, int t, cap_t flow_limit){
+    // ToDo
+  }
+
   void remove_minus_dag(int s){
     queue<int> qu;
     vector<int> in(n);
