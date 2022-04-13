@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 struct BitVector{
   using u16 = uint16_t;
   using u32 = uint32_t;
@@ -52,6 +49,9 @@ struct BitVector{
     + popCount(b_vector[t / b_sz] & bitMask(t % b_sz));
   }
 
+  int rank0(int s, int t) const { return (t - s) - rank1(s, t); }
+  int rank1(int s, int t) const { return (s == t)  ? 0 : rank1(t) - rank1(s); }
+
   int select0(int t) const;
   int select1(int t) const;
 };
@@ -92,7 +92,6 @@ struct WaveletMatrix{
     return rank_leg(x, s, t)[1];
   }
 
-  // count x \in [l, r) in a[s, t)
   int rank(const T &l, const T &r, int s, int t) const {
     return rank_leg(r, s, t)[0] - rank_leg(l, s, r)[0];
   }
@@ -115,4 +114,61 @@ struct WaveletMatrix{
     }
     return {lt, t - s, gt};
   }
+
+  // pos of kth x
+  int select(const T &x, int k) const;
+
+  T kth_smallest(int s, int t, int k) const {
+    T ret = 0;
+    for(size_t i = bn; i--; ){
+      size_t j = bn - i - 1;
+      int z = bitvectors[j].rank0(s, t);
+
+      if(k < z){
+        s = bitvectors[j].rank0(s);
+        t = bitvectors[j].rank0(t);
+      }else{
+        ret |= T(1) << i;
+        s = boundary[j] + bitvectors[j].rank1(s);
+        t = boundary[j] + bitvectors[j].rank1(t);
+        k -= z;
+      }
+    }
+    return ret;
+  }
+
+  vector<pair<T, int>> top_k(int s, int t, int k) const {
+    vector<pair<T, int>> res; res.reserve(k);
+    using ti4t = tuple<int, int, int, size_t, T>; // width, left, right, depth, value;
+    auto cmp = [](const ti4t &l, const ti4t &r) -> bool {
+      if(get<0>(l) != get<0>(r)) return get<0>(l) < get<0>(r);
+      if(get<3>(l) != get<3>(r)) return get<3>(l) > get<3>(r);
+      if(get<4>(l) != get<4>(r)) return get<4>(l) > get<4>(r);
+      return true;
+    };
+    priority_queue<ti4t, vector<ti4t>, decltype(cmp)> pq{cmp};
+    pq.emplace(t - s, s, t, 0, 0);
+
+    while(!pq.empty()){
+      auto[width, left, right, depth, value] = pq.top(); pq.pop();
+      if(depth >= bn){
+        res.emplace_back(value, width);
+        if(int(res.size()) >= k) break;
+        continue;
+      }
+
+      int nl = bitvectors[depth].rank0(left);
+      int nr = bitvectors[depth].rank0(right);
+      if(nl != nr) pq.emplace(nr - nl, nl, nr, depth+1, value);
+
+      nl = bitvectors[depth].rank1(left);
+      nr = bitvectors[depth].rank1(right);
+      if(nl != nr) pq.emplace(nr - nl, nl, nr, depth+1, value | (T(1) << (bn - depth - 1)));
+    }
+    return res;
+  }
+
+  T sum(int s, int t) const;
+
+  vector<pair<T, int>> intersect(int s1, int t1, int s2, int t2) const;
 };
