@@ -14,7 +14,7 @@ struct Sieve{
     }
   }
 
-  map<int,int> factor(int a){
+  map<int,int> factor(int a) const {
     map<int,int> res;
     while(~a&1 && a > 1){ ++res[2]; a >>= 1; }
     while(a > 1){
@@ -24,7 +24,7 @@ struct Sieve{
     return res;
   }
 
-  vector<int> vfactor(int a){
+  vector<int> vfactor(int a) const {
     vector<int> ps;
     while(~a&1 && a > 1){ ps.push_back(2); a >>= 1; }
     while(a > 1){
@@ -34,16 +34,39 @@ struct Sieve{
     return ps;
   }
 
-  bool isPrime(int p){
+  bool isPrime(int p) const {
     if(p<=1) return false;
     if(p==2) return true;
     return min_factor[p>>1] == p;
   }
 
-  vector<int> prime_table(){
+  vector<int> prime_table() const {
     vector<int> res;
     for(int i=2; i < n ; i++){
       if(isPrime(i)) res.push_back(i);
+    }
+    return res;
+  }
+
+  vector<int> divisors(int a) const {
+    vector<pair<int, int>> ps;
+
+    for(auto&&p : vfactor(a)){
+      if(!ps.empty() && ps.back().first == p) ++ps.back().second;
+      else ps.emplace_back(p, 1);
+    }
+    int m = int(ps.size());
+    stack<pair<int, int>> st; st.emplace(0, 1);
+    vector<int> res;
+
+    while(!st.empty()){
+      auto[i, s] = st.top(); st.pop();
+      if(i == m){
+        res.push_back(s);
+        continue;
+      }
+      auto[p, c] = ps[i];
+      for(int j = 0; j <= c; j++, s *= p) st.emplace(i+1, s);
     }
     return res;
   }
