@@ -2,7 +2,6 @@ struct BitVector{
   using u16 = uint16_t;
   using u32 = uint32_t;
 
-  static constexpr int b_sz = 16;
   static constexpr int s_ws = 16;
   static constexpr int l_ws = 512;
 
@@ -24,11 +23,11 @@ struct BitVector{
 
   void init(const vector<bool> &bit){
     const int n = int(bit.size());
-    b_vector.assign(n / b_sz + 1, 0);
+    b_vector.assign(n / s_ws + 1, 0);
 
     for(int i = 0; i < n; ++i){
       if(!bit[i]) continue;
-      b_vector[i / b_sz] |= 1 << (i % b_sz);
+      b_vector[i / s_ws] |= 1 << (i % s_ws);
     }
 
     l_block.assign(n / l_ws + 1, 0);
@@ -38,15 +37,15 @@ struct BitVector{
       if(i % l_ws == 0) l_block[i / l_ws] = cnt_one;
       if(i % s_ws == 0) s_block[i / s_ws] = cnt_one - l_block[i / l_ws];
 
-      if(i != n && i % b_sz == 0) cnt_one += popCount(b_vector[i / b_sz]);
+      if(i != n && i % s_ws == 0) cnt_one += popCount(b_vector[i / s_ws]);
     }
   }
 
-  bool access(int t) const { return (b_vector[t / b_sz] >> (t % b_sz) & 1); }
+  bool access(int t) const { return (b_vector[t / s_ws] >> (t % s_ws) & 1); }
   int rank0(int t) const { return t - rank1(t); }
   int rank1(int t) const {
     return l_block[t / l_ws] + s_block[t / s_ws]
-    + popCount(b_vector[t / b_sz] & bitMask(t % b_sz));
+    + popCount(b_vector[t / s_ws] & bitMask(t % s_ws));
   }
 
   int rank0(int s, int t) const { return (t - s) - rank1(s, t); }
@@ -137,6 +136,10 @@ struct WaveletMatrix{
     return ret;
   }
 
+  T kth_largest(int s, int t, int k) const {
+    return kth_smallest(s, t, (t - s) - k - 1);
+  }
+
   vector<pair<T, int>> top_k(int s, int t, int k) const {
     vector<pair<T, int>> res; res.reserve(k);
     using ti4t = tuple<int, int, int, size_t, T>; // width, left, right, depth, value;
@@ -167,8 +170,6 @@ struct WaveletMatrix{
     }
     return res;
   }
-
-  T sum(int s, int t) const;
 
   vector<pair<T, int>> intersect(int s1, int t1, int s2, int t2) const;
 };
