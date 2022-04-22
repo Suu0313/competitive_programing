@@ -4,8 +4,9 @@ struct WaveletMatrixRectangleSum : WaveletMatrix<bn, T> {
   using WaveletMatrix<bn, T>::bitvectors;
   using WaveletMatrix<bn, T>::boundary;
   WaveletMatrixRectangleSum() = default;
-  WaveletMatrixRectangleSum(const vector<T> &a, const vector<V> &v){
-    WaveletMatrix<bn, T>::init(a);
+  WaveletMatrixRectangleSum(const vector<T> &a, const vector<V> &v): WaveletMatrix<bn, T>(a) { init(a, v); }
+
+  void init(const vector<T> &a, const vector<V> &v){
     size_t n = a.size();
     vector<int> ord(n); iota(begin(ord), end(ord), 0);
     for(size_t i = bn; i--; ){
