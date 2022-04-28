@@ -34,15 +34,17 @@ int64_t CountPrimes(int64_t n){
   }
 
   vector<tuple<int64_t, int, int>> rem;
-  auto phi = [&](auto f, int64_t m, int a, int sign = 1) -> void{
-    if(m == 0) return;
-    if(a == 0){ ans += m * sign; return; }
-    if(m <= iy){ rem.emplace_back(m, a, sign); return; }
-    f(f, m, a-1, sign);
-    f(f, m/primes[a-1], a-1, -sign);
-  };
 
-  phi(phi, n, pi_y);
+  stack<tuple<int64_t, int, int>> st; st.emplace(n, pi_y, 1);
+  while(!st.empty()){
+    auto[m, a, sign] = st.top(); st.pop();
+    if(m == 0) continue;
+    if(a == 0){ ans += m * sign; continue; }
+    if(m <= iy){ rem.emplace_back(m, a, sign); continue; }
+    st.emplace(m, a-1, sign);
+    st.emplace(m/primes[a-1], a-1, -sign);
+  }
+  
   sort(begin(rem), end(rem));
   
   int cur = 2;
