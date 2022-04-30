@@ -1,6 +1,6 @@
-struct TreeDecomposition{
+template<typename T>
+struct CentroidDecomposition{
   int n;
-  using T = int;
   Graph<T> tree;
 
   vector<int> sz;
@@ -9,22 +9,31 @@ struct TreeDecomposition{
   vector<int> parent;
   vector<int> centroids;
 
-  TreeDecomposition() {}
+  Graph<int> child;
+  int root = -1;
 
-  void solve(){
-    solve(0, n);
-    
+  CentroidDecomposition() = default;
+  CentroidDecomposition(int n): n(n), tree(n), sz(n), used(n), parent(n), centroids(), child(n) {}
+  CentroidDecomposition(const Graph<T> &tree): n(tree.size()), tree(tree), sz(n), used(n)
+  , parent(n), centroids(), child(n) { build(); }
+  
+  void add_edge(int src, int to, T cost = 1){ tree.add_edge(src, to, cost); }
+
+  void build(){
+    root = build(0, n);
   }
 
-  void solve(int v, int size){
+  int build(int v, int size){
     auto[c, subtrees] = findCentroid(v, size);
     used[c] = true;
 
-    for(auto&&[e,s] : subtrees) solve(e, s);
+    for(auto&&[e,s] : subtrees){
+      child.add_directed_edge(c, build(e, s), s);
+    }
 
-    // がんばる
+    used[c] = false;
 
-     used[c] = false;
+    return c;
   }
 
   vector<int> bfs(int r){
