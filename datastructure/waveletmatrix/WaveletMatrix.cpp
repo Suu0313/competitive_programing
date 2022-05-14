@@ -172,4 +172,56 @@ struct WaveletMatrix{
   }
 
   vector<pair<T, int>> intersect(int s1, int t1, int s2, int t2) const;
+
+  // min x s.t. l <= x < r in a[s, t)
+  T get_min(const T &l, const T &r, int s, int t) const {
+    using t5_t = tuple<int, int, size_t, T, int>; // left, right, depth, value, tight;
+    stack<t5_t> st; st.emplace(s, t, 0, 0, 1);
+
+    while(!st.empty()){
+      auto[left, right, depth, value, tight] = st.top(); st.pop();
+      if(depth == bn){
+        if(value < r) return value;
+        continue;
+      }
+      
+      int nl = boundary[depth] + bitvectors[depth].rank1(left);
+      int nr = boundary[depth] + bitvectors[depth].rank1(right);
+      int bit = (l >> (bn - depth - 1)) & 1;
+
+      if(nl != nr) st.emplace(nl, nr, depth+1, (value << 1) | 1, tight & bit);
+
+      nl = bitvectors[depth].rank0(left);
+      nr = bitvectors[depth].rank0(right);
+      if(nl != nr && (!(tight && bit))) st.emplace(nl, nr, depth+1, value << 1, tight);
+    }
+
+    return -1;
+  }
+
+  // max x s.t. l <= x < r in a[s, t)
+  T get_max(const T &l, const T &r, int s, int t) const {
+    using t5_t = tuple<int, int, size_t, T, int>; // left, right, depth, value, tight;
+    stack<t5_t> st; st.emplace(s, t, 0, 0, 1);
+
+    while(!st.empty()){
+      auto[left, right, depth, value, tight] = st.top(); st.pop();
+      if(depth == bn) return value;
+
+      int nl = bitvectors[depth].rank0(left);
+      int nr = bitvectors[depth].rank0(right);
+      int bit = (l >> (bn - depth - 1)) & 1;
+      T nval = T(1) << (bn - depth - 1);
+      if(nl != nr && (!(tight && bit))) st.emplace(nl, nr, depth+1, value, tight);
+      
+      nl = boundary[depth] + bitvectors[depth].rank1(left);
+      nr = boundary[depth] + bitvectors[depth].rank1(right);
+      if(nl != nr && ((value | nval) < r)) st.emplace(nl, nr, depth+1, value | nval, tight & bit); 
+    }
+
+    return -1;
+  }
+
+  // (x, c) s.t. l <= x < r, c = #{i | ai = x}
+  vector<pair<T, int>> enumerate(const T &l, const T &r, int s, int t) const;
 };
