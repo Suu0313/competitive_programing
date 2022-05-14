@@ -1,23 +1,23 @@
 template<typename T, typename OP>
 struct SegmentTree{
 
-  int n, defn;
+  int n, n0;
   vector<T> node;
-  T t;
+  T id;
   const OP op;
 
-  SegmentTree(int n_, const T &t, const OP &op) : t(t),op(op){
+  SegmentTree(int n_, const T &id, const OP &op) : id(id), op(op){
     n = 1;
-    defn = n_;
-    while(n < n_) n<<=1;
-    node.assign(2*n,t);
+    n0 = n_;
+    while(n < n_) n <<= 1;
+    node.assign(2*n, id);
   }
 
   void init(int n_){
     n = 1;
-    defn = n_;
-    while(n < n_) n<<=1;
-    node.assign(2*n,t);
+    n0 = n_;
+    while(n < n_) n <<= 1;
+    node.assign(2*n, id);
   }
 
   void set(int k, const T &x){
@@ -31,8 +31,8 @@ struct SegmentTree{
   }
 
   void build(const vector<T> &v){
-    assert((int)v.size() == defn);
-    for(int k = 0; k < defn; k++) node[k+n] = v[k];
+    assert((int)v.size() == n0);
+    for(int k = 0; k < n0; k++) node[k+n] = v[k];
     build();
   }
 
@@ -40,7 +40,7 @@ struct SegmentTree{
     k += n;
     node.at(k) = x;
     while(k >>= 1){
-      node.at(k) = op(node.at(2*k),node.at(2*k+1));
+      node.at(k) = op(node.at(2*k), node.at(2*k+1));
     }
   }
 
@@ -73,8 +73,8 @@ struct SegmentTree{
   }
 
   T query(int a, int b){
-    if(a==0 && b==defn) return all_query();
-    T L = t, R = t;
+    if(a==0 && b==n0) return all_query();
+    T L = id, R = id;
     for(a += n, b += n; a < b; a >>= 1, b >>= 1) {
       if(a & 1) L = op(L, node.at(a++));
       if(b & 1) R = op(node.at(--b), R);
@@ -86,9 +86,9 @@ struct SegmentTree{
 
   template<typename C>
   int max_right(int l, const C &check){
-    if(l == defn) return defn;
+    if(l == n0) return n0;
     l += n;
-    T tm = t;
+    T tm = id;
     do{
       while(l%2 == 0) l >>= 1;
       if(!check(op(tm, node.at(l)))){
@@ -104,14 +104,14 @@ struct SegmentTree{
       tm = op(tm, node.at(l));
       l++;
     }while((l&-l) != l);
-    return defn;
+    return n0;
   }
 
   template<typename C>
   int min_left(int r, const C &check){
     if(r == 0) return 0;
     r += n;
-    T tm = t;
+    T tm = id;
     do{
       r--;
       while(r>1 && (r%2)) r >>= 1;
@@ -132,13 +132,13 @@ struct SegmentTree{
 };
 
 template<typename T, typename OP>
-SegmentTree<T,OP> get_segtree(int n, const T &t, const OP &op){
-  return {n, t, op};
+SegmentTree<T,OP> get_segtree(int n, const T &id, const OP &op){
+  return {n, id, op};
 }
 
 template<typename T, typename OP>
-SegmentTree<T,OP> get_segtree(int n, const T &t, const OP &op, const vector<T> &v){
-  SegmentTree<T,OP> seg(n, t, op);
+SegmentTree<T,OP> get_segtree(int n, const T &id, const OP &op, const vector<T> &v){
+  SegmentTree<T,OP> seg(n, id, op);
   seg.build(v);
   return seg;
 }
