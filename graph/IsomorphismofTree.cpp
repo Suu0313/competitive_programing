@@ -51,7 +51,6 @@ struct IsomorphismofTree{
   }
 
   vector<int> CenterofTree(const Graph<T> &tree, int p = 0){
-    int n = int(tree.size());
     auto[dist, par]  = bfs(tree, p);
     int u = max_element(begin(dist), end(dist)) - begin(dist);
 
