@@ -38,4 +38,24 @@ struct Graph {
       else add_edge(u, v, c);
     }
   }
+  
+  vector<int> topological_order() const {
+    int n = int(g.size());
+    vector<int> vs, ind(n); vs.reserve(n);
+    for(int v = 0; v < n; ++v){
+      for(const auto&e : g[v]) ++ind[e];
+    }
+    queue<int> qu;
+    for(int v = 0; v < n; ++v){
+      if(ind[v] == 0) qu.push(v);
+    }
+    while(!qu.empty()){
+      int v = qu.front(); qu.pop();
+      vs.push_back(v);
+      for(auto e : g[v]){
+        if(--ind[e] == 0) qu.push(e);
+      }
+    }
+    return vs;
+  }
 };
