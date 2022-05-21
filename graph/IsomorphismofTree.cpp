@@ -1,5 +1,6 @@
 template<typename T>
 struct IsomorphismofTree{
+
   IsomorphismofTree() = default;
 
   static constexpr uint64_t mod = (1ull << 61) - 1;
@@ -20,8 +21,8 @@ struct IsomorphismofTree{
   }
 
   static inline uint64_t generate_base(){
-    mt19937_64 mt(random_device{}());
-    uniform_int_distribution<uint64_t> rand(1, mod-1);
+    static mt19937_64 mt(random_device{}());
+    static uniform_int_distribution<uint64_t> rand(1, mod-1);
     return rand(mt);
   }
 
