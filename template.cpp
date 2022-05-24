@@ -157,14 +157,19 @@ string format(const string &fmt, Ts... ts){
   snprintf(&buf[0], len + 1, fmt.c_str(), ts...);
   return string(buf.begin(), buf.end()-1);
 }
-
 template<typename Container>
 string join(const Container&v, const string &sep = "", const string &en = ""){
   stringstream s;
   for(size_t i = 0; i < size(v); i++) s << v[i] << (i+1 != size(v) ? sep : en);
   return s.str();
 }
-
+template<typename T>
+vector<T> preffix_sum(const vector<T> &v){
+  int n = int(v.size());
+  vector<T> ps(n + 1, 0);
+  for(int i = 0; i < n; ++i) ps[i + 1] = ps[i] + v[i];
+  return ps;
+}
 template<class Container> auto myref(Container &c, size_t i){ return ref(c[i]); }
 template<class Container> auto myref(Container &&c, size_t i){ return c[i]; }
 
@@ -237,7 +242,6 @@ constexpr int dx[] = {1,0,-1,0,1,1,-1,-1}, dy[] = {0,1,0,-1,1,-1,1,-1};
 int main(){
   // cin.tie(0); ios::sync_with_stdio(false);
   cout << fixed << setprecision(12);
-
 
 
 
