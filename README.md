@@ -1,7 +1,6 @@
 # competitive_programing
 library for competitive programing
 
-show
 https://github.com/online-judge-tools/verification-helper/blob/master/README.ja.md
 
 [![Actions Status](https://github.com/Suu0313/competitive_programing/workflows/verify/badge.svg)](https://github.com/Suu0313/competitive_programing/actions)
@@ -10,3 +9,5 @@ https://github.com/online-judge-tools/verification-helper/blob/master/README.ja.
 [![GitHub Pages](https://img.shields.io/static/v1?label=GitHub+Pages&message=+&color=brightgreen&logo=github)](https://Suu0313.github.io/competitive_programing/)
 
 https://suu0313.github.io/
+
+普段ここからコピペしています バグが無限に埋め込まれています
