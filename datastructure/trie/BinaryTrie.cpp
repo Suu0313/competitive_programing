@@ -67,7 +67,7 @@ struct BinaryTrie{
   }
 
   /*
-  ToDo: lb, ub, kth, max
+  TODO: lb, ub, kth, max
   //*/
 
 private:
