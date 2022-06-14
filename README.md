@@ -11,3 +11,5 @@ https://github.com/online-judge-tools/verification-helper/blob/master/README.ja.
 https://suu0313.github.io/
 
 普段ここからコピペしています バグが無限に埋め込まれています
+
+うしさんやACLなど, いろいろなところからパクってきたものも多いのでここからパクるのは気を付けてください
