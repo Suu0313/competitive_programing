@@ -1,5 +1,5 @@
 template< typename T >
-vector<T> MultipointEvaluation(const Formalpowerseries<T> &f, const vector<T> &xs){
+vector<T> multipoint_evaluation(const Formalpowerseries<T> &f, const vector<T> &xs){
   int n0 = int(xs.size()), n = 1;
   while(n < n0) n <<= 1;
   vector<Formalpowerseries<T>> g(n*2, {1});
