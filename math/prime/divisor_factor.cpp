@@ -1,9 +1,10 @@
-set<LL> DivisorFacor(LL N){
-  set<LL> s;
-  for(LL i = 1; i*i <= N; ++i) {
-    if(N%i != 0) continue;
+template<typename T>
+set<T> divisor_factor(T n){
+  set<T> s;
+  for(T i = 1; i*i <= n; ++i) {
+    if(n%i != 0) continue;
     s.insert(i);
-    s.insert(N/i);
+    s.insert(n/i);
   }
   return s;
 }
