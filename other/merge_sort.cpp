@@ -1,5 +1,5 @@
 template<typename T>
-long long MergeSort(vector<T> &a){
+long long merge_sort(vector<T> &a){
   int n = int(a.size());
   long long inv = 0;
 
