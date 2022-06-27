@@ -1,5 +1,5 @@
 template <typename T>
-vector<T> LIS(const vector<T> &a, bool fl = true) {
+vector<T> longest_increasing_subsequence(const vector<T> &a, bool fl = true) {
   int n = a.size();
   if(n == 0) return {};
   vector<T> dp(n, numeric_limits<T>::max());
