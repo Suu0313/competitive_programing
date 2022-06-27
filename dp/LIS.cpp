@@ -1,9 +1,8 @@
 template <typename T>
 vector<T> LIS(const vector<T> &a, bool fl = true) {
-  const T LIM = numeric_limits<T>::max();
   int n = a.size();
   if(n == 0) return {};
-  vector<T> dp(n, LIM);
+  vector<T> dp(n, numeric_limits<T>::max());
   vector<int> idx(n);
   for(int i = 0; i < n; i++){
     if(fl) idx[i] = std::distance(dp.begin(), lower_bound(dp.begin(), dp.end(), a[i]));
