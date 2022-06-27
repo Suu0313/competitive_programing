@@ -1,5 +1,5 @@
 template <typename T>
-T LCS(T s, T t){
+T longest_common_subsequence(T s, T t){
   int n = s.size(), m = t.size();
   vector dp(n+1, vector(m+1,0));
   for(int i = 0; i < n; i++)for(int j = 0; j < m; j++){

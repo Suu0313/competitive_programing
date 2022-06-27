@@ -1,5 +1,5 @@
 template<typename Container>
-tuple<int,int,int> LongestCommonSubsequence(const Container &s, const Container &t){
+tuple<int,int,int> longest_common_substr_lcp(const Container &s, const Container &t){
   int n = s.size(), m = t.size();
   vector<int> u(n + 1 + m); int lower = s[0];
   for(int i = 0; i < n; i++){ u[i] = s[i]; lower = min(lower, u[i]); }
