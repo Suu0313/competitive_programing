@@ -1,5 +1,5 @@
 template <class T>
-struct queue_aggregation{
+struct SlidingWindowAggregation{
   struct node{
     T val, sum;
     node(const T &val, const T &sum) : val(val), sum(sum){}
@@ -8,7 +8,7 @@ struct queue_aggregation{
   OP op;
   stack<node> front_stack, back_stack;
 
-  queue_aggregation(const OP &op): op(op), front_stack(), back_stack(){}
+  SlidingWindowAggregation(const OP &op): op(op), front_stack(), back_stack(){}
 
   bool empty() const { return front_stack.empty() && back_stack.empty(); }
 
