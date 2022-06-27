@@ -1,5 +1,5 @@
 template<typename Container>
-vector<int> Z_algorithm(const Container &s){
+vector<int> z_algorithm(const Container &s){
   int n = int(s.size());
   vector<int> z(n); z[0] = n;
   int i = 1, j = 0;
