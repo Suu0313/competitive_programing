@@ -59,27 +59,26 @@ constexpr LL LINF = numeric_limits<LL>::max()/3;
 constexpr LL MOD = 1e9+7;
 constexpr LL MODD = 998244353;
 constexpr LL TEN(int n) { return n? 10*TEN(n-1) : 1; }
-constexpr LL MASK(int n) { return (1ll << n)-1; }
-constexpr LL MASK(int l, int r) { return MASK(r) - MASK(l); }
-constexpr bool BITAT(LL bit, int n){ return (bit>>n) & 1; }
+constexpr LL bit_mask(int n) { return (1ll << n) - 1; }
+constexpr LL bit_mask(int l, int r) { return bit_mask(r) - bit_mask(l); }
 
-template<class T> constexpr T Sqr(T x) { return x*x; }
+template<class T> constexpr T sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
-inline int Pcnt(unsigned long long x) { return __builtin_popcountll(x); }
-inline int FFS(unsigned long long x){ return __builtin_ffsll(x); }
-inline int LSB(unsigned long long x){ return x==0 ? -1 :  __builtin_ctzll(x); }
-inline int BWidth(unsigned long long x){ return x==0 ? 0 : (64 - __builtin_clzll(x)); }
+inline int popcount(unsigned long long x) { return __builtin_popcountll(x); }
+inline int ffs(unsigned long long x){ return __builtin_ffsll(x); }
+inline int lsb(unsigned long long x){ return x==0 ? -1 :  __builtin_ctzll(x); }
+inline int bit_width(unsigned long long x){ return x==0 ? 0 : (64 - __builtin_clzll(x)); }
 
 template<typename T>
-T ModInv(T a, T m){
+T mod_inv(T a, T m){
   T b = m, u= 1, v = 0;
   while(b){ T t = a/b; a -= t*b; swap(a,b); u -= t*v; swap(u,v); }
   u %= m; if(u<0) u+= m;
   return u;
 }
 template<typename T>
-T Pow(T a, LL n, T m = 0, T e = 1){
-  if(n < 0){ assert(m != 0); return ModInv(Pow(a, -n, m, e), m); }
+T ipow(T a, LL n, T m = 0, T e = 1){
+  if(n < 0){ assert(m != 0); return mod_inv(ipow(a, -n, m, e), m); }
   T res = e;
   while(n > 0){ if(n&1){ res *= a; if(m) res %= m; } a *= a; n >>= 1; if(m) a %= m; }
   return res;
@@ -88,14 +87,14 @@ T Pow(T a, LL n, T m = 0, T e = 1){
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 
-template<typename T> T Sum(const vector<T> &v){ return reduce(v.begin(),v.end()); }
+template<typename T> T accumulate(const vector<T> &v){ return accumulate(begin(v), end(v), T(0)); }
 template<typename T>
-T gcd(const vector<T> &v){ return reduce(v.begin(),v.end(),T(0),[](auto&&a, auto&&b){ return gcd(a,b); }); }
+T gcd(const vector<T> &v){ return accumulate(begin(v), end(v),T(0),[](auto&&a, auto&&b){ return gcd(a,b); }); }
 template<typename T>
-T lcm(const vector<T> &v){ return reduce(v.begin(),v.end(),T(1),[](auto&&a, auto&&b){ return lcm(a,b); }); }
+T lcm(const vector<T> &v){ return accumulate(begin(v), end(v),T(1),[](auto&&a, auto&&b){ return lcm(a,b); }); }
 
-template<typename T> T max(const vector<T> &v){ return *max_element(v.begin(), v.end()); }
-template<typename T> T min(const vector<T> &v){ return *min_element(v.begin(), v.end()); }
+template<typename T> T max(const vector<T> &v){ return *max_element(begin(v), end(v)); }
+template<typename T> T min(const vector<T> &v){ return *min_element(begin(v), end(v)); }
 
 template<class T> vector<T> &operator++(vector<T> &v){ for(auto&&e : v){ ++e; } return v; }
 template<class T> vector<T> &operator--(vector<T> &v){ for(auto&&e : v){ --e; } return v; }
@@ -111,41 +110,45 @@ template<typename T = int> vector<T> stov(const string &s, char c = '0'){
   return res;
 }
 
-template<typename Container> constexpr int SZ(const Container &c){ return size(c); }
-template<typename Container> Container Rev(Container c){ reverse(begin(c), end(c)); return c; }
+vector<int> iota(int s, int t, int d){
+  vector<int> idx;
+  for(int i = s; (s <= i && i < t) || (t < i && i <= s); i += d) idx.push_back(i);
+  return idx;
+}
 template<typename T = int> vector<T> iota(int n, T e = 0){ vector<T> v(n); iota(begin(v), end(v), e); return v; }
-template<typename Container> Container Sort(Container c){ sort(begin(c), end(c)); return c; }
+template<typename Container> constexpr int isz(const Container &c){ return size(c); }
+template<typename Container> Container reverse(Container c){ reverse(begin(c), end(c)); return c; }
+template<typename Container> Container sort(Container c){ sort(begin(c), end(c)); return c; }
 template<typename Container, class Compair>
-Container Sort(Container c, const Compair &cmp){ sort(begin(c), end(c), cmp); return c; }
+Container sort(Container c, const Compair &cmp){ sort(begin(c), end(c), cmp); return c; }
 template<typename T>
 vector<T> subvec(const vector<T> &v,  size_t pos = 0, size_t n = string::npos){
   assert(pos <= v.size()); n = min(n, v.size() - pos);
   return vector<T>(v.begin()+pos, v.begin()+pos+n);
 }
 template<typename Container>
-Container Unique(Container c, bool sorted = false){
-  if(!sorted) sort(begin(c), end(c));
+Container unique(Container c){
   c.erase(unique(begin(c), end(c)), end(c));
   return c;
 }
 template<typename T>
-vector<T> Concat(const vector<T> &a, const vector<T> &b){
+vector<T> concat(const vector<T> &a, const vector<T> &b){
   vector<T> res = a; res.reserve(a.size() + b.size());
   res.insert(end(res), begin(b), end(b));
   return res;
 }
 template<typename T, class Compair = less<T>>
-vector<int> KeySort(const vector<T> &a, vector<int> idx, const Compair &cmp = Compair{}){
+vector<int> key_sort(const vector<T> &a, vector<int> idx, const Compair &cmp = Compair{}){
   sort(begin(idx), end(idx), [&](int i, int j){ return cmp(a[i], a[j]); });
   return idx;
 }
 template<typename T, class Compair = less<T>>
-vector<int> KeySort(const vector<T> &a, const Compair &cmp = Compair{}){
+vector<int> key_sort(const vector<T> &a, const Compair &cmp = Compair{}){
   vector<int> idx(a.size()); iota(begin(idx), end(idx), 0);
-  return KeySort<T, Compair>(a, idx, cmp);
+  return key_sort<T, Compair>(a, idx, cmp);
 }
 template<typename T>
-vector<T> Reorder(const vector<T> &a, const vector<int> &idx){
+vector<T> re_order(const vector<T> &a, const vector<int> &idx){
   int n = int(a.size());
   vector<T> res(n); for(int i = 0; i < n; ++i) res[i] = a[idx[i]];
   return res;
@@ -174,7 +177,7 @@ template<class Container> auto myref(Container &c, size_t i){ return ref(c[i]); 
 template<class Container> auto myref(Container &&c, size_t i){ return c[i]; }
 
 template<class... Cs>
-auto inzip(Cs&&... cs){
+auto in_zip(Cs&&... cs){
   vector<tuple<conditional_t<is_lvalue_reference_v<Cs>, add_lvalue_reference_t<typename remove_reference_t<Cs>::value_type>, typename remove_reference_t<Cs>::value_type>...>> v;
   size_t n = min({size(cs)...}); v.reserve(n);
   for(size_t i = 0; i < n; i++) v.emplace_back(myref(std::forward<Cs>(cs), i)...);
@@ -184,7 +187,7 @@ auto inzip(Cs&&... cs){
 template<class... Cs>
 auto enumerate(Cs&&... cs){
   auto iota_impl = [&]{ vector<int> idx(min({size(cs)...})); iota(begin(idx), end(idx), 0); return idx; };
-  return inzip(iota_impl(), cs...);
+  return in_zip(iota_impl(), cs...);
 }
 
 bool cYN(bool fl=true,bool fl2=false){cout << (fl?"Yes":"No") << '\n'; if(fl2){ exit(0); } return fl; }
@@ -243,8 +246,8 @@ int main(){
   // cin.tie(0); ios::sync_with_stdio(false);
   cout << fixed << setprecision(12);
 
-
-
   
+
+
   return 0;
 }
