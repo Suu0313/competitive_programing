@@ -30,7 +30,7 @@ private:
     }
   }
 
-  T sum_sub(vector<T> &node, int i) const {
+  T sum_sub(const vector<T> &node, int i) const {
     T s(0);
     for(int idx = i; idx > 0; idx -= (idx & -idx)){
       s += node[idx];
