@@ -2,7 +2,7 @@ struct StaticRangeInversionsQuery{
   int n, sn;
   vector<int> a;
   vector<vector<int64_t>> binv;
-  vector<BIT<int>> bits;
+  vector<FenwickTree<int>> bits;
 
   template<typename T>
   StaticRangeInversionsQuery(const vector<T> &x){
@@ -14,7 +14,7 @@ struct StaticRangeInversionsQuery{
 
     for(int i = 0; i < n; i += sn){
       int64_t inv = 0;
-      BIT<int> bit(n);
+      FenwickTree<int> bit(n);
       for(int j = i; j < n; ++j){
         inv += (j-i) - bit.sum(a[j] + 1);
         bit.add(a[j], 1);
