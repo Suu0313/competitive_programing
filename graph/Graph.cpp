@@ -58,4 +58,19 @@ struct Graph {
     }
     return vs;
   }
+
+  Graph<T> get_directed_tree(int root = 0) const {
+    Graph<T> tree(g.size());
+    queue<pair<int, int>> qu;
+    qu.emplace(root, -1);
+    for(qu.emplace(root, -1); !qu.empty(); qu.pop()){
+      auto[v, p] = qu.front();
+      for(const auto &e : g[v]){
+        if(e.to == p) continue;
+        tree.add_directed_edge(v, e.to, e.cost);
+        qu.emplace(e.to, v);
+      }
+    }
+    return tree;
+  }
 };
