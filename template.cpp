@@ -117,20 +117,18 @@ vector<int> iota(int s, int t, int d){
 }
 template<typename T = int> vector<T> iota(int n, T e = 0){ vector<T> v(n); iota(begin(v), end(v), e); return v; }
 template<typename Container> constexpr int isz(const Container &c){ return size(c); }
-template<typename Container> Container reverse(Container c){ reverse(begin(c), end(c)); return c; }
-template<typename Container> Container sort(Container c){ sort(begin(c), end(c)); return c; }
-template<typename Container, class Compair>
-Container sort(Container c, const Compair &cmp){ sort(begin(c), end(c), cmp); return c; }
+template<typename Container> void reverse(Container &c){ reverse(begin(c), end(c));}
+template<typename Container> Container reversed(Container c){ reverse(c); return c; }
+template<typename Container> void sort(Container &c){ sort(begin(c), end(c)); }
+template<typename Container> Container sorted(Container c){ sort(c); return c; }
+template<typename Container, class Compair> void sort(Container &c, const Compair &cmp){ sort(begin(c), end(c), cmp); }
+template<typename Container, class Compair> Container sorted(Container c, const Compair &cmp){ sort(c, cmp); return c; }
 template<typename T>
 vector<T> subvec(const vector<T> &v,  size_t pos = 0, size_t n = string::npos){
   assert(pos <= v.size()); n = min(n, v.size() - pos);
   return vector<T>(v.begin()+pos, v.begin()+pos+n);
 }
-template<typename Container>
-Container unique(Container c){
-  c.erase(unique(begin(c), end(c)), end(c));
-  return c;
-}
+template<typename Container> Container unique(Container c){ c.erase(unique(begin(c), end(c)), end(c)); return c; }
 template<typename T>
 vector<T> concat(const vector<T> &a, const vector<T> &b){
   vector<T> res = a; res.reserve(a.size() + b.size());
@@ -138,14 +136,14 @@ vector<T> concat(const vector<T> &a, const vector<T> &b){
   return res;
 }
 template<typename T, class Compair = less<T>>
-vector<int> key_sort(const vector<T> &a, vector<int> idx, const Compair &cmp = Compair{}){
+vector<int> sorted_idx(const vector<T> &a, vector<int> idx, const Compair &cmp = Compair{}){
   sort(begin(idx), end(idx), [&](int i, int j){ return cmp(a[i], a[j]); });
   return idx;
 }
 template<typename T, class Compair = less<T>>
-vector<int> key_sort(const vector<T> &a, const Compair &cmp = Compair{}){
+vector<int> sorted_idx(const vector<T> &a, const Compair &cmp = Compair{}){
   vector<int> idx(a.size()); iota(begin(idx), end(idx), 0);
-  return key_sort<T, Compair>(a, idx, cmp);
+  return sorted_idx<T, Compair>(a, idx, cmp);
 }
 template<typename T>
 vector<T> re_order(const vector<T> &a, const vector<int> &idx){
@@ -193,6 +191,7 @@ auto enumerate(Cs&&... cs){
 bool cYN(bool fl=true,bool fl2=false){cout << (fl?"Yes":"No") << '\n'; if(fl2){ exit(0); } return fl; }
 bool CYN(bool fl=true,bool fl2=false){cout << (fl?"YES":"NO") << '\n'; if(fl2){ exit(0); } return fl; }
 template<typename T = int> void error(T t=-1,bool fl=true){cout << t << '\n'; if(fl){ exit(0); } }
+void COUT(){ cout << "\n"; }
 template<class T> void COUT(T&& t){ cout << t << '\n'; }
 template<class T,class... Ts> void COUT(T&& t,Ts&&... ts){ cout << t << " "; COUT(ts...); }
 template<class... Ts> void CIN(Ts&&... ts){ (cin >> ... >> ts); }
