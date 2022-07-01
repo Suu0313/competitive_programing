@@ -1,9 +1,13 @@
 template <typename T=int>
-struct BIT{
+struct FenwickTree{
   int n;
   vector<T> node;
-  BIT() {}
-  BIT(int n_) : n(n_+1), node(n,0){}
+  FenwickTree() {}
+  FenwickTree(int n_) : n(n_+1), node(n,0) {}
+  FenwickTree(const FenwickTree&) = default;
+  FenwickTree(FenwickTree&&) = default;
+  FenwickTree &operator=(const FenwickTree&) = default;
+  FenwickTree &operator=(FenwickTree&&) = default;
 
   void add(int i, T x){
     for(int idx = i+1; idx < n; idx += (idx & -idx)){
@@ -35,9 +39,4 @@ struct BIT{
     }
     return x;
   }
-  /*
-  //invension number
-  ans += i - bit.sum(a[i]+1);
-  bit.add(a[i],1);
-  */
 };
