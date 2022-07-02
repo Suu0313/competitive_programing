@@ -65,7 +65,7 @@ struct RangeInversionsQuery{
       }
     }
 
-    small_inv[k] = cal_inv_short(bk * n, bk * n + n);
+    small_inv[bk] = cal_inv_short(bk * n, bk * n + n);
   }
 
   int64_t query(int l, int r){
