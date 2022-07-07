@@ -1,18 +1,14 @@
-template<typename T>
-pair<vector<T>, vector<T>> SplitAndList(const vector<T> &a){
-  vector<T> b(1, T{}), c(1, T{});
-  auto merge = [&](T x){
-    vector<T> d;
-    auto it = b.begin();
-    for(auto&&y : b){
-      while(x+*it < y) d.emplace_back(x + *it++);
-      d.emplace_back(y);
-    }
-    while(it < b.end()) d.emplace_back(x + *it++);
-    swap(b, d);
-  };
+template<typename T, class Operator, class Compair>
+pair<vector<T>, vector<T>> split_and_list(const vector<T> &a, const T &e, const Operator &op, const Compair &cmp){
+  vector<T> b(1, e), c(1, e);
+
   for(auto&&x : a){
-    merge(x); swap(b, c);
+    int n = int(b.size());
+    b.reserve(n * 2);
+    for(int i = 0; i < n; ++i) b.push_back(op(b[i], x));
+    inplace_merge(begin(b), begin(b) + n, end(b), cmp);
+    swap(b, c);
   }
+
   return {b, c};
 }
