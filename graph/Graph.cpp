@@ -62,7 +62,6 @@ struct Graph {
   Graph<T> get_directed_tree(int root = 0) const {
     Graph<T> tree(g.size());
     queue<pair<int, int>> qu;
-    qu.emplace(root, -1);
     for(qu.emplace(root, -1); !qu.empty(); qu.pop()){
       auto[v, p] = qu.front();
       for(const auto &e : g[v]){
