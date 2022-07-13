@@ -272,6 +272,11 @@ template<class T> struct Circle{
     return 0;
   }
 
+  bool isIntersect(const Circle&c) const {
+    int k = this->Intersect(c);
+    return !(k == 0 || k == 4);
+  }
+
   int Intersect(const Line<T> &l) const {
     double d = l.dist(o);
     if(geometry::lt<double>(d, r)) return 2;
