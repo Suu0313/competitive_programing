@@ -64,10 +64,9 @@ constexpr LL bit_mask(int l, int r) { return bit_mask(r) - bit_mask(l); }
 
 template<class T> constexpr T sqr(T x) { return x*x; }
 inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
-inline int popcount(unsigned long long x) { return __builtin_popcountll(x); }
-inline int ffs(unsigned long long x){ return __builtin_ffsll(x); }
-inline int lsb(unsigned long long x){ return x==0 ? -1 :  __builtin_ctzll(x); }
-inline int bit_width(unsigned long long x){ return x==0 ? 0 : (64 - __builtin_clzll(x)); }
+inline int pop_count(unsigned long long x) { return __builtin_popcountll(x); }
+inline int find_first_set(unsigned long long x){ return __builtin_ffsll(x); }
+inline int count_trailing_zeros(unsigned long long x){ return x==0 ? -1 :  __builtin_ctzll(x); }
 
 template<typename T>
 T mod_inv(T a, T m){
@@ -95,6 +94,34 @@ T lcm(const vector<T> &v){ return accumulate(begin(v), end(v),T(1),[](auto&&a, a
 
 template<typename T> T max(const vector<T> &v){ return *max_element(begin(v), end(v)); }
 template<typename T> T min(const vector<T> &v){ return *min_element(begin(v), end(v)); }
+
+template<typename T, class Iiter, class Fn>
+T min_of(Iiter first, Iiter last, const Fn &f){
+  T res = f(*first);
+  for(++first; first != last; ++first) res = min(res, f(*first));
+  return res;
+}
+
+template<typename T, class Fn>
+T min_of(int n, const Fn &f){
+  T res = f(0);
+  for(int i = 1; i < n; ++i) res = min(res, f(i));
+  return res;
+}
+
+template<typename T, class Iiter, class Fn>
+T max_of(Iiter first, Iiter last, const Fn &f){
+  T res = f(*first);
+  for(++first; first != last; ++first) res = max(res, f(*first));
+  return res;
+}
+
+template<typename T, class Fn>
+T max_of(int n, const Fn &f){
+  T res = f(0);
+  for(int i = 1; i < n; ++i) res = max(res, f(i));
+  return res;
+}
 
 template<class T> vector<T> &operator++(vector<T> &v){ for(auto&&e : v){ ++e; } return v; }
 template<class T> vector<T> &operator--(vector<T> &v){ for(auto&&e : v){ --e; } return v; }
