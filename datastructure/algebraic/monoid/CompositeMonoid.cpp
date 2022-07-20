@@ -18,4 +18,6 @@ struct CompositeMonoid{
   CompositeMonoid operator+(const CompositeMonoid &m) const {
     return CompositeMonoid(*this) += m;
   }
+  bool operator==(const CompositeMonoid &m) const { return a == m.a && b == m.b; }
+  bool operator!=(const CompositeMonoid &m) const { return !((*this) == m); }
 };
