@@ -31,10 +31,12 @@ struct ProjectSelectionProblem{
         cerr << "must be submodular function" << endl;
         assert(false);
       }
-      dinic.add_edge(i, j, x);
+      if(x > 0) dinic.add_edge(i, j, x);
     }
     for(int i = 0; i < n; ++i){
-      if(theta0[i] <= theta1[i]){
+      if(theta1[i] == theta0[i]){
+        res += theta0[i];
+      }else if(theta0[i] < theta1[i]){
         dinic.add_edge(s, i, theta1[i] - theta0[i]);
         res += theta0[i];
       }else{
@@ -44,4 +46,5 @@ struct ProjectSelectionProblem{
     }
     return res + dinic.flow(s, t);
   }
+};
 };
