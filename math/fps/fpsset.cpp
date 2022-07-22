@@ -413,9 +413,10 @@ struct Formalpowerseries : vector<T> {
   F pow(int64_t k, int d = -1) const {
     const int n = this->size();
     if(d == -1) d = n;
+    if(k == 0) return F(d, 0) + 1;
     for(int i = 0; i < n; ++i){
       if((*this)[i] == T(0)) continue;
-      if(i*k > d) return F(d, T(0));
+      if(i > d / k) return F(d, T(0));
       T inv = T(1) / (*this)[i];
       F res = ((((*this)*inv) >> i).log() * k).exp() * ((*this)[i].pow(k));
       res = (res << (i*k)).pre(d);
