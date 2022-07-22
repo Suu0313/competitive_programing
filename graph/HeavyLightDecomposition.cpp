@@ -103,15 +103,15 @@ struct HeavyLightDecomposition{
     return l;
   }
 
-  template<typename U, typename Q, typename F>
-  U query_path(int u, int v, const U &id, const Q &get_val, const F &prod, bool isedge = false) const {
-    U l = id, r = id;
+  template<typename M, typename F>
+  M query_path(int u, int v, const F &get_val, bool isedge = false) const {
+    M l{}, r{};
     for(;; v = par[branch[v]]){
       if(in[u] > in[v]) swap(u, v), swap(l, r);
       if(branch[u] == branch[v]) break;
-      l = prod(get_val(in[branch[v]], in[v] + 1), l);
+      l += get_val(in[branch[v]], in[v] + 1);
     }
-    return prod(prod(get_val(in[u]+isedge, in[v] + 1), l), r);
+    return get_val(in[u]+isedge, in[v] + 1) + l + r;
   }
 
   template<typename U, typename F>
@@ -119,12 +119,12 @@ struct HeavyLightDecomposition{
     return f(in[v]+isedge, out[v]);
   }
 
-  template<typename U, typename Q1, typename Q2, typename F>
-  U query_path(int u, int v, const U &id, const Q1 &get_val1, const Q2 &get_val2, const F &prod, bool isedge) const {
-    U res = id;
+  template<typename M, typename F1, typename F2>
+  M query_path(int u, int v, const F1 &get_val1, const F2 &get_val2, bool isedge) const {
+    M res{};
     for(auto&[a, b] : get_segments(u, v, isedge)){
-      if(a > b) res = prod(res, get_val2(b, a));
-      else res = prod(res, get_val1(a, b));
+      if(a > b) res += get_val2(b, a);
+      else res += get_val1(a, b);
     }
     return res;
   }
