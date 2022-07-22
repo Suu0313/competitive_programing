@@ -1,30 +1,28 @@
-template<typename T>
+template<typename Band>
 struct SparseTable{
-  using F = function<T(T, T)>;
-  F f;
-  vector<vector<T>> table;
+  vector<vector<Band>> table;
   vector<int> lookup;
   
-  SparseTable() {}
-  SparseTable(const vector<T> &v, const F &f): f(f){
-    const int n = v.size();
-    const int b = 32 - __builtin_clz(n);
-    table.assign(b, vector<T>(n));
-    for(int i = 0; i < n; i++) table.at(0).at(i) = v.at(i);
-
-    for(int i = 1; i < b; i++){
-      for(int j = 0; j+(1<<i) <= n; j++){
-        table.at(i).at(j) = f(table.at(i-1).at(j), table.at(i-1).at(j+(1<<(i-1))));
+  SparseTable() = default;
+  template<class Iiter>
+  SparseTable(Iiter first, Iiter last): table(1, vector<Band>(first, last)){
+    size_t n = table[0].size();
+    for(size_t i = 1, b = 1; b < table.back().size(); ++i, b <<= 1){
+      table.emplace_back(); table.reserve(n - b);
+      for(size_t j = b; j < table[i-1].size(); ++j){
+        table[i].push_back(table[i-1][j - b] + table[i-1][j]);
       }
     }
-    lookup.assign(n+1, 0);
-    for(int i = 2; i < n+1; i++){
-      lookup.at(i) = lookup.at(i>>1) + 1;
-    }
+    lookup.assign(n + 1, 0);
+    for(size_t i = 2; i < n+1; i++) lookup[i] = lookup[i >> 1] + 1;
   }
+  template<class Container>
+  SparseTable(const Container &c): SparseTable(begin(c), end(c)) {}
+  
 
-  T fold(int l, int r) const {
-    int b = lookup.at(r-l);
-    return f(table.at(b).at(l), table.at(b).at(r - (1<<b)));
+  Band fold(int l, int r) const {
+    if(l == r) return Band{};
+    int b = lookup[r - l];
+    return table[b][l] + table[b][r - (1 << b)];
   }
 };
