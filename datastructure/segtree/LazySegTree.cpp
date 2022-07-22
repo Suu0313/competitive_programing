@@ -54,7 +54,7 @@ struct LazySegTree{
   }
 
   Monoid operator[](int k){
-    resolve[k += n];
+    resolve(k += n);
     return node[k];
   }
 
