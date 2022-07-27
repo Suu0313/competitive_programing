@@ -1,3 +1,13 @@
+template<typename T, typename F>
+pair<T, T> binary_search(T ok, T ng, const F &isok){
+  while(abs(ok - ng) > 1){
+    T wj = (ok & ng) + ((ok ^ ng) >> 1);
+    (isok(wj)?ok : ng) = wj;
+  }
+  return {ok, ng};
+}
+
+
 uint64_t ftou(double f){
   uint64_t u; memcpy(&u, &f, sizeof f);
   return (u >> 63 & 1) ? ~u : u ^ (1ull << 63);
