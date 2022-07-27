@@ -59,29 +59,6 @@ constexpr LL LINF = numeric_limits<LL>::max()/3;
 constexpr LL MOD = 1e9+7;
 constexpr LL MODD = 998244353;
 constexpr LL TEN(int n) { return n? 10*TEN(n-1) : 1; }
-constexpr LL bit_mask(int n) { return (1ll << n) - 1; }
-constexpr LL bit_mask(int l, int r) { return bit_mask(r) - bit_mask(l); }
-
-template<class T> constexpr T sqr(T x) { return x*x; }
-inline bool Eq(double a, double b) { return fabs(b - a) < EPS; }
-inline int pop_count(unsigned long long x) { return __builtin_popcountll(x); }
-inline int find_first_set(unsigned long long x){ return __builtin_ffsll(x); }
-inline int count_trailing_zeros(unsigned long long x){ return x==0 ? -1 :  __builtin_ctzll(x); }
-
-template<typename T>
-T mod_inv(T a, T m){
-  T b = m, u= 1, v = 0;
-  while(b){ T t = a/b; a -= t*b; swap(a,b); u -= t*v; swap(u,v); }
-  u %= m; if(u<0) u+= m;
-  return u;
-}
-template<typename T>
-T ipow(T a, LL n, T m = 0, T e = 1){
-  if(n < 0){ assert(m != 0); return mod_inv(ipow(a, -n, m, e), m); }
-  T res = e;
-  while(n > 0){ if(n&1){ res *= a; if(m) res %= m; } a *= a; n >>= 1; if(m) a %= m; }
-  return res;
-}
 
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
@@ -91,37 +68,8 @@ template<typename T>
 T gcd(const vector<T> &v){ return accumulate(begin(v), end(v),T(0),[](auto&&a, auto&&b){ return gcd(a,b); }); }
 template<typename T>
 T lcm(const vector<T> &v){ return accumulate(begin(v), end(v),T(1),[](auto&&a, auto&&b){ return lcm(a,b); }); }
-
 template<typename T> T max(const vector<T> &v){ return *max_element(begin(v), end(v)); }
 template<typename T> T min(const vector<T> &v){ return *min_element(begin(v), end(v)); }
-
-template<typename T, class Iiter, class Fn>
-T min_of(Iiter first, Iiter last, const Fn &f){
-  T res = f(*first);
-  for(++first; first != last; ++first) res = min(res, f(*first));
-  return res;
-}
-
-template<typename T, class Fn>
-T min_of(int n, const Fn &f){
-  T res = f(0);
-  for(int i = 1; i < n; ++i) res = min(res, f(i));
-  return res;
-}
-
-template<typename T, class Iiter, class Fn>
-T max_of(Iiter first, Iiter last, const Fn &f){
-  T res = f(*first);
-  for(++first; first != last; ++first) res = max(res, f(*first));
-  return res;
-}
-
-template<typename T, class Fn>
-T max_of(int n, const Fn &f){
-  T res = f(0);
-  for(int i = 1; i < n; ++i) res = max(res, f(i));
-  return res;
-}
 
 template<class T> vector<T> &operator++(vector<T> &v){ for(auto&&e : v){ ++e; } return v; }
 template<class T> vector<T> &operator--(vector<T> &v){ for(auto&&e : v){ --e; } return v; }
@@ -197,6 +145,12 @@ vector<T> preffix_sum(const vector<T> &v){
   vector<T> ps(n + 1, 0);
   for(int i = 0; i < n; ++i) ps[i + 1] = ps[i] + v[i];
   return ps;
+}
+template<typename T>
+vector<T> get_pow_vector(int n, T p){
+  vector<T> res(n + 1, 1);
+  for(int i = 0; i < n; ++i) res[i + 1] = res[i] * p;
+  return res;
 }
 template<class Container> auto myref(Container &c, size_t i){ return ref(c[i]); }
 template<class Container> auto myref(Container &&c, size_t i){ return c[i]; }
