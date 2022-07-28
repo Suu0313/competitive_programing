@@ -12,6 +12,7 @@ struct AndMonoid{
 
   AndMonoid &operator+=(const AndMonoid &m){
     x &= m.x;
+    return (*this);
   }
 
   AndMonoid operator+(const AndMonoid &m){ return AndMonoid(*this) += m; }

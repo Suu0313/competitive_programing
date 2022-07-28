@@ -12,6 +12,7 @@ struct OrMonoid{
 
   OrMonoid &operator+=(const OrMonoid &m){
     x |= m.x;
+    return (*this);
   }
 
   OrMonoid operator+(const OrMonoid &m){ return OrMonoid(*this) += m; }
