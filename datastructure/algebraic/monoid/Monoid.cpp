@@ -12,6 +12,7 @@ struct Monoid{
 
   Monoid &operator+=(const Monoid &m){
     x += m.x;
+    return (*this);
   }
 
   Monoid operator+(const Monoid &m){ return Monoid(*this) += m; }

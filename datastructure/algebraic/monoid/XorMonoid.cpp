@@ -12,6 +12,7 @@ struct XorMonoid{
 
   XorMonoid &operator+=(const XorMonoid &m){
     x ^= m.x;
+    return (*this);
   }
 
   XorMonoid operator+(const XorMonoid &m){ return XorMonoid(*this) += m; }
