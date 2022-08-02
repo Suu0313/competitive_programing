@@ -110,6 +110,12 @@ struct Matrix{
     return res;
   }
 
+  T tr() const {
+    T res = 0;
+    for(size_t i = 0, n = height(); i < n; ++i) res += (*this)[i][i];
+    return res;
+  }
+
   #define def_cmp(cmp) bool operator cmp (const Matrix &b) const { return a cmp b.a; }
   def_cmp(==)
   def_cmp(!=)
