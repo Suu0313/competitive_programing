@@ -12,8 +12,7 @@ struct SetMonoid{
   SetMonoid(const T &x): id(false), x(x) {}
 
   SetMonoid &operator+=(const SetMonoid &m){
-    id = m.id;
-    if(!id) x = m.x;
+    if(!m.id) id = m.id, x = m.x;
     return (*this);
   }
 
