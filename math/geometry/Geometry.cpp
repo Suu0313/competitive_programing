@@ -140,8 +140,9 @@ template<class T> struct Line{
   Line() {}
   Line(const Point<T> &a, const Point<T> &b): a(a), b(b) {}
   Line(T A, T B, T C){ // Ax + By = C
-    if(A == 0){ a = Point<T>(0, C/B); b = Point<T>(1, C/B); }
-    else if(B == 0){ a = Point<T>(C/A, 0); b = Point<T>(C/A, 1); }
+    if(geometry::is_zero(A)){ a = Point<T>(0, C/B); b = Point<T>(1, C/B); }
+    else if(geometry::is_zero(B)){ a = Point<T>(C/A, 0); b = Point<T>(C/A, 1); }
+    else if(geometry::is_zero(C)){ a = Point<T>(-B/A, 1); b = Point<T>(1, -A/B); }
     else{ a = Point<T>(0, C/B); b = Point<T>(C/A, 0); }
   }
   //Line(const Segment<T> &s): a(s.a), b(s.b) {}
