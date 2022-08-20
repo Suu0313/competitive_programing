@@ -53,7 +53,6 @@ struct NTT{
   static void precalculate(){
     static bool precalculated = false;
     if(precalculated) return;
-    ++acnt;
     precalculated = true;
     int mod = modint::get_mod();
     cnt = bsf(mod - 1);
@@ -71,8 +70,9 @@ struct NTT{
   static void ntt(vector<modint> &a, int k){
     int n = 1 << k;
     a.resize(n);
-    for(int i = k - 1; i >= 0; --i){
-    modint omega = 1, omega_m = omegas[i + 1];
+    int i = k - 1;
+    if(k & 1){
+      modint omega = 1, omega_m = omegas[i + 1];
       for(int j = 0, m = (1 << i); j < m; ++j){
         for(int k = j; k < n; k += m * 2){
           mint u = a[k], t = a[k + m];
@@ -80,20 +80,58 @@ struct NTT{
         }
         omega *= omega_m;
       }
+      --i;
+    }
+    
+    for(; i >= 0; i -= 2){
+    modint omega1 = 1, omega_m1 = omegas[i];
+    modint omega2 = 1, iomega2 = omegas[2], omega_m2 = omegas[i + 1];
+      for(int j = 0, m = (1 << (i - 1)); j < m; ++j){
+        for(int k = j; k < n; k += m * 4){
+          modint u1 = a[k] + a[k + m * 2], u2 = (a[k] - a[k + m * 2]) * omega2;
+          modint t1 = a[k + m] + a[k + m * 3], t2 = (a[k + m] - a[k + m * 3]) * iomega2;
+
+          a[k] = u1 + t1; a[k + m] = (u1 - t1) * omega1;
+          a[k + m * 2] = u2 + t2; a[k + m * 3] = (u2 - t2) * omega1;
+        }
+        omega1 *= omega_m1;
+        omega2 *= omega_m2;
+        iomega2 *= omega_m2;
+      }
     }
   }
 
-  static void invntt(vector<mint> &a, int k){
+  static void invntt(vector<modint> &a, int k){
     int n = 1 << k;
     a.resize(n);
-    for(int i = 0; i < k; ++i){
-    mint omega = 1, omega_m = invomegas[i + 1];
+
+    int i = 0;
+    if(k & 1){
+      modint omega = 1, omega_m = invomegas[i + 1];
       for(int j = 0, m = (1 << i); j < m; ++j){
         for(int k = j; k < n; k += m * 2){
-          mint u = a[k], t = omega * a[k + m];
+          modint u = a[k], t = omega * a[k + m];
           a[k] = u + t; a[k + m] = u - t;
         }
         omega *= omega_m;
+      }
+      ++i;
+    }
+
+    for(; i < k; i += 2){
+    modint omega1 = 1, omega2 = 1, iomega2 = invomegas[2], omega_m1 = invomegas[i + 1], omega_m2 = invomegas[i + 2];
+      for(int j = 0, m = (1 << i); j < m; ++j){
+        for(int k = j; k < n; k += m * 4){
+          modint u = omega1 * a[k + m], t = omega1 * a[k + m * 3];
+          modint u1 = a[k] + u, t1 = a[k] - u;
+          modint u2 = a[k + m * 2] + t, t2 = a[k + m * 2] - t;
+
+          a[k] = u1 + (u2 *= omega2); a[k + m * 2] = u1 - u2;
+          a[k + m] = t1 + (t2 *= iomega2); a[k + m * 3] = t1 - t2;
+        }
+        omega1 *= omega_m1;
+        omega2 *= omega_m2;
+        iomega2 *= omega_m2;
       }
     }
   }
@@ -126,4 +164,3 @@ template<class modint> modint NTT<modint>::root = 0;
 template<class modint> modint NTT<modint>::zeta = 0;
 template<class modint> modint NTT<modint>::omegas[] = {};
 template<class modint> modint NTT<modint>::invomegas[] = {};
-// TODO: 4-radix
