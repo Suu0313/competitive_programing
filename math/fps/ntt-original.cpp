@@ -72,20 +72,18 @@ struct NTT{
     a.resize(n);
     int i = k - 1;
     if(k & 1){
-      modint omega = 1, omega_m = omegas[i + 1];
+      modint omega = 1;
       for(int j = 0, m = (1 << i); j < m; ++j){
-        for(int l = j; l < n; l += m * 2){
-          mint u = a[l], t = a[l + m];
-          a[l] = u + t; a[l + m] = (u - t) * omega;
-        }
-        omega *= omega_m;
+        mint u = a[j], t = a[j + m];
+        a[j] = u + t; a[j + m] = (u - t) * omega;
+        omega *= omegas[i + 1];
       }
       --i;
     }
     
     for(; i >= 0; i -= 2){
-    modint omega1 = 1, omega_m1 = omegas[i];
-    modint omega2 = 1, iomega2 = omegas[2], omega_m2 = omegas[i + 1];
+      modint omega1 = 1, omega_m1 = omegas[i];
+      modint omega2 = 1, iomega2 = omegas[2], omega_m2 = omegas[i + 1];
       for(int j = 0, m = (1 << (i - 1)); j < m; ++j){
         for(int l = j; l < n; l += m * 4){
           modint u1 = a[l] + a[l + m * 2], u2 = (a[l] - a[l + m * 2]) * omega2;
@@ -107,19 +105,15 @@ struct NTT{
 
     int i = 0;
     if(k & 1){
-      modint omega = 1, omega_m = invomegas[i + 1];
-      for(int j = 0, m = (1 << i); j < m; ++j){
-        for(int l = j; l < n; l += m * 2){
-          modint u = a[l], t = omega * a[l + m];
-          a[l] = u + t; a[l + m] = u - t;
-        }
-        omega *= omega_m;
+      for(int l = 0; l < n; l += 2){
+        modint u = a[l], t = a[l + 1];
+        a[l] = u + t; a[l + 1] = u - t;
       }
       ++i;
     }
 
     for(; i < k; i += 2){
-    modint omega1 = 1, omega2 = 1, iomega2 = invomegas[2], omega_m1 = invomegas[i + 1], omega_m2 = invomegas[i + 2];
+      modint omega1 = 1, omega2 = 1, iomega2 = invomegas[2], omega_m1 = invomegas[i + 1], omega_m2 = invomegas[i + 2];
       for(int j = 0, m = (1 << i); j < m; ++j){
         for(int l = j; l < n; l += m * 4){
           modint u = omega1 * a[l + m], t = omega1 * a[l + m * 3];
