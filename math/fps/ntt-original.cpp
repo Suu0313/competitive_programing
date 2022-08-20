@@ -121,7 +121,7 @@ struct NTT{
     for(; i < k; i += 2){
     modint omega1 = 1, omega2 = 1, iomega2 = invomegas[2], omega_m1 = invomegas[i + 1], omega_m2 = invomegas[i + 2];
       for(int j = 0, m = (1 << i); j < m; ++j){
-        for(int k = j; k < n; k += m * 4){
+        for(int l = j; l < n; l += m * 4){
           modint u = omega1 * a[l + m], t = omega1 * a[l + m * 3];
           modint u1 = a[l] + u, t1 = a[l] - u;
           modint u2 = a[l + m * 2] + t, t2 = a[l + m * 2] - t;
