@@ -74,9 +74,9 @@ struct NTT{
     if(k & 1){
       modint omega = 1, omega_m = omegas[i + 1];
       for(int j = 0, m = (1 << i); j < m; ++j){
-        for(int k = j; k < n; k += m * 2){
-          mint u = a[k], t = a[k + m];
-          a[k] = u + t; a[k + m] = (u - t) * omega;
+        for(int l = j; l < n; l += m * 2){
+          mint u = a[l], t = a[l + m];
+          a[l] = u + t; a[l + m] = (u - t) * omega;
         }
         omega *= omega_m;
       }
@@ -87,12 +87,12 @@ struct NTT{
     modint omega1 = 1, omega_m1 = omegas[i];
     modint omega2 = 1, iomega2 = omegas[2], omega_m2 = omegas[i + 1];
       for(int j = 0, m = (1 << (i - 1)); j < m; ++j){
-        for(int k = j; k < n; k += m * 4){
-          modint u1 = a[k] + a[k + m * 2], u2 = (a[k] - a[k + m * 2]) * omega2;
-          modint t1 = a[k + m] + a[k + m * 3], t2 = (a[k + m] - a[k + m * 3]) * iomega2;
+        for(int l = j; l < n; l += m * 4){
+          modint u1 = a[l] + a[l + m * 2], u2 = (a[l] - a[l + m * 2]) * omega2;
+          modint t1 = a[l + m] + a[l + m * 3], t2 = (a[l + m] - a[l + m * 3]) * iomega2;
 
-          a[k] = u1 + t1; a[k + m] = (u1 - t1) * omega1;
-          a[k + m * 2] = u2 + t2; a[k + m * 3] = (u2 - t2) * omega1;
+          a[l] = u1 + t1; a[l + m] = (u1 - t1) * omega1;
+          a[l + m * 2] = u2 + t2; a[l + m * 3] = (u2 - t2) * omega1;
         }
         omega1 *= omega_m1;
         omega2 *= omega_m2;
@@ -109,9 +109,9 @@ struct NTT{
     if(k & 1){
       modint omega = 1, omega_m = invomegas[i + 1];
       for(int j = 0, m = (1 << i); j < m; ++j){
-        for(int k = j; k < n; k += m * 2){
-          modint u = a[k], t = omega * a[k + m];
-          a[k] = u + t; a[k + m] = u - t;
+        for(int l = j; l < n; l += m * 2){
+          modint u = a[l], t = omega * a[l + m];
+          a[l] = u + t; a[l + m] = u - t;
         }
         omega *= omega_m;
       }
@@ -122,12 +122,12 @@ struct NTT{
     modint omega1 = 1, omega2 = 1, iomega2 = invomegas[2], omega_m1 = invomegas[i + 1], omega_m2 = invomegas[i + 2];
       for(int j = 0, m = (1 << i); j < m; ++j){
         for(int k = j; k < n; k += m * 4){
-          modint u = omega1 * a[k + m], t = omega1 * a[k + m * 3];
-          modint u1 = a[k] + u, t1 = a[k] - u;
-          modint u2 = a[k + m * 2] + t, t2 = a[k + m * 2] - t;
+          modint u = omega1 * a[l + m], t = omega1 * a[l + m * 3];
+          modint u1 = a[l] + u, t1 = a[l] - u;
+          modint u2 = a[l + m * 2] + t, t2 = a[l + m * 2] - t;
 
-          a[k] = u1 + (u2 *= omega2); a[k + m * 2] = u1 - u2;
-          a[k + m] = t1 + (t2 *= iomega2); a[k + m * 3] = t1 - t2;
+          a[l] = u1 + (u2 *= omega2); a[l + m * 2] = u1 - u2;
+          a[l + m] = t1 + (t2 *= iomega2); a[l + m * 3] = t1 - t2;
         }
         omega1 *= omega_m1;
         omega2 *= omega_m2;
