@@ -74,7 +74,7 @@ struct NTT{
     if(k & 1){
       modint omega = 1;
       for(int j = 0, m = (1 << i); j < m; ++j){
-        mint u = a[j], t = a[j + m];
+        modint u = a[j], t = a[j + m];
         a[j] = u + t; a[j + m] = (u - t) * omega;
         omega *= omegas[i + 1];
       }
