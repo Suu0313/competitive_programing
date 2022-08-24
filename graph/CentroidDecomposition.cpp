@@ -1,67 +1,42 @@
 template<typename T>
-struct CentroidDecomposition{
-  int n;
-  Graph<T> tree;
-
-  vector<int> sz;
-  vector<bool> used;
-
-  vector<int> parent;
-  vector<int> centroids;
-
-  Graph<int> child;
-  int root = -1;
-
+struct CentroidDecomposition : Graph<T>{
+  using base_t = Graph<T>;
+  using base_t::base_t;
   CentroidDecomposition() = default;
-  CentroidDecomposition(int n): n(n), tree(n), sz(n), used(n), parent(n), centroids(), child(n) {}
-  CentroidDecomposition(const Graph<T> &tree): n(tree.size()), tree(tree), sz(n), used(n)
-  , parent(n), centroids(), child(n) { build(); }
-  
-  void add_edge(int src, int to, T cost = 1){ tree.add_edge(src, to, cost); }
+  CentroidDecomposition(size_t n):
+    base_t(n), used(n), sz(n), parent(n), centroids() {}
+  vector<bool> used;
+  vector<size_t> sz;
+  vector<int> parent, centroids;
 
-  void build(){
-    root = build(0, n);
+  pair<Graph<int>, int> decomposition(){
+    Graph<int> decomposition_tree(base_t::size());
+    int root = decomposition(0, base_t::size(), decomposition_tree);
+    return {decomposition_tree, root};
   }
 
-  int build(int v, int size){
-    auto[c, subtrees] = findCentroid(v, size);
-    used[c] = true;
+  int decomposition(int tmp, size_t size, Graph<int> &decomposition_tree){
+    auto[centroid, subtrees] = findCentroid(tmp, size);
+    used[centroid] = true;
 
-    for(auto&&[e,s] : subtrees){
-      child.add_directed_edge(c, build(e, s), s);
+    for(auto&&[sub_c, sub_sz] : subtrees){
+      decomposition_tree.add_directed_edge(
+        centroid, decomposition(sub_c, sub_sz, decomposition_tree), sub_sz);
     }
 
-    used[c] = false;
+    used[centroid] = false;
 
-    return c;
+    return centroid;
   }
-
-  vector<int> bfs(int r){
-    queue<tuple<int,int,int>> qu;
-    qu.emplace(r, 1, -1);
-    vector<int> ds;
-
-    while(!qu.empty()){
-      auto[v, d, p] = qu.front(); qu.pop();
-      ds.push_back(d);
-      for(auto&&e : tree[v]){
-        if(e == p || used[e]) continue;
-        qu.emplace(e, d+1, v);
-      }
-    }
-
-    return ds;
-  }
-
 
   pair<int, vector<pair<int,int>> > findCentroid(int root, int size){
     vector<pair<int, int> > subtrees;
     centroids.clear();
     findCentroidRec(root, size);
     int c = centroids[0];
-    for (auto&&e : tree[c]) {
+    for (auto&&e : base_t::operator[](c)) {
         if(used[e]) continue;
-        if(e == parent[c]) subtrees.emplace_back(e, size-sz[c]);
+        if(e.to == parent[c]) subtrees.emplace_back(e, size-sz[c]);
         else subtrees.emplace_back(e, sz[e]);
     }
     return {c, subtrees};
@@ -70,8 +45,8 @@ struct CentroidDecomposition{
   void findCentroidRec(int v, int size, int p = -1){
     sz[v] = 1; parent[v] = p;
     bool isCentroid = true;
-    for(auto&&e : tree[v]){
-      if(e==p || used[e]) continue;
+    for(auto&&e : base_t::operator[](v)){
+      if(e.to == p || used[e]) continue;
       findCentroidRec(e, size, v);
       if(sz[e] > size/2) isCentroid = false;
       sz[v] += sz[e];
