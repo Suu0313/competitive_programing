@@ -5,6 +5,8 @@ struct CentroidDecomposition : Graph<T>{
   CentroidDecomposition() = default;
   CentroidDecomposition(size_t n):
     base_t(n), used(n), sz(n), parent(n), centroids() {}
+  CentroidDecomposition(const base_t &tree):
+    base_t(tree), used(tree.size()), sz(tree.size()), parent(tree.size()), centroids() {}
   vector<bool> used;
   vector<size_t> sz;
   vector<int> parent, centroids;
@@ -29,7 +31,7 @@ struct CentroidDecomposition : Graph<T>{
     return centroid;
   }
 
-  pair<int, vector<pair<int,int>> > findCentroid(int root, int size){
+  pair<int, vector<pair<int,int>> > findCentroid(int root, size_t size){
     vector<pair<int, int> > subtrees;
     centroids.clear();
     findCentroidRec(root, size);
@@ -42,7 +44,7 @@ struct CentroidDecomposition : Graph<T>{
     return {c, subtrees};
   }
 
-  void findCentroidRec(int v, int size, int p = -1){
+  void findCentroidRec(int v, size_t size, int p = -1){
     sz[v] = 1; parent[v] = p;
     bool isCentroid = true;
     for(auto&&e : base_t::operator[](v)){
