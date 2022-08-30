@@ -66,15 +66,15 @@ struct Combination{
     return com(n+k-1, k);
   }
 
-  T Catalan(int n){
-    return Catalan(n, n, 1);
+  T catalan(int n){
+    return catalan(n, n, 1);
   }
 
-  T Catalan(int n, int k){
-    return Catalan(n, k, 1);
+  T catalan(int n, int k){
+    return catalan(n, k, 1);
   }
 
-  T Catalan(int n, int k, int m){
+  T catalan(int n, int k, int m){
     if(k < m) return com(n+k, k);
     if(k < n+m-1) return com(n+k, k) - com(n+k, k-m);
     return 0;
@@ -87,6 +87,13 @@ struct Combination{
 
   T random_walk(int n, int x, int y){
     return random_walk(n, x+y) * random_walk(n, x-y);
+  }
+
+  T mul(std::initializer_list<int> ks){
+    int n = accumulate(begin(ks), end(ks), 0);
+    T res = fact(n);
+    for(int k : ks) res *= finv(k);
+    return res;
   }
 
 private:
