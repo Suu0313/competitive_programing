@@ -1,4 +1,4 @@
-int ChromaticNumber(const vector<int> &es){
+int chromatic_number(const vector<int> &es){
   const int n = int(es.size());
   vector<int> ind(1 << n), cnt((1 << n) + 1);
   ind[0] = 1; cnt[1] = 1;
