@@ -57,9 +57,9 @@ struct RollingHash{
     return cal_mod(s[l+n] + mod*4 - mul(s[l], pow_table[n]));
   }
 
-  uint64_t cat(uint64_t h1, uint64_t h2, size_t len){
-    expand(len);
-    return cal_mod(mul(h1, pow_table[len]) + h2);
+  uint64_t cat(uint64_t hl, uint64_t hr, size_t hr_len){
+    expand(hr_len);
+    return cal_mod(mul(hl, pow_table[hr_len]) + hr);
   }
 
   int lcp(const vector<uint64_t> &a, int la, int ra, const vector<uint64_t> &b, int lb, int rb){
