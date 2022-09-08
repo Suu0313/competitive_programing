@@ -29,3 +29,18 @@ auto enumerate(Cs&&... cs){
   iota(begin(idx), end(idx), 0);
   return in_zip(idx, cs...);
 }
+
+template<typename T, size_t... Is>
+auto unpack_impl(const vector<T> &v, index_sequence<Is...>){
+  tuple<vector<typename tuple_element<Is, T>::type>...> res;
+  size_t n = v.size();
+  for(size_t i = 0; i < n; ++i){
+    [[maybe_unused]] bool a[] = {(get<Is>(res).push_back(get<Is>(v[i])), false)...};
+  }
+  return res;
+}
+
+template<typename T>
+auto unpack(const vector<T> &v){
+  return unpack_impl(v, make_index_sequence<tuple_size<T>::value>());
+}
