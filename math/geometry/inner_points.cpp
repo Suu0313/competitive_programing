@@ -1,12 +1,12 @@
 template<typename T>
-pair<int64_t, int64_t> InnerPoints(const Polygon<T> &ps){
+pair<int64_t, int64_t> inner_points(const Polygon<T> &ps){
   int n = int(ps.size());
   if(n < 2) return {0, n};
   if(n == 2){
     auto[x, y] = ps[0] - ps[1];
     return {0, gcd(x, y) + 1};
   }
-  int64_t s2 = Area(ps, false);
+  int64_t s2 = area(ps, false);
   int64_t b = 0;
   for(int i = 0; i < n; ++i){
     int j = (i+1==n) ? 0 : i+1;

@@ -1,18 +1,18 @@
 template<typename T>
-double ConvexDiameter(const Polygon<T> &ps){
-  Polygon<T> qs = ConvexHull(ps);
-  int n = qs.size();
-  if(n == 2) return qs[0].dist(qs[1]);
+double convex_diameter(Polygon<T> ps){
+  ps = convex_hull(ps);
+  int n = ps.size();
+  if(n == 2) return ps[0].dist(ps[1]);
   int i=0, j=0;
   for(int k = 0; k < n; k++){
-    if(!(qs[i] < qs[k])) i = k;
-    if(qs[j] < qs[k]) j = k;
+    if(!(ps[i] < ps[k])) i = k;
+    if(ps[j] < ps[k]) j = k;
   }
   double res = 0;
   int si = i, sj = j;
   while(i!=sj || j!=si){
-    res = max(res, qs[i].dist(qs[j]));
-    if(Cross(qs[(i+1)%n]-qs[i], qs[(j+1)%n]-qs[j]) < 0){
+    res = max(res, ps[i].dist(ps[j]));
+    if(geometry::lt((ps[(i+1)%n]-ps[i]).cross(ps[(j+1)%n]-ps[j]), T(0))){
       i = (i + 1)%n;
     }else{
       j = (j + 1)%n;

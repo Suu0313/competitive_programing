@@ -11,6 +11,8 @@ namespace geometry{
   int sgn(double a){ return is_zero(a) ? 0 : ((a < 0) ? -1 : 1); }
   template<typename T> int sgn(T a){ return (a<0) ? -1 : ((a > 0) ? 1 : 0); }
   template<typename T> double psqrt(T a){ return sqrt(max(T(0), a)); }
+
+  enum Dir{ BAC = -2, CW, ACB, CCW, ABC };
 };
 
 
@@ -44,8 +46,8 @@ template<class T> struct Point{
     if(geometry::eq(x, b.x)) return y < b.y;
     return x < b.x;
   }
-  T Norm() const { return x * x + y * y; }
-  double Abs() const { return hypot<double>(x, y); }
+  T norm() const { return x * x + y * y; }
+  double abs() const { return hypot<double>(x, y); }
   double dist(const Point &b) const { return hypot<double>(x - b.x, y - b.y); }
   double arg() const { return atan2<double>(y, x); }
   
@@ -85,6 +87,14 @@ template<class T> struct Point{
     p = Point<T>(a, b);
     return (is);
   }
+
+  T cross(const Point &p) const { return x * p.y - y * p.x; }
+  T cross(const Point &p, const Point &q) const { return (p - (*this)).cross(q - (*this)) ; }
+
+  T dot(const Point &p) const { return x * p.x + y * p.y; }
+  T dot(const Point &p, const Point &q) const { return (p - (*this)).dot(q - (*this)) ; }
+
+  
 };
 
 template<typename T> Point<T> Polar(const T& rho, const T& theta = 0){
@@ -93,28 +103,13 @@ template<typename T> Point<T> Polar(const T& rho, const T& theta = 0){
 
 template<typename T> using Polygon = vector<Point<T>>;
 
-template<class T> T Cross(const Point<T> &a, const Point<T> &b) { return a.x * b.y - a.y * b.x; }
-
-template<class T> T Dot(const Point<T> &a, const Point<T> &b) { return a.x * b.x + a.y * b.y; }
-
 template<class T> int iSP(const Point<T> &a, const Point<T> &b, const Point<T> &c){
-  T fl = Cross(b-a, c-a);
+  T fl = a.cross(b, c);
   if(geometry::lt(T(0), fl)) return 1; // CCW
   if(geometry::lt(fl, T(0))) return -1; // CW
-  if(geometry::lt(T(0), Dot(b-a, c-b))) return 2; //abc
-  if(geometry::lt(T(0), Dot(a-b, c-a))) return -2; //bac
+  if(geometry::lt(b.dot(a, c), T(0))) return 2; //abc
+  if(geometry::lt(a.dot(b, c), T(0))) return -2; //bac
   return 0; // acb
-}
-
-template<class T> bool Intersect(const Point<T> &a, const Point<T> &b, const Point<T> &c, const Point<T> &d) {
-  return (iSP(a, b, c)*iSP(a, b, d) <= 0) && (iSP(c, d, a)*iSP(c, d, b) <= 0);
-}
-
-template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Point<T> &c){
-  T v = Dot(a-b, c-a);
-  if(geometry::is_zero(v)) return 0; // right angle
-  if(v > 0) return 1; // acute angle
-  return -1; // obtuse angle
 }
 
 template<typename T>
@@ -130,6 +125,6 @@ bool cmp_arg(const Point<T>& p1, const Point<T> &p2){
 }
 
 template<typename T>
-void ArgSort(Polygon<T> &ps){
+void arg_sort(Polygon<T> &ps){
   sort(begin(ps), end(ps), cmp_arg<T>);
 }

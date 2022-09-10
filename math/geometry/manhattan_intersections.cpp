@@ -1,5 +1,5 @@
 template<typename T>
-int64_t manhattanIntersections(vector<Segment<T>> ss){
+int64_t manhattan_intersections(vector<Segment<T>> ss){
   const int n = int(ss.size());
   vector<T> xs(n*2);
   for(int i = 0; i < n; ++i) xs[i] = ss[i].a.x, xs[i+n] = ss[i].b.x;
