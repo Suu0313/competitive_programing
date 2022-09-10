@@ -11,6 +11,8 @@ namespace geometry{
   int sgn(double a){ return is_zero(a) ? 0 : ((a < 0) ? -1 : 1); }
   template<typename T> int sgn(T a){ return (a<0) ? -1 : ((a > 0) ? 1 : 0); }
   template<typename T> double psqrt(T a){ return sqrt(max(T(0), a)); }
+
+  enum Dir{ BAC = -2, CW, ACB, CCW, ABC };
 };
 
 
@@ -44,8 +46,8 @@ template<class T> struct Point{
     if(geometry::eq(x, b.x)) return y < b.y;
     return x < b.x;
   }
-  T Norm() const { return x * x + y * y; }
-  double Abs() const { return hypot<double>(x, y); }
+  T norm() const { return x * x + y * y; }
+  double abs() const { return hypot<double>(x, y); }
   double dist(const Point &b) const { return hypot<double>(x - b.x, y - b.y); }
   double arg() const { return atan2<double>(y, x); }
   
@@ -85,37 +87,29 @@ template<class T> struct Point{
     p = Point<T>(a, b);
     return (is);
   }
+
+  T cross(const Point &p) const { return x * p.y - y * p.x; }
+  T cross(const Point &p, const Point &q) const { return (p - (*this)).cross(q - (*this)) ; }
+
+  T dot(const Point &p) const { return x * p.x + y * p.y; }
+  T dot(const Point &p, const Point &q) const { return (p - (*this)).dot(q - (*this)) ; }
+
+  
 };
 
 template<typename T> Point<T> Polar(const T& rho, const T& theta = 0){
   return Point<T>(rho * cos(theta), rho * sin(theta));
 }
 
-
 template<typename T> using Polygon = vector<Point<T>>;
 
-template<class T> T Cross(const Point<T> &a, const Point<T> &b) { return a.x * b.y - a.y * b.x; }
-
-template<class T> T Dot(const Point<T> &a, const Point<T> &b) { return a.x * b.x + a.y * b.y; }
-
 template<class T> int iSP(const Point<T> &a, const Point<T> &b, const Point<T> &c){
-  T fl = Cross(b-a, c-a);
+  T fl = a.cross(b, c);
   if(geometry::lt(T(0), fl)) return 1; // CCW
   if(geometry::lt(fl, T(0))) return -1; // CW
-  if(geometry::lt(T(0), Dot(b-a, c-b))) return 2; //abc
-  if(geometry::lt(T(0), Dot(a-b, c-a))) return -2; //bac
+  if(geometry::lt(b.dot(a, c), T(0))) return 2; //abc
+  if(geometry::lt(a.dot(b, c), T(0))) return -2; //bac
   return 0; // acb
-}
-
-template<class T> bool Intersect(const Point<T> &a, const Point<T> &b, const Point<T> &c, const Point<T> &d) {
-  return (iSP(a, b, c)*iSP(a, b, d) <= 0) && (iSP(c, d, a)*iSP(c, d, b) <= 0);
-}
-
-template<class T> int angletype(const Point<T> &a, const Point<T> &b, const Point<T> &c){
-  T v = Dot(a-b, c-a);
-  if(geometry::is_zero(v)) return 0; // right angle
-  if(v > 0) return 1; // acute angle
-  return -1; // obtuse angle
 }
 
 template<typename T>
@@ -131,7 +125,7 @@ bool cmp_arg(const Point<T>& p1, const Point<T> &p2){
 }
 
 template<typename T>
-void ArgSort(Polygon<T> &ps){
+void arg_sort(Polygon<T> &ps){
   sort(begin(ps), end(ps), cmp_arg<T>);
 }
 
@@ -147,28 +141,28 @@ template<class T> struct Line{
   }
   //Line(const Segment<T> &s): a(s.a), b(s.b) {}
   Point<T> projection(const Point<T> &p) const {
-    return a + (b - a)*Dot(p - a, b - a)/(b - a).Norm();
+    return a + (b - a) * a.dot(p, b) / (b - a).norm();
   }
   Point<T> reflection(const Point<T> &p) const {
     return p + (projection(p) - p)*2;
   }
   int angletype(const Line &l) const {
-    if(geometry::is_zero(Cross(b-a, l.b-l.a))) return 1;
-    if(geometry::is_zero(Dot(a-b, l.b-l.a))) return -1;
+    if(geometry::is_zero((b - a).cross(l.b - l.a))) return 1;
+    if(geometry::is_zero((a - b).dot(l.b - l.a))) return -1;
     return 0;
   }
-  bool Intersect(const Line &l) const {
+  bool intersect(const Line &l) const {
     return angletype(l) != 1;
   }
-  Point<T> Cross_Point(const Line &l) const {
-    if(geometry::is_zero(Cross(b-a,l.b-l.a))) return l.a;
-    return (b - a)*Cross(l.a - a, l.b - l.a)/Cross(b - a,l.b - l.a) + a;
+  Point<T> cross_point(const Line &l) const {
+    if(geometry::is_zero((b - a).cross(l.b - l.a))) return l.a;
+    return (b - a) * ((l.a - a).cross(l.b - l.a)) / ((b - a).cross(l.b - l.a)) + a;
   }
   double dist(const Point<T> &p) const {
-    return abs(Cross(p - a, b - a)/(b - a).Abs());
+    return abs(a.cross(p, b)/(b - a).abs());
   }
   double dist(const Line &l) const {
-    if(Intersect(l)) return 0;
+    if(intersect(l)) return 0;
     return dist(l.a);
   }
 };
@@ -179,30 +173,30 @@ template<class T> struct Segment{
   Segment(const Point<T> &a, const Point<T> &b): a(a), b(b) {}
 
   double length() const { return a.dist(b); }
-  bool Intersect(const Segment &s) const {
+  bool intersect(const Segment &s) const {
     return iSP(a, b, s.a)*iSP(a, b, s.b) <= 0 && iSP(s.a, s.b, a)*iSP(s.a, s.b, b) <= 0;
   }
-  Point<T> Center() const { return (a + b) / 2; }
-  Line<T> PerpBisector() const {
-    Point<T> center = this->Center();
+  Point<T> center() const { return (a + b) / 2; }
+  Line<T> perp_bisector() const {
+    Point<T> center = this->center();
     return Line<T>((a - center).rotate90() + center, center);
   }
   int angletype(const Segment &s) const {
-    if(geometry::is_zero(Cross(b-a, s.b-s.a))) return 1;
-    if(geometry::is_zero(Dot(a-b, s.b-s.a))) return -1;
+    if(geometry::is_zero((b - a).cross(s.b - s.a))) return 1;
+    if(geometry::is_zero((a - b).dot(s.b - s.a))) return -1;
     return 0;
   }
-  Point<T> Cross_Point(const Segment &s) const {
-    if(geometry::is_zero(Cross(b-a,s.b-s.a))) return s.a;
-    return (b - a)*Cross(s.a - a, s.b - s.a)/Cross(b - a, s.b - s.a) + a;
+  Point<T> cross_point(const Segment &s) const {
+    if(geometry::is_zero((b - a).cross(s.b - s.a))) return s.a;
+    return (b - a) * ((s.a - a).cross(s.b - s.a)) / ((b - a).cross(s.b - s.a)) + a;
   }
   double dist(const Point<T> &p) const {
-    if(Dot(b-a, p-a) < 0) return p.dist(a);
-    if(Dot(a-b, p-b) < 0) return p.dist(b);
-    return abs(Cross(p-a, b-a)/ (b-a).Abs());
+    if(geometry::lt(a.dot(b, p), T(0))) return p.dist(a);
+    if(geometry::lt(b.dot(a, p), T(0))) return p.dist(b);
+    return abs(a.cross(p, b) / (b-a).abs());
   }
   double dist(const Segment &s) const {
-    if(Intersect(s)) return 0;
+    if(intersect(s)) return 0;
     return min({dist(s.a), dist(s.b), s.dist(a), s.dist(b)});
   }
 };
@@ -234,7 +228,7 @@ struct Triangle{
   }
   Point<T> circumcenter() const {
     Segment<T> s1(a, b), s2(a, c);
-    return s1.PerpBisector().Cross_Point(s2.PerpBisector());
+    return s1.perp_bisector().cross_point(s2.perp_bisector());
   }
   Point<T> orthocenter() const {
     return centerofgravity()*3 - circumcenter()*2;
@@ -257,14 +251,15 @@ template<class T> struct Circle{
   Point<T> o;
   T r;
   Circle() {}
+  Circle(const T &r): o(0, 0), r(r) {}
   Circle(const Point<T> &o, const T &r): o(o), r(r) {}
   Circle(const Point<T> &a, const Point<T> &b): o((a + b)/2), r(a.dist(b)/2) {}
   Circle(const Point<T> &a, const Point<T> &b, const Point<T> &c)
     : o(Triangle(a,b,c).circumcenter()), r(o.dist(a)) {}
 
-  int Intersect(const Circle&c) const {
-    if(r < c.r) return c.Intersect(*this);
-    auto od = (o - c.o).Norm();
+  int intersect(const Circle&c) const {
+    if(r < c.r) return c.intersect(*this);
+    auto od = (o - c.o).norm();
     auto ra = (r + c.r)*(r + c.r), rs = (r - c.r)*(r - c.r);
     if(geometry::lt(ra, od)) return 4;
     if(geometry::eq(ra, od)) return 3;
@@ -273,35 +268,45 @@ template<class T> struct Circle{
     return 0;
   }
 
-  bool isIntersect(const Circle&c) const {
-    int k = this->Intersect(c);
+  bool is_intersect(const Circle&c) const {
+    int k = this->intersect(c);
     return !(k == 0 || k == 4);
   }
 
-  int Intersect(const Line<T> &l) const {
+  int intersect(const Line<T> &l) const {
     double d = l.dist(o);
     if(geometry::lt<double>(d, r)) return 2;
     return geometry::eq(d, r);
   }
 
-  int Contains(const Point<T> &p) const {
-    auto od = (o - p).Norm();
+  int contains(const Point<T> &p) const {
+    auto od = (o - p).norm();
     if(geometry::eq(od, r*r)) return 1; // on
     return (od > r*r) ? 2 : 0; // out/in
   }
 
-  Polygon<T> CrossPoints(const Line<T> &l) const {
-    int k = this->Intersect(l);
+  Polygon<T> cross_points(const Line<T> &l) const {
+    int k = this->intersect(l);
     if(k == 0) return {};
     Point<T> p = l.projection(o);
     if(k == 1) return {p};
     Point<T> d = (l.b - l.a)/l.a.dist(l.b);
-    double base = geometry::psqrt(r*r - (p - o).Norm());
-    return {p + d*base, p - d*base};
+    double base = geometry::psqrt(r*r - (p - o).norm());
+    return {p - d*base, p + d*base};
   }
 
-  Polygon<T> CrossPoints(const Circle &c) const {
-    int k = this->Intersect(c);
+  Polygon<T> cross_points(const Segment<T> &s) const {
+    Polygon<T> ps;
+    for(const auto &p : this->cross_points(Line<T>(s.a, s.b))){
+      if((p == s.a) || (p == s.b) || (iSP(s.a, p, s.b) == 2)){
+        ps.push_back(p);
+      }
+    }
+    return ps;
+  }
+
+  Polygon<T> cross_points(const Circle &c) const {
+    int k = this->intersect(c);
     if(k == 0 || k == 4) return {};
     double d = o.dist(c.o), h = (r*r - c.r*c.r + d*d) / (d*2);
     Point<T> v = (c.o - o) / d;
@@ -310,8 +315,8 @@ template<class T> struct Circle{
     return {o + v*Point<T>(h, s), o + v*Point<T>(h, -s) };
   }
 
-  Polygon<T> TangentPoints(const Point<T> &p) const {
-    int t = this->Contains(p);
+  Polygon<T> tangent_points(const Point<T> &p) const {
+    int t = this->contains(p);
     if(t == 0) return {};
     if(t == 1) return {p};
     double d = p.dist(o), h = r*r/d, s = geometry::psqrt(r*r - h*h);
@@ -319,30 +324,32 @@ template<class T> struct Circle{
     return {o + v*h + v.rotate90()*s, o + v*h + v.rotate270()*s};
   }
 
-  Polygon<T> TangentPoints(const Circle &c) const {
-    int k = this->Intersect(c);
+  Polygon<T> tangent_points(const Circle &c) const {
+    int k = this->intersect(c);
     if(k == 0) return {};
     Polygon<T> ps; 
     Point<T> p = c.o - o;
 
-    if(k == 1) return { p*r*(r - c.r)/p.Norm() + o };
+    if(k == 1) return { p*r*(r - c.r)/p.norm() + o };
 
-    double d = geometry::psqrt(p.Norm() - (r - c.r)*(r - c.r));
-    ps.push_back((p*(r - c.r) + p.rotate90()*d)*r/p.Norm() + o);
-    ps.push_back((p*(r - c.r) + p.rotate270()*d)*r/p.Norm() + o);
+    double d = geometry::psqrt(p.norm() - (r - c.r)*(r - c.r));
+    ps.push_back((p*(r - c.r) + p.rotate90()*d)*r/p.norm() + o);
+    ps.push_back((p*(r - c.r) + p.rotate270()*d)*r/p.norm() + o);
     if(k == 2) return ps;
 
     if(k == 3){
-      ps.push_back(p*r*(r + c.r)/p.Norm() + o);
+      ps.push_back(p*r*(r + c.r)/p.norm() + o);
       return ps;
     }
 
-    d = geometry::psqrt(p.Norm() - (r + c.r)*(r + c.r));
-    ps.push_back((p*(r + c.r) + p.rotate90()*d)*r/p.Norm() + o);
-    ps.push_back((p*(r + c.r) + p.rotate270()*d)*r/p.Norm() + o);
+    d = geometry::psqrt(p.norm() - (r + c.r)*(r + c.r));
+    ps.push_back((p*(r + c.r) + p.rotate90()*d)*r/p.norm() + o);
+    ps.push_back((p*(r + c.r) + p.rotate270()*d)*r/p.norm() + o);
     
     return ps;
   }
+
+  double area() const { return r * r * acos(-1.0); }
 
   friend ostream &operator<<(ostream &os, const Circle &c) {
     return os << c.o << " " << c.r;

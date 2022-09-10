@@ -3,7 +3,7 @@ bool isCongruence(const Polygon<T> &ps, const Polygon<T> &qs){
   int n = int(ps.size()), m = int(qs.size());
   if(n != m) return false;
   if(n <= 1) return true;
-  if(n == 2) return geometry::eq((ps[0] - ps[1]).Norm(), (qs[0] - qs[1]).Norm());
+  if(n == 2) return geometry::eq((ps[0] - ps[1]).norm(), (qs[0] - qs[1]).norm());
 
   auto normalize = [](const Polygon<T> &pts) -> vector<T>{
     int n = int(pts.size());
@@ -13,14 +13,14 @@ bool isCongruence(const Polygon<T> &ps, const Polygon<T> &qs){
       if(g == p * n) continue;
       nps.emplace_back(p*n - g);
     }
-    ArgSort(nps);
+    arg_sort(nps);
     n = int(nps.size());
     vector<T> res(n * 3);
     for(int i = 0; i < n; ++i){
       int j = (i+1==n) ? 0 : (i+1);
-      res[i*3] = nps[i].Norm();
-      res[i*3+1] = Dot(nps[i], nps[j]);
-      res[i*3+2] = Cross(nps[i], nps[j]);
+      res[i*3] = nps[i].norm();
+      res[i*3+1] = nps[i].dot(nps[j]);
+      res[i*3+2] = nps[i].cross(nps[j]);
     }
     return res;
   };
