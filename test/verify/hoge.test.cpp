@@ -10,7 +10,7 @@ int main(){
   vector<int> ans;
 
   auto mp = Factoring(n);
-  for(auto&&[x, t] : mp){
+  for(auto[x, t] : mp){
     while(t--) ans.push_back(x);
   }
 
