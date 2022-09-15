@@ -34,8 +34,8 @@ struct Date{
   constexpr int get_m() const { return get<1>(get_date()); }
   constexpr int get_d() const { return get<2>(get_date()); }
   constexpr int get_w() const { return (G + 3) % 7; } // Sun = 0
-  constexpr bool is_weelend() const { return get_w() == 0 || get_w() == 6; }
-  constexpr bool is_weekday() const { return !is_weelend(); }
+  constexpr bool is_weekend() const { return get_w() == 0 || get_w() == 6; }
+  constexpr bool is_weekday() const { return !is_weekend(); }
 
   static constexpr uint64_t date_to_G(int y, int m, int d){
     if(m <= 2) y--, m += 12;
