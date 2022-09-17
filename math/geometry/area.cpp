@@ -57,5 +57,5 @@ double common_area(const Circle<T> &c1, const Circle<T> &c2){
   auto ps = c1.cross_points(c2);
   return abs(c1.r*c1.r*((ps[0] - c1.o)/(c2.o - c1.o)).arg())
     + abs(c2.r*c2.r*((ps[0] - c2.o)/(c1.o - c2.o)).arg())
-    - abs(area(Polygon<T>{c1.o, ps[0], c2.o, ps[1]}));
+    - abs(ps[0].cross(c1.o, c2.o));
 }
