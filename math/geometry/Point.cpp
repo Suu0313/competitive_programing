@@ -121,7 +121,7 @@ bool cmp_y(const Point<T>& p1, const Point<T> &p2){
 template<typename T>
 bool cmp_arg(const Point<T>& p1, const Point<T> &p2){
   if(p1.ort() != p2.ort()) return p1.ort() < p2.ort();
-  return iSP(Point<T>(0,0), p1, p2) > 0;
+  return p1.cross(p2) > 0;
 }
 
 template<typename T>
