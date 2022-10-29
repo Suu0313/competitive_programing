@@ -19,6 +19,7 @@ struct ReRooting{
 
   vector<int> dag, rev;
 
+  // f(s, g(dp, edge))
   ReRooting(int V, const F f, const G g, const T &e)
     : V(V), tree(V), f(f), g(g), e(e), dp(V, e), dp_p(V, e) {}
   
