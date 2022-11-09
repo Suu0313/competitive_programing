@@ -63,6 +63,64 @@ struct BigInt : vector<uint64_t> {
     return a;
   }
 
+  static self div(self a, self b){
+    size_t s = a.size(), t = b.size();
+    if(a < b) return 0;
+
+    val_type D = BASE;
+
+    if(t == 1){
+      val_type r = 0, d = b[0];
+      self w(a);
+      for(size_t i = s; i--; ){
+        w[i] = (r * D + a[i]) / d;
+        r = (r * D + a[i]) % d;
+      }
+      w.normalize();
+      return w;
+    }
+
+    val_type n = (t == 1 ? b[t - 1] : (b[t - 1] * D + b[t - 2]));
+    val_type d = (n < D ? (D / (n + 1)) : D * D / (n + 1));
+    a *= d; b *= d;
+    s = a.size(), t = b.size();
+    
+    self m = self(D).pow(s - t) * b;
+    size_t h = m.size();
+    val_type mh = m[h - 1], ms = m[h - 2];
+    self c(0);
+    if(a >= m){ c += 1; a -= m; }
+    m.erase(m.begin());
+
+    /*
+    1 < t <= s
+    //*/
+
+    auto a_at = [&](size_t i){ return (a.size() <= i) ? val_type(0) : a[i]; };
+
+    for(size_t i = 0; i < s - t; ++i){
+      c *= D;
+      size_t k = a.size();
+      val_type xh = a_at(s - 1 - i) * D + a_at(s - 2 - i);
+      val_type xs = a_at(s - 3 - i);
+      val_type q = min(xh / mh, D - 1);
+      while(q * ms > (xh - q * mh) * D + xs) --q;
+
+      if(self mm = m * q; a >= mm){
+        c += q;
+        a -= mm;
+      }else if(q){
+        while(a < mm && q > 1){ --q; mm -= m; }
+        if(q){
+          c += q;
+          a -= mm;
+        }
+      }
+      m.erase(m.begin());
+    }
+    return c;
+  }
+
   self operator-() const { self r(*this); r.sign = -r.sign; return r; }
 
   self abs() const { return (sign == -1) ? -(*this) : (*this); }
@@ -91,6 +149,7 @@ struct BigInt : vector<uint64_t> {
   self &operator-=(const self &a){ return (*this) = (*this) - a; }
 
   self &operator*=(int64_t k){
+    if((k >= 0 ? k : -k) >= BASE) return (*this) *= self(k);
     if(k < 0) sign = -sign, k = -k;
     for(val_type &e : (*this)) e *= k;
     normalize();
@@ -125,7 +184,29 @@ struct BigInt : vector<uint64_t> {
     return ret;
   }
 
-  self operator/(const self &a) const; // TODO:
+  self &operator/=(int64_t k){
+    if(k < 0) sign = -sign, k = -k;
+    val_type r = 0;
+    for(size_t i = this->size(); i--; ){
+      val_type a = (*this)[i];
+      (*this)[i] = (r * BASE + a) / k;
+      r = (r * BASE + a) % k;
+    }
+    normalize();
+    return (*this);
+  }
+
+  self &operator/(int64_t k) const { return self(*this) /= k; }
+
+  self operator/(const self &a) const {
+    assert(a.sign != 0);
+    if(sign == 0) return 0;
+    if(sign != a.sign) return -(this->abs() / a.abs());
+    if(sign == -1) return (this->abs() / a.abs());
+    return div(*this, a);
+  }
+
+  self &operator/=(const self &a){ return (*this) = (*this) / a; }
 
   self &operator%=(const self &a){ return (*this) -= (*this) / a * a; }
   self operator%(const self &a) const { return self(*this) %= a; }
