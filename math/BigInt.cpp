@@ -106,7 +106,7 @@ struct BigInt : vector<uint64_t> {
       val_type q = min(xh / mh, D - 1);
       while(q * ms > (xh - q * mh) * D + xs) --q;
 
-      if(self mm = m * q; a >= mm){
+      if(self mm = m * self(q); a >= mm){
         c += q;
         a -= mm;
       }else if(q){
@@ -148,14 +148,14 @@ struct BigInt : vector<uint64_t> {
   self &operator+=(const self &a){ return (*this) = (*this) + a; }
   self &operator-=(const self &a){ return (*this) = (*this) - a; }
 
-  self &operator*=(int64_t k){
-    if((k >= 0 ? k : -k) >= BASE) return (*this) *= self(k);
-    if(k < 0) sign = -sign, k = -k;
-    for(val_type &e : (*this)) e *= k;
-    normalize();
-    return (*this);
-  }
-  self operator*(int64_t k) const { return self(*this) *= k; }
+  // self &operator*=(int64_t k){
+  //   if((k >= 0 ? k : -k) >= BASE) return (*this) *= self(k);
+  //   if(k < 0) sign = -sign, k = -k;
+  //   for(val_type &e : (*this)) e *= k;
+  //   normalize();
+  //   return (*this);
+  // }
+  // self operator*(int64_t k) const { return self(*this) *= k; }
 
   self operator*(const self &a) const {
     int ns = sign * a.sign;
@@ -184,19 +184,19 @@ struct BigInt : vector<uint64_t> {
     return ret;
   }
 
-  self &operator/=(int64_t k){
-    if(k < 0) sign = -sign, k = -k;
-    val_type r = 0;
-    for(size_t i = this->size(); i--; ){
-      val_type a = (*this)[i];
-      (*this)[i] = (r * BASE + a) / k;
-      r = (r * BASE + a) % k;
-    }
-    normalize();
-    return (*this);
-  }
+  // self &operator/=(int64_t k){
+  //   if(k < 0) sign = -sign, k = -k;
+  //   val_type r = 0;
+  //   for(size_t i = this->size(); i--; ){
+  //     val_type a = (*this)[i];
+  //     (*this)[i] = (r * BASE + a) / k;
+  //     r = (r * BASE + a) % k;
+  //   }
+  //   normalize();
+  //   return (*this);
+  // }
 
-  self &operator/(int64_t k) const { return self(*this) /= k; }
+  // self &operator/(int64_t k) const { return self(*this) /= k; }
 
   self operator/(const self &a) const {
     assert(a.sign != 0);
