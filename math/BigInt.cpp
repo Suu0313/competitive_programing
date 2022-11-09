@@ -92,10 +92,6 @@ struct BigInt : vector<uint64_t> {
     if(a >= m){ c += 1; a -= m; }
     m.erase(m.begin());
 
-    /*
-    1 < t <= s
-    //*/
-
     auto a_at = [&](size_t i){ return (a.size() <= i) ? val_type(0) : a[i]; };
 
     for(size_t i = 0; i < s - t; ++i){
@@ -148,15 +144,6 @@ struct BigInt : vector<uint64_t> {
   self &operator+=(const self &a){ return (*this) = (*this) + a; }
   self &operator-=(const self &a){ return (*this) = (*this) - a; }
 
-  // self &operator*=(int64_t k){
-  //   if((k >= 0 ? k : -k) >= BASE) return (*this) *= self(k);
-  //   if(k < 0) sign = -sign, k = -k;
-  //   for(val_type &e : (*this)) e *= k;
-  //   normalize();
-  //   return (*this);
-  // }
-  // self operator*(int64_t k) const { return self(*this) *= k; }
-
   self operator*(const self &a) const {
     int ns = sign * a.sign;
     if(ns == 0) return self(0);
@@ -184,19 +171,25 @@ struct BigInt : vector<uint64_t> {
     return ret;
   }
 
-  // self &operator/=(int64_t k){
-  //   if(k < 0) sign = -sign, k = -k;
-  //   val_type r = 0;
-  //   for(size_t i = this->size(); i--; ){
-  //     val_type a = (*this)[i];
-  //     (*this)[i] = (r * BASE + a) / k;
-  //     r = (r * BASE + a) % k;
-  //   }
-  //   normalize();
-  //   return (*this);
-  // }
+  self bpow(const self &k) const {
+    self r(1);
+    for(size_t i = k.size(); i--; ) r = r.pow(BASE) * (*this).pow(k[i]);
+    return r;
+  }
 
-  // self &operator/(int64_t k) const { return self(*this) /= k; }
+  self pow_mod(uint64_t k, const self &m) const {
+    self ret(1), a(*this);
+    for(; k; k >>= 1, a = (a * a) % m){
+      if(k & 1) ret = (ret * a) % m;
+    }
+    return ret;
+  }
+
+  self bpow_mod(const self &k, const self &m) const {
+    self r(1);
+    for(size_t i = k.size(); i--; ) r = (r.pow_mod(BASE, m) * (*this).pow_mod(k[i], m)) % m;
+    return r;
+  }
 
   self operator/(const self &a) const {
     assert(a.sign != 0);
@@ -210,6 +203,11 @@ struct BigInt : vector<uint64_t> {
 
   self &operator%=(const self &a){ return (*this) -= (*this) / a * a; }
   self operator%(const self &a) const { return self(*this) %= a; }
+
+  pair<self, self> divmod(const self &m) const {
+    self d = (*this) / m;
+    return {d, d - (*this) * d};
+  }
 
   int to_int() const { return (*this)[0] * sign; }
   int64_t to_ll() const { return (*this)[0] * sign; }
