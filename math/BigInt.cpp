@@ -96,7 +96,6 @@ struct BigInt : vector<uint64_t> {
 
     for(size_t i = 0; i < s - t; ++i){
       c *= D;
-      size_t k = a.size();
       val_type xh = a_at(s - 1 - i) * D + a_at(s - 2 - i);
       val_type xs = a_at(s - 3 - i);
       val_type q = min(xh / mh, D - 1);
@@ -263,3 +262,5 @@ struct BigInt : vector<uint64_t> {
     return os;
   }
 };
+namespace bint_literal{ BigInt operator""_bi(unsigned long long x) { return x; } }
+using namespace bint_literal;
