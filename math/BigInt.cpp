@@ -242,7 +242,7 @@ struct BigInt : vector<uint64_t> {
   bool operator>=(const self &a) const { return this->compair(a) >= 0; }
   bool operator==(const self &a) const { return this->compair(a) == 0; }
   bool operator!=(const self &a) const { return this->compair(a) != 0; }
-  operator bool() const { return sign != 0; }
+  bool is_zero() const { return sign == 0; }
 
   friend istream &operator>>(istream &is, self &a){
     string s; is >> s;
