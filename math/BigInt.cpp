@@ -190,6 +190,12 @@ struct BigInt : vector<uint64_t> {
     return r;
   }
 
+  uint64_t smod(uint64_t m) const {
+    uint64_t r = 0;
+    for(size_t i = (*this).size(); i--; ) r = (r * BASE + (*this)[i]) % m;
+    return r;
+  }
+
   self operator/(const self &a) const {
     assert(a.sign != 0);
     if(sign == 0) return 0;
@@ -242,6 +248,7 @@ struct BigInt : vector<uint64_t> {
   bool operator>=(const self &a) const { return this->compair(a) >= 0; }
   bool operator==(const self &a) const { return this->compair(a) == 0; }
   bool operator!=(const self &a) const { return this->compair(a) != 0; }
+  explicit operator bool() const { return sign != 0; }
   bool is_zero() const { return sign == 0; }
 
   friend istream &operator>>(istream &is, self &a){
