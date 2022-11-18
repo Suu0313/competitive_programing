@@ -1,4 +1,4 @@
-vector<int> SubsetSum(const vector<int> &a, int x){
+vector<int> subset_sum(const vector<int> &a, int x){
   int n = int(a.size()), s = 0;
   vector<int> b(a), d(n), idx(n);
   for(auto&e : b){
@@ -70,9 +70,9 @@ vector<int> SubsetSum(const vector<int> &a, int x){
   return {};
 }
 
-vector<int> pmsum(const vector<int> &a, int x){
+vector<int> pm_sum(const vector<int> &a, int x){
   // sum (-1)^t ai = x
   for(auto&e : a) x += e;
   if(x & 1) return {};
-  return SubsetSum(a, x >> 1);
+  return subset_sum(a, x >> 1);
 }
