@@ -16,6 +16,7 @@ struct SuffixArray{
     sa_is(s);
   }
 
+  // kth suffix = s[sa[k] : end]
   int operator[](int k) const { return sa[k]; }
   size_t size() const { return s.size(); }
 
