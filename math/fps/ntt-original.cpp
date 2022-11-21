@@ -6,7 +6,7 @@ struct NTT{
 
   static int bsf(unsigned int n) { return __builtin_ctz(n); }
 
-  static long long pow_mod(long long x, long long n, int m) {
+  static constexpr long long pow_mod(long long x, long long n, int m) {
     if (m == 1) return 0;
     unsigned int _m = (unsigned int)(m);
     unsigned long long r = 1;
@@ -19,7 +19,7 @@ struct NTT{
     return r;
   }
 
-  static int primitive_root(int m){
+  static constexpr int primitive_root(int m){
     if (m == 2) return 1;
     if (m == 167772161) return 3;
     if (m == 469762049) return 3;
@@ -69,7 +69,6 @@ struct NTT{
 
   static void ntt(vector<modint> &a, int k){
     int n = 1 << k;
-    a.resize(n);
     int i = k - 1;
     if(k & 1){
       modint omega = 1;
@@ -101,8 +100,6 @@ struct NTT{
 
   static void invntt(vector<modint> &a, int k){
     int n = 1 << k;
-    a.resize(n);
-
     int i = 0;
     if(k & 1){
       for(int l = 0; l < n; l += 2){
@@ -130,18 +127,23 @@ struct NTT{
     }
   }
 
+  static vector<modint> multiply_native(const vector<modint> &a, const vector<modint> &b){
+    int n = int(a.size()), m = int(b.size());
+    vector<modint> ans(n + m - 1);
+    for(int i = 0; i < n; i++)
+      for(int j = 0; j < m; j++)
+        ans[i + j] += a[i] * b[j];
+    return ans;
+  }
+
+
   static vector<modint> multiply(vector<modint> a, vector<modint> b){
     int n = int(a.size()), m = int(b.size());
-    if(min(n, m) <= 60){
-      vector<modint> ans(n + m - 1);
-      for(int i = 0; i < n; i++)
-        for(int j = 0; j < m; j++)
-          ans[i + j] += a[i] * b[j];
-      return ans;
-    }
+    if(min(n, m) <= 60) return multiply_native(a, b);
     precalculate();
     int k = 0;
     while((n + m - 1) > (1 << k)) ++k;
+    a.resize(1 << k); b.resize(1 << k);
     ntt(a, k); ntt(b, k);
     for(int i = 0; i < (1 << k); ++i) a[i] *= b[i];
     invntt(a, k);
