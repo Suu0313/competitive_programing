@@ -85,6 +85,12 @@ struct Matrix{
     return (*this);
   }
 
+  Matrix operator-() const {
+    Matrix m(*this);
+    for(auto&&v : m.a) for(auto&&e : v) e = -e;
+    return m;
+  }
+
   Matrix operator+(const Matrix &b) const { return Matrix(*this) += b; }
   Matrix operator-(const Matrix &b) const { return Matrix(*this) -= b; }
   Matrix operator*(const T &c) const { return Matrix(*this) *= c; }
