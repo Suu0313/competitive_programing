@@ -101,12 +101,28 @@ struct Formalpowerseries : vector<T> {
   bool operator>(const F &f){ return this->size() > f.size(); }
   bool operator>=(const F &f){ return this->size() >= f.size(); }
 
+  // F inv(int d = -1) const {
+  //   if(d == -1) d = this->size();
+  //   if((*this)[0] == T(0)) return F{};
+  //   F res(1, T(1) / (*this)[0]);
+  //   for(int i = 1; i < d; i <<= 1){
+  //     res = (res+res - res*res*pre(i << 1)).pre(i << 1);
+  //   }
+  //   return res.pre(d);
+  // }
+
   F inv(int d = -1) const {
     if(d == -1) d = this->size();
     if((*this)[0] == T(0)) return F{};
     F res(1, T(1) / (*this)[0]);
     for(int i = 1; i < d; i <<= 1){
-      res = (res+res - res*res*pre(i<<1)).pre(i << 1);
+      int n = i << 2;
+      F f(n), g(n); f += pre(i << 1); g += res;
+      NTT::butterfly(f); NTT::butterfly(g);
+      for(int j = 0; j < n; ++j) f[j] *= g[j] * g[j];
+      NTT::butterfly_inv(f);
+      f.resize(i << 1);
+      res += res - f * T(n).inverse();
     }
     return res.pre(d);
   }
@@ -131,7 +147,14 @@ struct Formalpowerseries : vector<T> {
   F integral() const {
     int n = this->size();
     F res(n + 1);
-    for(int i = 0; i < n; i++) res[i+1] = (*this)[i] / T(i + 1);
+    static vector<T> invs(2, 1);
+    static int mod = T::get_mod();
+    if(int(invs.size()) <= n){
+      int m = invs.size();
+      invs.resize(n + 1);
+      for(int i = m; i <= n; ++i) invs[i] = -invs[mod%i] * (mod/i);
+    }
+    for(int i = 0; i < n; i++) res[i+1] = (*this)[i] * invs[i + 1];
     return res;
   }
 
@@ -146,7 +169,7 @@ struct Formalpowerseries : vector<T> {
     if((*this)[0] != T(0)) return F{};
     F res(1, T(1));
     for(int i = 1; i < d; i <<= 1){
-      res = res*(pre(i<<1) + T(1) - res.log(i<<1)).pre(i<<1);
+      res = (res*(pre(i<<1) + T(1) - res.log(i<<1))).pre(i<<1);
     }
     return res.pre(d);
   }
