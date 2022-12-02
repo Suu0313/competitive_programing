@@ -10,7 +10,8 @@ Formalpowerseries<T> pow_sparse(const Formalpowerseries<T> &f, int64_t k){
 
   if(non_zero.empty()) return Formalpowerseries<T>(n) + (k == 0);
   int d = non_zero[0].first;
-  if(d >= (n + k - 1) / k) return Formalpowerseries<T>(n);
+  if(k < 0) assert(d == 0);
+  if(k > 0 && d >= (n + k - 1) / k) return Formalpowerseries<T>(n);
   int offset = d * k; assert(offset < n);
   
   T c = f[d], c_inv = c.inverse();
@@ -30,6 +31,14 @@ Formalpowerseries<T> pow_sparse(const Formalpowerseries<T> &f, int64_t k){
     }
     g[i + 1] /= i + 1;
   }
-  g *= c.pow(k);
+  if(k >= 0) g *= c.pow(k);
+  else g *= c_inv.pow(-k);
   return (g << offset);
+}
+
+template<typename T>
+Formalpowerseries<T> pow_sparse(const vector<pair<int, T>> &xs, int n, int64_t k){
+  Formalpowerseries<T> f(n);
+  for(const auto&[i, x] : xs) if(i < n) f[i] += x;
+  return pow_sparse(f, k);
 }
