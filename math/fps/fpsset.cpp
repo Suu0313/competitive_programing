@@ -263,6 +263,9 @@ struct Formalpowerseries : vector<T> {
   using vector<T>::operator=;
   using F = Formalpowerseries;
   
+  Formalpowerseries(const vector<T> &v): vector<T>(v) {}
+  Formalpowerseries(vector<T> &&v): vector<T>(v) {}
+
   void set(size_t i, const T &x){
     while(i >= this->size()) this->emplace_back(0);
     (*this)[i] = x;
@@ -328,9 +331,8 @@ struct Formalpowerseries : vector<T> {
   }
   F operator-(const F &f) const { return F(*this) -= f; }
 
-  F &operator*=(const F &f) {  (*this) = FFT::multiply((*this), f); return (*this); }
-  //F &operator*=(const F &f) {  (*this) = NTT::multiply((*this), f); return (*this); }
-  F operator*(const F &f) const { return F(*this) *= f; }
+  F operator*(const F &f) const { return FFT::multiply((*this), f); }
+  F &operator*=(const F &f) { return (*this) = (*this) * f; }
 
   F operator/(const F &f) const {
     if(this->size() < f.size()){ return F{}; }
