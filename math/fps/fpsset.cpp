@@ -339,8 +339,10 @@ struct Formalpowerseries : vector<T> {
   }
   F &operator/=(const F &f){ return (*this) = (*this) / f; }
 
-  F operator%(const F &f) const { return ((*this) - (*this) / f * f).pre(f.size()-1); }
-  F &operator%=(const F &f){ return (*this) = (*this) % f; }
+  F &operator%=(const F &f){ (*this) -= (*this) / f * f; shrink(); return (*this); }
+  F operator%(const F &f) const { return F(*this) %= f; }
+
+  pair<F, F> divmod(const F &f){ F q = (*this) / f; F r = (*this) - q * f; r.shrink(); return {q, r}; }
 
   F &operator<<=(size_t d){ this->insert(this->begin(), d, T(0)); return (*this); }
   F operator<<(size_t d) const{ return F(*this) <<= d; }
