@@ -5,7 +5,7 @@ struct Formalpowerseries : vector<T> {
   using F = Formalpowerseries;
   
   Formalpowerseries(const vector<T> &v): vector<T>(v) {}
-  Formalpowerseries(vector<T> &&v): vector<T>(v) {}
+  Formalpowerseries(vector<T> &&v): vector<T>(move(v)) {}
 
   void set(size_t i, const T &x){
     while(i >= this->size()) this->emplace_back(0);
