@@ -1,30 +1,30 @@
 template<typename T>
-Formalpowerseries<T> mulinv_sparse(const Formalpowerseries<T> &f, const Formalpowerseries<T> &g, int d){
-  int n = int(g.size());
-  assert(g[0] != T(0));
-  T c_inv = g[0].inverse();
+vector<T> mulinv_sparse(vector<T> f, vector<pair<int, T>> g, int d){
+  assert(!g.empty());
+  auto[p, c] = g[0];
+  assert(p == 0 && c != T(0));
+  T c_inv = c.inverse();
 
-  vector<pair<int, T>> non_zero;
-  for(int i = 1; i < n; ++i)
-    if(g[i] != T(0)) non_zero.emplace_back(i, g[i]);
+  g.erase(begin(g));
 
-  Formalpowerseries<T> h(d); h += f.pre(d);
-  h[0] *= c_inv;
+  f.resize(d);
+  f[0] *= c_inv;
 
   for(int i = 1; i < d; ++i){
-    for(const auto&[j, x] : non_zero){
+    for(const auto&[j, x] : g){
       if(j > i) break;
-      h[i] -= x * h[i - j];
+      f[i] -= x * f[i - j];
     }
-    h[i] *= c_inv;
+    f[i] *= c_inv;
   }
-  return h;
+  return f;
 }
 
-
 template<typename T>
-Formalpowerseries<T> mulinv_sparse(const Formalpowerseries<T> &f, const vector<pair<int, T>> &xs, int d){
-  Formalpowerseries<T> g(d);
-  for(const auto&[i, x] : xs) if(i < d) g[i] += x;
-  return mulinv_sparse(f, g, d);
+vector<T> mulinv_sparse(const vector<T> &f, const vector<T> &g, int n){
+  vector<pair<int, T>> xs;
+  for(int i = 0, m = int(g.size()); i < m; ++i){
+    if(g[i] != T(0)) xs.emplace_back(i, g[i]);
+  }
+  return mulinv_sparse(f, xs, n);
 }

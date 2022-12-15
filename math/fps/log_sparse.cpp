@@ -1,25 +1,42 @@
 template<typename T>
-Formalpowerseries<T> log_sparse(const Formalpowerseries<T> &f){
-  int n = int(f.size());
-  assert(f[0] == T(1));
+vector<T> log_sparse(vector<pair<int, T>> f, int n){
+  if(n == 0) return {};
+  assert(!f.empty());
+  auto[p, c] = f[0];
+  assert(p == 0 && c == T(1));
 
-  /*
-  log f = g
-  f'/f = g'
-  fg' = f'
-  //*/
+  f.erase(begin(f));
 
-  vector<pair<int, T>> non_zero;
-  for(int i = 1; i < n; ++i)
-    if(f[i] != T(0)) non_zero.emplace_back(i, f[i]);
+  vector<T> g(n - 1), inv(n, 1);
+  int mod = T::get_mod();
 
-  Formalpowerseries<T> g(n - 1);
+  auto it = begin(f);
+
   for(int i = 0; i < n - 1; ++i){
-    g[i] = f[i + 1] * (i + 1);
-    for(const auto&[j, x] : non_zero){
+    while(it != end(f) && it->first < i + 1) ++it;
+    if(it != end(f) && it->first == i + 1){
+      g[i] = (it->second) * (i + 1);
+    }
+    for(const auto&[j, x] : f){
       if(j > i) break;
       g[i] -= x * g[i - j];
     }
   }
-  return g.integral();
+
+  g.insert(begin(g), 0);
+
+  for(int i = 2; i < n; ++i) g[i] *= (inv[i] = -inv[mod%i] * (mod/i));
+
+  return g;
+}
+
+
+template<typename T>
+vector<T> log_sparse(const vector<T> &f, int n = -1){
+  if(n == -1) n = int(f.size());
+  vector<pair<int, T>> xs;
+  for(int i = 0, m = int(f.size()); i < m; ++i){
+    if(f[i] != T(0)) xs.emplace_back(i, f[i]);
+  }
+  return log_sparse(xs, n);
 }
