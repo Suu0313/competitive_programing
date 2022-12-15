@@ -12,13 +12,22 @@ struct HeavyLightDecomposition{
     dfs0(root); dfs(root);
   }
 
-  int level_ancestor(int v, int k){
+  int level_ancestor(int v, int k) const {
+    if(depth[v] < k) return -1;
     while(1){
       int u = branch[v];
       if(in[v]-k >= in[u]) return rev[in[v] - k];
       k -= in[v] - in[u] + 1;
       v = par[u];
     }
+  }
+
+  int jump(int u, int v, int k) const {
+    int p = lca(u, v);
+    if(depth[u] + depth[v] - 2*depth[p] < k) return -1;
+    if(depth[u] - depth[p] >= k) return level_ancestor(u, k);
+    k -= depth[u] - depth[p];
+    return level_ancestor(v, depth[v] - depth[p] - k);
   }
 
   int lca(int u, int v) const {
