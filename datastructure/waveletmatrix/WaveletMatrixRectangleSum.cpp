@@ -16,10 +16,11 @@ struct WaveletMatrixRectangleSum : WaveletMatrix<bn, T> {
       ord.insert(end(ord), begin(one), end(one));
       size_t j = bn - i - 1;
       vs[j].assign(n + 1, 0);
-      for(int k = 0; k < n; ++k) vs[j][k+1] = vs[j][k] + v[ord[k]];
+      for(size_t k = 0; k < n; ++k) vs[j][k+1] = vs[j][k] + v[ord[k]];
     }
   }
 
+  // sum v[i] | s <= i < t, a[i] < x
   V sum(const T &x, int s, int t) const {
     V res = 0;
     for(size_t i = bn; i--; ){
