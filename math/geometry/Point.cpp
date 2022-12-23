@@ -18,7 +18,7 @@ namespace geometry{
 
 template<class T> struct Point{
   T x,y;
-  Point(){}
+  Point() = default;
   Point(T x, T y) : x(x), y(y) {}
   Point(const pair<T,T> &p) : x(p.first), y(p.second) {}
 
