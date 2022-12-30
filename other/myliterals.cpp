@@ -9,3 +9,4 @@ namespace myliterals{
   constexpr uint32_t operator ""_u32(unsigned long long n){ return n; }
   constexpr uint64_t operator ""_u64(unsigned long long n){ return n; }
 }
+using namespace myliterals;
