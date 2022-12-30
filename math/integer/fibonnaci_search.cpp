@@ -5,7 +5,7 @@ T fibonnaci_search(T l, T r, const F &f, const C &cmp){
   T d = r - l;
   for(int i = 0; fib.back() <= d + 1; ++i) fib.push_back(fib[i] + fib[i + 1]);
 
-  auto sf = [&](T x) -> optional<U>{
+  auto sf = [&](T x) -> optional<U> {
     if(x < l || r < x) return nullopt;
     return f(x);
   };
