@@ -1,5 +1,5 @@
-template<class Compair = less<int>>
-vector<int> CartesianTree(const vector<int> &a, const Compair &cmp = Compair{}){
+template<class T, class Compair = less<T>>
+vector<int> cartesian_tree(const vector<T> &a, const Compair &cmp = Compair{}){
   int n = int(a.size());
   vector<int> p(n, -1);
   stack<int> st;
