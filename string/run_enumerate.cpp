@@ -6,7 +6,7 @@ vector<tuple<int, int, int>> run_enumerate(const Container &s){
     for(int i = 0; i < n; i++) r.push_back(l[i]);
     for(int i = 0; i < m; i++) r.push_back(r[i]);
     reverse(begin(l), end(l));
-    vector<int> lz = Z_algorithm(l), rz = Z_algorithm(r);
+    vector<int> lz = z_algorithm(l), rz = z_algorithm(r);
     vector<tuple<int, int, int>> res;
 
     for(int p = 1; p <= n; ++p){
