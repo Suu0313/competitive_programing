@@ -15,7 +15,7 @@ struct Monoid{
     return (*this);
   }
 
-  Monoid operator+(const Monoid &m){ return Monoid(*this) += m; }
+  Monoid operator+(const Monoid &m) const { return Monoid(*this) += m; }
 
   bool operator==(const Monoid &m) const { return x == m.x; }
   bool operator!=(const Monoid &m) const { return !((*this) == m); }
