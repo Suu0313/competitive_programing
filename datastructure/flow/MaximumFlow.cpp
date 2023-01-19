@@ -1,5 +1,6 @@
 template <class Cap>
 struct Dinic{
+  using cap_type = Cap;
   int n;
   struct edge{
     int to, rev;
