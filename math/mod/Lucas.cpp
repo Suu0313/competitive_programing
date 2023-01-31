@@ -4,7 +4,7 @@ struct Lucas{
 
   Lucas(): bc(p-1) {}
 
-  T com(int n, int k){
+  T com(int64_t n, int64_t k){
     if(n < k) return 0;
     if(n < 0 || k < 0) return 0;
     T res = 1;
@@ -14,5 +14,11 @@ struct Lucas{
       n /= p; k /= p;
     }
     return res;
+  }
+
+  T hom(int64_t n, int64_t k){
+    if(n < 0 || k < 0) return 0;
+    if(k == 0) return 1;
+    return com(n+k-1, k);
   }
 };

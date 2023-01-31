@@ -48,5 +48,10 @@ struct Trie{
     return g;
   }
 
+  int succ(int p, const T &c) const {
+    if(ptr[p].find(c) == ptr[p].end()) return -1;
+    return ptr[p].at(c);
+  }
+
   size_t size() const { return sz.size(); }
 };
