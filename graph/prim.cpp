@@ -1,5 +1,5 @@
 template<typename T>
-pair<T, Graph<T>> Prim(const Graph<T> &g){
+pair<T, Graph<T>> prim(const Graph<T> &g){
   T sum = 0;
   Graph<T> mst(g.size());
   vector<bool> used(g.size());

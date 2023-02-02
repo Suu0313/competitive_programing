@@ -1,7 +1,7 @@
 template<typename T, typename U>
-T Partition(U sum, const vector<U> &d, const vector<U> &u, const vector<U> &m){
+T partition(U sum, const vector<U> &d, const vector<U> &u, const vector<U> &m){
 
-  auto com = [&](U n, U r) -> T{
+  auto com = [&](U n, U r) -> T {
     if(n < r) return T(0);
     if (n < 0 || r < 0) return T(0);
     r = min(r, n - r);
@@ -16,7 +16,7 @@ T Partition(U sum, const vector<U> &d, const vector<U> &u, const vector<U> &m){
   auto msum = 0;
   for(auto &e : m) msum += e;
 
-  auto dfs = [&](auto f, int ind, U sum) -> T{
+  auto dfs = [&](auto f, int ind, U sum) -> T {
     if(ind == n){
       return com(sum+msum-1, msum-1);
     }

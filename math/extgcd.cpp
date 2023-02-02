@@ -1,5 +1,5 @@
 template<typename T>
-T ExtGcd(T a, T b, T &x, T &y) {
+T extgcd(T a, T b, T &x, T &y) {
   if (b == 0) {
       x = 1;
       y = 0;
