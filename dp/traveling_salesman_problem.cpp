@@ -1,5 +1,5 @@
 template <typename T>
-T TSP(const vector<vector<T>> &dist, int s = -1, int t = -1, const T &inf = numeric_limits<T>::max()){
+T traveling_salesman_problem(const vector<vector<T>> &dist, int s = -1, int t = -1, const T &inf = numeric_limits<T>::max()){
   const int n = dist.size();
   vector dp(1<<n, vector(n, inf));
 
