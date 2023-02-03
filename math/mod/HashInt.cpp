@@ -20,9 +20,20 @@ struct HashInt{
   HashInt() = default;
   HashInt(uint64_t x): x(cal_mod(x)) {}
 
+  HashInt operator-() const { return HashInt(x == 0 ? 0 : mod - x); }
   HashInt &operator+=(const HashInt &h){ x = add(x, h.x); return (*this); }
+  HashInt &operator-=(const HashInt &h){ return (*this) += -h; }
   HashInt &operator*=(const HashInt &h){ x = cal_mod(mul(x, h.x)); return (*this); }
   HashInt operator+(const HashInt &h) const { return HashInt(*this) += h; }
+  HashInt operator-(const HashInt &h) const { return HashInt(*this) -= h; }
   HashInt operator*(const HashInt &h) const { return HashInt(*this) *= h; }
+
+  bool operator==(const HashInt &h) const { return x == h.x; }
+  bool operator!=(const HashInt &h) const { return x != h.x; }
+
+  friend istream &operator>>(istream &is, HashInt &h){
+    uint64_t x; cin >> x; h = HashInt(x);
+    return is;
+  }
   friend ostream &operator<<(ostream &os, const HashInt &h){ return os << h.x; }
 };
