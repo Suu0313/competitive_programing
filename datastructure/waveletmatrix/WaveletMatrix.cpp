@@ -92,7 +92,7 @@ struct WaveletMatrix{
   }
 
   int rank(const T &l, const T &r, int s, int t) const {
-    return rank_leg(r, s, t)[0] - rank_leg(l, s, r)[0];
+    return rank_leg(r, s, t)[0] - rank_leg(l, s, t)[0];
   }
 
   array<int, 3> rank_leg(const T &x, int s, int t) const {
