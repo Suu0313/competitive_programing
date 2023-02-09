@@ -202,16 +202,3 @@ constexpr int dx[] = {1,0,-1,0,1,1,-1,-1}, dy[] = {0,1,0,-1,1,-1,1,-1};
 
 #pragma endregion
 
-
-
-
-
-int main(){
-  // cin.tie(0); ios::sync_with_stdio(false);
-  cout << fixed << setprecision(12);
-
-  
-
-
-  return 0;
-}
