@@ -1,3 +1,8 @@
+#pragma once
+
+#include ".\\Geometry.cpp"
+
+
 template<typename T> T area(const Polygon<T> &ps, bool harf = true){
   if((int)ps.size() < 3) return 0;
   T res = ps.back().cross(ps.front());
@@ -13,7 +18,7 @@ double common_area(const Circle<T> &c, const Polygon<T> &ps){
   int n = int(ps.size());
   if(n < 3) return 0;
 
-  auto calc_impl = [&](Point<T> p, Point<T> q, bool tri) -> double{
+  auto calc_impl = [&](Point<T> p, Point<T> q, bool tri) -> double {
     p -= c.o; q -= c.o;
     if(tri) return p.cross(q)/2.0;
     return c.r*c.r*((q / p).arg())/2.0;

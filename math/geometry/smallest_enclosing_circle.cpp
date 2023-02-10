@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Geometry.cpp"
+
 template<typename T>
 Circle<T> smallest_enclosing_circle(Polygon<T> ps){
   int n = ps.size();

@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Point.cpp"
+
 template<typename T>
 Polygon<T> convex_hull(Polygon<T> ps, bool strict = true){
   int n = ps.size(), k = 0;

@@ -1,3 +1,8 @@
+#pragma once
+
+#include ".\\Point.cpp"
+
+
 template<typename T> bool is_convex(const Polygon<T> &ps, bool strict = true){
   int n = ps.size();
   for(int i = 0; i < n; i++){

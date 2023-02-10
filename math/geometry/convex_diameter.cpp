@@ -1,3 +1,8 @@
+#pragma once
+
+#include ".\\convex_hull.cpp"
+
+
 template<typename T>
 double convex_diameter(Polygon<T> ps){
   ps = convex_hull(ps);

@@ -1,3 +1,8 @@
+#pragma once
+
+#include ".\\Point.cpp"
+
+
 template<typename T>
 int is_contains(const Polygon<T> &ps, const Point<T>& p){
   bool in = false;

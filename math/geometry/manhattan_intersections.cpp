@@ -1,3 +1,8 @@
+#pragma once
+
+#include ".\\Geometry.cpp"
+
+
 template<typename T>
 int64_t manhattan_intersections(vector<Segment<T>> ss){
   const int n = int(ss.size());
