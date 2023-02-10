@@ -1,3 +1,5 @@
+#pragma once
+
 namespace geometry{
   constexpr double eps = 1e-10;
   bool eq(double a, double b){ return fabs(a - b) < eps; }
