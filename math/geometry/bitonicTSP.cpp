@@ -1,3 +1,8 @@
+#pragma once
+
+#include ".\\Point.cpp"
+
+
 template<typename T>
 double bitonicTSP(const Polygon<T> &ps){
   int n = int(ps.size());

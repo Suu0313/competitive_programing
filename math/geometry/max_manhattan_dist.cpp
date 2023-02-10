@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T> // n個,k次元の点
 T max_manhattan_distance(vector<vector<T>> &v){
   int n = v.size();

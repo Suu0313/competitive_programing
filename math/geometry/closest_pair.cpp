@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Point.cpp"
+
 template<typename T>
 pair<Point<T>, Point<T>> closest_pair(Polygon<T> a){
   sort(a.begin(), a.end());

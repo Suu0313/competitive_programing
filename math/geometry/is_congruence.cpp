@@ -1,3 +1,8 @@
+#pragma once
+
+#include ".\\Point.cpp"
+
+
 template<typename T>
 bool isCongruence(const Polygon<T> &ps, const Polygon<T> &qs){
   int n = int(ps.size()), m = int(qs.size());
@@ -5,7 +10,7 @@ bool isCongruence(const Polygon<T> &ps, const Polygon<T> &qs){
   if(n <= 1) return true;
   if(n == 2) return geometry::eq((ps[0] - ps[1]).norm(), (qs[0] - qs[1]).norm());
 
-  auto normalize = [](const Polygon<T> &pts) -> vector<T>{
+  auto normalize = [](const Polygon<T> &pts) -> vector<T> {
     int n = int(pts.size());
     Point<T> g(0, 0); for(auto&p : pts) g += p;
     Polygon<T> nps; nps.reserve(n);
