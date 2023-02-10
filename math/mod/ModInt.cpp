@@ -75,7 +75,7 @@ constexpr ModInt<mod> operator*(const int64_t &p, const ModInt<mod> &m){ return 
 template< int mod >
 constexpr ModInt<mod> operator/(const int64_t &p, const ModInt<mod> &m){ return ModInt<mod>(p) / m; };
 
-//constexpr int MOD = 1e9 + 7;
+// constexpr int MOD = 1e9 + 7;
 //constexpr int MOD = 998244353;
 // using mint = ModInt< MOD >;
 // using VM = vector<mint>;
@@ -83,3 +83,6 @@ constexpr ModInt<mod> operator/(const int64_t &p, const ModInt<mod> &m){ return 
 
 // namespace mintliteral{ constexpr mint operator""_m(unsigned long long x) { return mint(x); } }
 // using namespace mintliteral;
+
+using mint998244353 = ModInt< 998244353 >;
+using mint1000000007 = ModInt< 1000000007 >;
