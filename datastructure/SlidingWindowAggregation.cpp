@@ -1,3 +1,5 @@
+#pragma once
+
 template <class SemiGroup>
 struct SlidingWindowAggregation{
   stack<pair<SemiGroup, SemiGroup>> front_stack, back_stack;

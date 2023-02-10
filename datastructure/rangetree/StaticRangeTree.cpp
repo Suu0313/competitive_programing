@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<typename Tx, typename Ty, typename T = int>
 struct StaticRangeTree{
   using OP = function<T(T, T)>;

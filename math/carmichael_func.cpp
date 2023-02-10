@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 constexpr T carmichael_func(T n){
   auto ppow = [&](T p, int e) -> T {

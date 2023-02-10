@@ -1,3 +1,5 @@
+#pragma once
+
 struct Fraction{
   long long a,b;
   constexpr Fraction normalize(){

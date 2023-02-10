@@ -1,3 +1,5 @@
+#pragma once
+
 int chromatic_number(const vector<int> &es){
   const int n = int(es.size());
   vector<int> ind(1 << n), cnt((1 << n) + 1);

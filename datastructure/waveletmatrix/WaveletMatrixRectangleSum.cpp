@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\WaveletMatrix.cpp"
+
 template<size_t bn, typename T, typename V>
 struct WaveletMatrixRectangleSum : WaveletMatrix<bn, T> {
   vector<V> vs[bn];

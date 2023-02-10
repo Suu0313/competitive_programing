@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 long long merge_sort(vector<T> &a){
   int n = int(a.size());

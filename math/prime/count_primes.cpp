@@ -1,3 +1,5 @@
+#pragma once
+
 int64_t count_primes(int64_t n){
   int64_t y = pow(n, 0.38);
   if(n < 100) y = 1;

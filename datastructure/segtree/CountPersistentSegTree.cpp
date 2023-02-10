@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, typename M>
 struct CountPersistentSegTree{
   using OP = function<M(M, M)>;

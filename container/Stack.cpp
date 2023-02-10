@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct Stack : stack<T>{
   using stack<T>::stack;

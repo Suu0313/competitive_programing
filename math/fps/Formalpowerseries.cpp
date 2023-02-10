@@ -1,3 +1,5 @@
+#pragma once
+
 #include ".\FFT-ntt.cpp"
 
 template< typename T >

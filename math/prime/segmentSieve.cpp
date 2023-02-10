@@ -1,3 +1,5 @@
+#pragma once
+
 struct segmentSieve{
   int64_t l, r, m;
   vector<int> small;

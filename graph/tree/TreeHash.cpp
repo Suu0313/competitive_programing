@@ -1,3 +1,10 @@
+#pragma once
+
+#include "..\\Graph.cpp"
+
+#include "..\..\\string\\RollingHash.cpp"
+
+
 struct TreeHash{
   unordered_map<uint64_t, int> mp;
   RollingHash rh;

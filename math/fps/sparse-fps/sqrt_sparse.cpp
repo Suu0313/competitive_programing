@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> sqrt_sparse(vector<pair<int, T>> f, const function< T(T) > &get_sqrt, int n){
 

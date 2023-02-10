@@ -1,3 +1,5 @@
+#pragma once
+
 const int MAX_ROW = 510;
 const int MAX_COL = 510;
 struct BitMatrix{

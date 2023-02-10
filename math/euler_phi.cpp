@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 T euler_phi(T n){
   T res = n;

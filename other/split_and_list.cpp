@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, class Operator, class Compair>
 pair<vector<T>, vector<T>> split_and_list(const vector<T> &a, const T &e, const Operator &op, const Compair &cmp){
   vector<T> b(1, e), c(1, e);

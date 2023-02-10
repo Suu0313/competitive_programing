@@ -1,3 +1,5 @@
+#pragma once
+
 struct PartiallyPersistentUF {
   vector<int> par, siz, last;
   int now;

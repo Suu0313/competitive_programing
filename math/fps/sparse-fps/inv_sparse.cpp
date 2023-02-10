@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> inv_sparse(vector<pair<int, T>> f, int n){
   assert(!f.empty());

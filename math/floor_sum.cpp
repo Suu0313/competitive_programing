@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 T floor_sum(T n, T m, T a, T b){
   // sum[0,n) \floor((ai+b)/m)

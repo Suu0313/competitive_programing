@@ -1,3 +1,9 @@
+#pragma once
+
+#include ".\\multiple_fast_zeta_transform.cpp"
+
+#include ".\\multiple_fast_mobius_transform.cpp"
+
 template<typename T>
 vector<T> gcd_convolution(vector<T> f, vector<T> g){
   int n = int(max(f.size(), g.size()));

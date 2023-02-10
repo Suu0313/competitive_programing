@@ -1,3 +1,5 @@
+#pragma once
+
 struct divide{
   struct itr{
     uint64_t s;

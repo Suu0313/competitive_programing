@@ -1,3 +1,5 @@
+#pragma once
+
 template<class Monoid>
 struct DualSegTree{
   int n, height;

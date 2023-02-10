@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<tuple<T, T, T>> quotient_range(T n){
   vector<tuple<T, T, T>> res;

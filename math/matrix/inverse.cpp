@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Matrix.cpp"
+
 template<typename T>
 Matrix<T> inverse(Matrix<T> a){
   int n = a.height(), m = a.width();

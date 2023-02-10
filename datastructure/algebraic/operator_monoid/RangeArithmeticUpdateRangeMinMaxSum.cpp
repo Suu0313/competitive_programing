@@ -1,3 +1,9 @@
+#pragma once
+
+#include "..\\monoid\\MinMaxSumIdxMonoid.cpp"
+#include "..\\monoid\\ArithmeticUpdateMonoid.cpp"
+
+
 template<typename T>
 struct RangeArithmeticUpdateRangeMinMaxSum{
   using Monoid = MinMaxSumIdxMonoid<T>;

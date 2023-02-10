@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Formalpowerseries.cpp"
+
 template< typename T >
 vector<T> multipoint_evaluation(const Formalpowerseries<T> &f, const vector<T> &xs){
   int n0 = int(xs.size()), n = 1;

@@ -1,3 +1,7 @@
+#pragma once
+
+#include "..\\monoid\\LengthMonoid.cpp"
+
 template<typename T>
 struct RangeAddRangeSum{
   using Monoid = LengthMonoid<T>;

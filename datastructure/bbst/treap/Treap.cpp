@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<typename T, typename Compair = less<T>>
 struct Treap{
   struct Node{

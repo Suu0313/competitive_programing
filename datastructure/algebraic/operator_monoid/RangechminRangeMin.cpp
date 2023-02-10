@@ -1,3 +1,7 @@
+#pragma once
+
+#include "..\\monoid\\MinMonoid.cpp"
+
 template<typename T>
 struct RangechminRangeMin{
   using Monoid = MinMonoid<T>;

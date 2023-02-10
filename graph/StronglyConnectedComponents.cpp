@@ -1,3 +1,5 @@
+#pragma once
+
 struct StronglyConnectedComponents{
   int N;
   vector<vector<int>> G, rG;

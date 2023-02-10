@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, class Compair = less<T>>
 struct PersistentLeftistHeap{
   struct Node;

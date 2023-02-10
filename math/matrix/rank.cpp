@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Matrix.cpp"
+
 template<typename T>
 int rank(Matrix<T> a){
   int n = a.height(), m = a.width();

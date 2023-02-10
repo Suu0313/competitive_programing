@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename T>
 vector<T> Vpress(vector<T> &x) {
     vector<T> vs = x;

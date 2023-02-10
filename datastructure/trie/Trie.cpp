@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct Trie{
   Trie(): ptr(1), sz(1) {}

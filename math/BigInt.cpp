@@ -1,3 +1,5 @@
+#pragma once
+
 struct BigInt : vector<uint64_t> {
   using val_type = uint64_t;
   using base_type = vector<val_type>;

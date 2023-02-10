@@ -1,3 +1,5 @@
+#pragma once
+
 struct UndoUF {
   vector<int> data;
   stack<pair<int, int>> hist;

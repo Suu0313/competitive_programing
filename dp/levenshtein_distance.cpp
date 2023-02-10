@@ -1,3 +1,5 @@
+#pragma once
+
 int levenshtein_distance(const string &s, const string &t){
   int n = int(s.size()), m = int(t.size());
   vector dp(n+1, vector(m+1,n+m));

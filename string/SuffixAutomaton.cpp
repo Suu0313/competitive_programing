@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T = char>
 struct SuffixAutomaton{
   using Mp = map<T, int>;

@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> montmort_number(int n){
   vector<T> dp(n + 1, 1);

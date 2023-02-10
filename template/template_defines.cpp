@@ -1,3 +1,5 @@
+#pragma once
+
 typedef long long LL;
 typedef pair<int, int> PII; typedef pair<LL,LL> PLL;
 typedef vector<int> VI; typedef vector<VI> VVI;

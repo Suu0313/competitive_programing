@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename Container>
 struct KnuthMorrisPrattAlgorithm{
   Container s;

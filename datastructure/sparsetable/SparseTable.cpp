@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<typename Band>
 struct SparseTable{
   vector<vector<Band>> table;

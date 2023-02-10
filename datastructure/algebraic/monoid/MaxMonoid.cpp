@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct MaxMonoid{
   T x = numeric_limits<T>::min();

@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\CentroidDecomposition.cpp"
+
 template<typename T>
 struct ContourAggregationQueryOnTree{
   ContourAggregationQueryOnTree() = default;

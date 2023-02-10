@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 T largest_rectangle(vector<T> height){
   stack<int> st;

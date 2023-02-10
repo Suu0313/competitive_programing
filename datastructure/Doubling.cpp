@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, size_t bwidth = 60>
 struct Doubling{
   using OP = function<T(T,T)>;

@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 T extgcd(T a, T b, T &x, T &y) {
   if (b == 0) {

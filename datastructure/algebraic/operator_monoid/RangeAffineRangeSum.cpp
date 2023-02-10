@@ -1,3 +1,9 @@
+#pragma once
+
+
+#include "..\\monoid\\LengthMonoid.cpp"
+#include "..\\monoid\\CompositeMonoid.cpp"
+
 template<typename T>
 struct RangeAffineRangeSum{
   using Monoid = LengthMonoid<T>;

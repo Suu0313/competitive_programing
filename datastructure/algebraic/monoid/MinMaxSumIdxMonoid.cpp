@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct MinMaxSumIdxMonoid{
   T mn = numeric_limits<T>::min(), mx = numeric_limits<T>::max(), sum = 0;

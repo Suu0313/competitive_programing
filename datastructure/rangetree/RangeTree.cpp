@@ -1,3 +1,7 @@
+#pragma once
+
+#include "..\\bbst\\treap\\Treap.cpp"
+
 template<typename Tx, typename Ty>
 struct RangeTree{ // memory yabai
 

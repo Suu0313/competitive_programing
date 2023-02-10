@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Formalpowerseries.cpp"
+
 template< typename T >
 Formalpowerseries<T> taylor_shift(const Formalpowerseries<T> &f, const T &c){
   int n = int(f.size()), mod = T::get_mod();

@@ -1,3 +1,5 @@
+#pragma once
+
 struct product{
   struct itr{
     int current;

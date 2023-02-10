@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, typename F>
 pair<T, T> binary_search(T ok, T ng, const F &isok){
   while(abs(ok - ng) > 1){

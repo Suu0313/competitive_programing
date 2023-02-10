@@ -1,3 +1,5 @@
+#pragma once
+
 template<int pw>
 constexpr uint64_t hilbert_length(int x, int y, int rot = 0){
   if constexpr (pw == 0) return 0;

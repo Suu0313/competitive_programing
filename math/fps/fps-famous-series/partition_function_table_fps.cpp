@@ -1,3 +1,7 @@
+#pragma once
+
+#include "..\\Formalpowerseries.cpp"
+
 template<typename T>
 Formalpowerseries<T> partition_function_table_fps(int n){
   Formalpowerseries<T> f(n + 1); f[0] = 1;

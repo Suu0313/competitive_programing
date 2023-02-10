@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 T sum_of_pairs(const vector<T> &v, const T &aa, const T &bb, const T &ab, const T &a, const T &b, const T &c){
   int n = int(v.size());

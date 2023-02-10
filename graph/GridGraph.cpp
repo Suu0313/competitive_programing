@@ -1,3 +1,5 @@
+#pragma once
+
 struct GridGraph{
   int h, w;
   vector<pair<int, int>> delta = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};

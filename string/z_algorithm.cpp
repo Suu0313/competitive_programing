@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename Container>
 vector<int> z_algorithm(const Container &s){
   int n = int(s.size());

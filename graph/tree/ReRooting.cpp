@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, typename U>
 struct ReRooting{
   struct Edge{

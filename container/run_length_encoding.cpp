@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename Container, typename T = typename Container::value_type>
 vector<pair<T,int>> run_length_encoding(const Container &v){
   if(v.empty()) return {};

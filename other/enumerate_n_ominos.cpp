@@ -1,3 +1,5 @@
+#pragma once
+
 vector<vector<vector<bool>>> enumerate_n_ominos(int n){
   if(n < 1) return {};
 

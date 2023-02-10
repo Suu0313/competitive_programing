@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct Combination{
   // T は mint の想定です

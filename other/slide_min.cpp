@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> slide_min(const vector<T> &v, int k){
   int n = SZ(v);

@@ -1,4 +1,6 @@
-constexpr bool is_prime(int n){
+#pragma once
+
+constexpr bool is_prime_32bit(int n){
   if(n <= 1) return false;
   if(n == 2 || n == 7 || n == 61) return true;
   if(~n & 1) return false;

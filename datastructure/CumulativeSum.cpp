@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct CumulativeSum{
   int n, m;

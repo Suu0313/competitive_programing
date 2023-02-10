@@ -1,3 +1,5 @@
+#pragma once
+
 constexpr double EPS = 1e-10;
 constexpr double PI  = 3.141592653589793238462643383279;
 constexpr int INF = numeric_limits<int>::max()/2;

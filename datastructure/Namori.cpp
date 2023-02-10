@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename F>
 struct DirectedNamori{
   int s, d, len;

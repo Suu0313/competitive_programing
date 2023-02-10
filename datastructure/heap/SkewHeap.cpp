@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, typename Compare = less<T>>
 struct SkewHeap{
   struct Node{

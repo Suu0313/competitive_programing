@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> concat(const vector<T> &a, const vector<T> &b){
   vector<T> res = a;

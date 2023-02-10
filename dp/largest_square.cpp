@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 int largest_square(const vector<vector<T>> &tl){
   int h = int(tl.size()), w = int(tl[0].size());

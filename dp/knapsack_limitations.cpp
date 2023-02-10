@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<typename T>
 vector<T> knapsack_limitations(const vector<T> &v, const vector<int> &w, const vector<int> &m, int W){
   int n = int(v.size());

@@ -1,4 +1,6 @@
-constexpr bool is_prime(long long n){
+#pragma once
+
+constexpr bool is_prime_64bit(long long n){
   if(n <= 1) return false;
   constexpr long long witnesses[12] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
   for(long long a : witnesses) if(n == a) return true;

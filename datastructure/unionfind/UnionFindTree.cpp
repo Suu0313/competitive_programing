@@ -1,3 +1,5 @@
+#pragma once
+
 struct UnionFindTree {
   
   vector<int> data, left, right, anc;

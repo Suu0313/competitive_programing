@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename T>
 vector<T> longest_increasing_subsequence(const vector<T> &a, bool fl = true) {
   int n = a.size();

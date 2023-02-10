@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, class Compair>
 vector<pair<int, int>> satisfied_sections(const vector<T> &a, const Compair &cmp){
   int n = int(a.size());

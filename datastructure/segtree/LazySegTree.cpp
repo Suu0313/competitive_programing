@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<class Operation>
 struct LazySegTree{
   using Monoid = typename Operation::Monoid;

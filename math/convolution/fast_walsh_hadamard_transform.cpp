@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> fast_walsh_hadamard_transform(vector<T> f, bool inv = false){
   int n = int(f.size());

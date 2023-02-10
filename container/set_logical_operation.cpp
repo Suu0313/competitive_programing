@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename Container>
 Container SetAnd(const Container &a, const Container &b){
   Container res;

@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> partition_function_table(int n){
   vector<T> dp(n + 1); dp[0] = 1;

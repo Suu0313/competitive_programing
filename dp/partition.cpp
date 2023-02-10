@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, typename U>
 T partition(U sum, const vector<U> &d, const vector<U> &u, const vector<U> &m){
 

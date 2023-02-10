@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, typename T2>
 vector<T> convert_base_10tob(T x, T2 b) {
   vector<T> ret;

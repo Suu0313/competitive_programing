@@ -1,3 +1,10 @@
+#pragma once
+
+#include ".\\Formalpowerseries.cpp"
+
+#include ".\\multipoint_evaluation.cpp"
+
+
 template<typename T>
 Formalpowerseries<T> polynomial_interpolation(const vector<T> &xs, const vector<T> &ys){
   using fps = Formalpowerseries<T>;

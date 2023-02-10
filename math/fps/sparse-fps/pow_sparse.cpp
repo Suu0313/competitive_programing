@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> pow_sparse(vector<pair<int, T>> f, int64_t k, int n){
   if(f.empty()){

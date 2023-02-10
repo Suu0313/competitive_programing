@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T = unsigned,  int B = 32>
 struct BinaryTrie{
   vector<array<int, 2>> to;

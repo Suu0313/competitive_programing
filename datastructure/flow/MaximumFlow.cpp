@@ -1,3 +1,5 @@
+#pragma once
+
 template <class Cap>
 struct Dinic{
   using cap_type = Cap;

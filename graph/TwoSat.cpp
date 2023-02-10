@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\StronglyConnectedComponents.cpp"
+
 struct TwoSat{
   int n;
   StronglyConnectedComponents scc;

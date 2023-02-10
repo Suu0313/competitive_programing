@@ -1,3 +1,5 @@
+#pragma once
+
 struct Sieve{
   int n;
   vector<int> min_factor;

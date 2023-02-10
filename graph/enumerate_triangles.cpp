@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Graph.cpp"
+
 template<typename T>
 vector<tuple<int,int,int>> enumerate_triangles(const Graph<T> &g){
   int n = int(g.size());
