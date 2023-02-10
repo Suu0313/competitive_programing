@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename T=int, typename U = long long>
 struct runtimeBIT{
   U n;

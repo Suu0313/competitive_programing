@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<vector<T>> rotate(const vector<vector<T>> &a){
   int h = int(a.size()), w = int(a[0].size());

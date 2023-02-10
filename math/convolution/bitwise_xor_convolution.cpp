@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\fast_walsh_hadamard_transform.cpp"
+
 template<typename T>
 vector<T> bitwise_xor_convolution(vector<T> f, vector<T> g){
   f = fast_walsh_hadamard_transform(f, false);

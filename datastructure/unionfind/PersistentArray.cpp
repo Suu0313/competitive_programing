@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, size_t M = 20>
 struct PersistentArray{
   struct Node;

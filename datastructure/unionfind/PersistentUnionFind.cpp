@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\PersistentArray.cpp"
+
 struct PersistentUnionFind{
   
   PersistentArray<int, 20> data;

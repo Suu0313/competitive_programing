@@ -1,3 +1,9 @@
+#pragma once
+
+#include "..\\Graph.cpp"
+
+#include "..\..\\string\\RollingHash.cpp"
+
 template<typename T>
 struct IsomorphismofTree{
   unordered_map<uint64_t, int> mp;

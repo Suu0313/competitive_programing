@@ -1,3 +1,5 @@
+#pragma once
+
 template<class modint>
 struct NTT{
   static int ps, cnt;

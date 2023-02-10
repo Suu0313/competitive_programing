@@ -1,3 +1,5 @@
+#pragma once
+
 vector<int> bit_rev_perm(int k){
   int n = 1 << k;
   vector<int> a(n);

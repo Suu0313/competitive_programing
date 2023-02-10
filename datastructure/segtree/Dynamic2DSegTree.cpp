@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\DynamicSegTree.cpp"
+
 template<typename T>
 struct Dynamic2DSegTree{
   using OP = function<T(T,T)>;

@@ -1,3 +1,5 @@
+#pragma once
+
 template<uint32_t mod>
 struct PowMint{
 private:

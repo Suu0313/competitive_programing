@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Formalpowerseries.cpp"
+
 template<typename T>
 T FastKitamasa(const Formalpowerseries<T> &c, const Formalpowerseries<T> &a, long long n){
   Formalpowerseries<T> d({1}), xn({0, 1}), f(-c);

@@ -1,3 +1,5 @@
+#pragma once
+
 vector<int> euler_phi_table(int n) {
   vector<int> euler(n+1);
   iota(euler.begin(), euler.end(), 0);

@@ -1,6 +1,10 @@
+#pragma once
+
+#include ".\\is_prime_64bit.cpp"
+
 int64_t pollard_pho(int64_t n){
   if(~n & 1) return 2;
-  if(is_prime(n)) return n;
+  if(is_prime_64bit(n)) return n;
   for(int c = 1; ; ++c){
     int64_t x = 2, y = 2, d = 1;
     for( ; d == 1; d = gcd((y - x) >= 0 ? (y - x) : (y - x + n), n)){

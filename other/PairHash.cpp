@@ -1,3 +1,5 @@
+#pragma once
+
 struct PairHash{
   static size_t hash0;
 

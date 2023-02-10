@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\SuffixArray.cpp"
+
 template<typename Container>
 struct LongestCommonPrefixArray{
   SuffixArray<Container> sa;

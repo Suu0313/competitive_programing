@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\FenwickTree.cpp"
+
 struct RangeInversionsQuery{
   int n, upper;
   vector<int> a;

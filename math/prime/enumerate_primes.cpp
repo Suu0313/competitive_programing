@@ -1,3 +1,5 @@
+#pragma once
+
 vector<int> enumerate_primes(int n){
   vector<bool> table(n + 1, 1);
   vector<int> ps;

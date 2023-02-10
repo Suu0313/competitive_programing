@@ -1,3 +1,9 @@
+#pragma once
+
+#include "..\\monoid\\BitInversionMonoid.cpp"
+
+#include "..\\monoid\\XorMonoid.cpp"
+
 template<typename T>
 struct RangeFlipRangeBitInversion{
   using Monoid = BitInversionMonoid<T>;

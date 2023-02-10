@@ -1,3 +1,7 @@
+#pragma once
+
+#include "..\\graph\\Graph.cpp"
+
 template<typename T>
 T chinese_postman_problem(const Graph<T> &g){
   int n = int(g.size());

@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 T mod_log(T x, T y, T m){ // x^k = y mod m
   if(m == 1 || y == 1) return 0;

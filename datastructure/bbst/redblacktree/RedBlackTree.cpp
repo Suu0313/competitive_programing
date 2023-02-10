@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<typename T, class Compair = less<T>>
 struct RedBlackTree{
 private:

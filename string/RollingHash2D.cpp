@@ -1,3 +1,5 @@
+#pragma once
+
 struct RollingHash2D{
   static constexpr uint64_t mod = (1ull << 61) - 1;
   static constexpr uint64_t mask(int k){ return (1ull << k) - 1; }

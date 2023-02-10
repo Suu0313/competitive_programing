@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<typename T>
 struct SparseTable2D{
   using F = function<T(T, T)>;

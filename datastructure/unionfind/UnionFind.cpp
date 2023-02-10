@@ -1,3 +1,5 @@
+#pragma once
+
 struct UnionFind {
   
   vector<int> data;

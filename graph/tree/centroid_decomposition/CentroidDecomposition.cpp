@@ -1,3 +1,7 @@
+#pragma once
+
+#include "..\\..\\Graph.cpp"
+
 template<typename T>
 struct CentroidDecomposition : Graph<T>{
   using base_t = Graph<T>;

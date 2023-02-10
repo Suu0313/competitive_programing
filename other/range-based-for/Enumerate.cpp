@@ -1,3 +1,5 @@
+#pragma once
+
 template<class Container>
 struct Enumerate{
   struct itr{

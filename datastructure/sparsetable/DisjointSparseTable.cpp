@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<typename SemiGroup>
 struct DisjointSparseTable{
   vector<vector<SemiGroup>> table;

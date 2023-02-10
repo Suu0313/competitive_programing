@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct GcdMonoid{
   T x = 0;

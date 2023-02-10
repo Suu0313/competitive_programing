@@ -1,3 +1,7 @@
+#pragma once
+
+#include "..\\Formalpowerseries.cpp"
+
 template< typename T >
 Formalpowerseries<T> bernoulli_number(int n){
   Formalpowerseries<T> f(n+1, 1);

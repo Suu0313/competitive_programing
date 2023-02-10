@@ -1,12 +1,15 @@
+#pragma once
+
+
 template <typename SemiRing>
-struct Matrix{
+struct SemiRingMatrix{
   vector<vector<SemiRing>> A;
 
-  Matrix() {}
-  Matrix(size_t n, size_t m, SemiRing e = SemiRing::e()): A(n, vector<SemiRing>(m, e)) {}
-  Matrix(size_t n): A(n, vector<SemiRing>(n)) {}
-  Matrix(const vector<vector<SemiRing>> &e): A(e) {}
-  Matrix(const initializer_list<initializer_list<SemiRing>> &x): A(x.begin(),x.end()) {}
+  SemiRingMatrix() {}
+  SemiRingMatrix(size_t n, size_t m, SemiRing e = SemiRing::e()): A(n, vector<SemiRing>(m, e)) {}
+  SemiRingMatrix(size_t n): A(n, vector<SemiRing>(n)) {}
+  SemiRingMatrix(const vector<vector<SemiRing>> &e): A(e) {}
+  SemiRingMatrix(const initializer_list<initializer_list<SemiRing>> &x): A(x.begin(),x.end()) {}
   
   size_t height() const { return A.size(); }
   size_t width() const { return A.at(0).size(); }
@@ -16,7 +19,7 @@ struct Matrix{
   vector<SemiRing> &at(int k) { return A.at(k); }
   const vector<SemiRing> &at(int k) const { return A.at(k); }
 
-  Matrix &operator+=(const Matrix &B){
+  SemiRingMatrix &operator+=(const SemiRingMatrix &B){
     assert(height() == B.height() && width() == B.width());
     size_t n = height(), m = width();
     for (size_t i = 0; i < n; i++)
@@ -25,7 +28,7 @@ struct Matrix{
     return (*this);
   }
 
-  Matrix &operator-=(const Matrix &B){
+  SemiRingMatrix &operator-=(const SemiRingMatrix &B){
     assert(height() == B.height() && width() == B.width());
     size_t n = height(), m = width();
     for (size_t i = 0; i < n; i++)
@@ -34,7 +37,7 @@ struct Matrix{
     return (*this);
   }
 
-  Matrix &operator*=(const Matrix &B){
+  SemiRingMatrix &operator*=(const SemiRingMatrix &B){
     assert(width() == B.height());
     size_t n = height(), m = B.width(), l = width();
     vector<vector<SemiRing>> C(n, vector<SemiRing>(m, SemiRing::id()));
@@ -46,7 +49,7 @@ struct Matrix{
     return (*this);
   }
 
-  Matrix &operator*=(const SemiRing &c){
+  SemiRingMatrix &operator*=(const SemiRing &c){
     size_t n = height(), m = width();
     for (size_t i = 0; i < n; i++)
       for (size_t j = 0; j < m; j++)
@@ -54,13 +57,13 @@ struct Matrix{
     return (*this);
   }
 
-  Matrix &operator/=(const SemiRing &c){
+  SemiRingMatrix &operator/=(const SemiRing &c){
     return (*this) *= SemiRing(1)/c;
   }
 
-  Matrix &operator^=(long long k){
+  SemiRingMatrix &operator^=(long long k){
     assert(height() == width());
-    Matrix B = Matrix::I(height());
+    SemiRingMatrix B = SemiRingMatrix::I(height());
     while(k > 0){
       if(k&1) B *= *this;
       *this *= *this;
@@ -70,12 +73,12 @@ struct Matrix{
     return (*this);
   }
 
-  Matrix operator+(const Matrix &B) const { return Matrix(*this) += B; }
-  Matrix operator-(const Matrix &B) const { return Matrix(*this) -= B; }
-  Matrix operator*(const Matrix &B) const { return Matrix(*this) *= B; }
-  Matrix operator^(const long long k) const { return Matrix(*this) ^= k; }
-  Matrix operator*(const SemiRing &c) const { return Matrix(*this) *= c; }
-  Matrix operator/(const SemiRing &c) const { return Matrix(*this) /= c; }
+  SemiRingMatrix operator+(const SemiRingMatrix &B) const { return SemiRingMatrix(*this) += B; }
+  SemiRingMatrix operator-(const SemiRingMatrix &B) const { return SemiRingMatrix(*this) -= B; }
+  SemiRingMatrix operator*(const SemiRingMatrix &B) const { return SemiRingMatrix(*this) *= B; }
+  SemiRingMatrix operator^(const long long k) const { return SemiRingMatrix(*this) ^= k; }
+  SemiRingMatrix operator*(const SemiRing &c) const { return SemiRingMatrix(*this) *= c; }
+  SemiRingMatrix operator/(const SemiRing &c) const { return SemiRingMatrix(*this) /= c; }
 
   vector<SemiRing> operator*(const vector<SemiRing> &x) const {
     assert(width() == x.size());
@@ -87,16 +90,16 @@ struct Matrix{
     return res;
   }
 
-  Matrix Transpose() const {
+  SemiRingMatrix Transpose() const {
     size_t n = height(), m = width();
-    Matrix res(m, n);
+    SemiRingMatrix res(m, n);
     for (size_t i = 0; i < n; i++)
       for (size_t j = 0; j < m; j++)
         res[j][i] = (*this)[i][j];
     return res;
   }
 
-  friend istream &operator>>(istream &is, Matrix &p){
+  friend istream &operator>>(istream &is, SemiRingMatrix &p){
     size_t n = p.height(), m = p.width();
     for (size_t i = 0; i < n; i++)
       for (size_t j = 0; j < m; j++)
@@ -104,7 +107,7 @@ struct Matrix{
     return (is);
   }
 
-  friend ostream &operator<<(ostream &os, const Matrix &p){
+  friend ostream &operator<<(ostream &os, const SemiRingMatrix &p){
     size_t n = p.height(), m = p.width();
     for (size_t i = 0; i < n; i++)
       for (size_t j = 0; j < m; j++)
@@ -112,8 +115,8 @@ struct Matrix{
     return (os);
   }
 
-  static Matrix I(size_t n){
-    Matrix res(n, n, SemiRing::id());
+  static SemiRingMatrix I(size_t n){
+    SemiRingMatrix res(n, n, SemiRing::id());
     for (size_t i = 0; i < n; i++) res[i][i] = SemiRing::e();
     return res;
   }

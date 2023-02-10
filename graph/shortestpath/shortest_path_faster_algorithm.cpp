@@ -1,5 +1,9 @@
+#pragma once
+
+#include "..\\Graph.cpp"
+
 template<typename T>
-pair<vector<T>, vector<int>> ShortestPathFasterAlgorithm(const Graph<T> &g, int s){
+pair<vector<T>, vector<int>> shortest_path_faster_algorithm(const Graph<T> &g, int s){
   int n = int(g.size());
   vector<T> dist(n);
   vector<int> inque(n), cnt(n), state(n);

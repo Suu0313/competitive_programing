@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, typename Container = vector<T>, typename Compare = less<typename Container::value_type>>
 struct prque : priority_queue<T, Container, Compare> {
   using priority_queue<T, Container, Compare>::priority_queue;

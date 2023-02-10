@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct Queue : queue<T>{
   using queue<T>::queue;

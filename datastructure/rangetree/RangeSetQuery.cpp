@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\StaticRangeTree.cpp"
+
 struct RangeSetQuery{
   StaticRangeTree<int, int, int> seg;
 
@@ -18,7 +22,7 @@ struct RangeSetQuery{
   }
 };
 
-// ToDo: WM で書き直す
+// TODO: WM で書き直す
 
 int main(){
   cin.tie(0); ios::sync_with_stdio(false);

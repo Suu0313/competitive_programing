@@ -1,3 +1,5 @@
+#pragma once
+
 template<class Container>
 vector<int> manacher(const Container &s){
   int n = int(s.size());

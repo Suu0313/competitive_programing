@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct RangeSet{
   set<pair<T, T>> st;

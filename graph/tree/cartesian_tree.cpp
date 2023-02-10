@@ -1,3 +1,5 @@
+#pragma once
+
 template<class T, class Compair = less<T>>
 vector<int> cartesian_tree(const vector<T> &a, const Compair &cmp = Compair{}){
   int n = int(a.size());

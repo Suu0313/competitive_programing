@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename Container>
 string join(const Container&v, const string &sep = "", const string &en = ""){
   stringstream s;

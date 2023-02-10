@@ -1,5 +1,9 @@
+#pragma once
+
+#include "..\\Graph.cpp"
+
 template<typename T>
-vector<T> Dijkstra(const Graph<T> &g, int s){
+vector<T> dijkstra(const Graph<T> &g, int s){
   priority_queue<pair<T, int>,vector<pair<T, int>>, greater<>> pq;
   vector<T> dist(g.size(), -1);
   vector<bool> seen(g.size(), false);
@@ -18,7 +22,7 @@ vector<T> Dijkstra(const Graph<T> &g, int s){
 }
 
 template<typename T>
-vector<vector<T>> Dijkstra_APSP(const Graph<T> &g){
+vector<vector<T>> dijkstra_APSP(const Graph<T> &g){
   int n = int(g.size());
   vector<vector<T>> dist; dist.reserve(n);
   for(int v = 0; v < n; ++v) dist.push_back(Dijkstra(g, v));

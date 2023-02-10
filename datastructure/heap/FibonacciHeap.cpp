@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename key_t, typename val_t, class Compair = less<key_t>>
 struct FibonacciHeap{
   struct Node;

@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename T>
 T traveling_salesman_problem(const vector<vector<T>> &dist, int s = -1, int t = -1, const T &inf = numeric_limits<T>::max()){
   const int n = dist.size();

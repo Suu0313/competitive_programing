@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct AhoCorasick{
   AhoCorasick(): ptr(1), cnt(1) {}

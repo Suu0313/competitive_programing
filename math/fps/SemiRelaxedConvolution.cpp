@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Formalpowerseries.cpp"
+
 template<typename T>
 struct SemiRelaxedConvolution{
   using fps = Formalpowerseries<T>;

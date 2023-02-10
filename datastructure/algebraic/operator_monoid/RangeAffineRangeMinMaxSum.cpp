@@ -1,3 +1,8 @@
+#pragma once
+
+#include "..\\monoid\\MinMaxSumMonoid.cpp"
+#include "..\\monoid\\CompositeMonoid.cpp"
+
 template<typename T>
 struct RangeAffineRangeMinMaxSum{
   using Monoid = MinMaxSumMonoid<T>;

@@ -1,3 +1,9 @@
+#pragma once
+
+#include "..\\monoid\\MaxMonoid.cpp"
+#include "..\\monoid\\SetMonoid.cpp"
+
+
 template<typename T>
 struct RangeUpdateRangeMax{
   using Monoid = MaxMonoid<T>;

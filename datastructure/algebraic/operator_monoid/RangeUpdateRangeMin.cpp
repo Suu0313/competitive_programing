@@ -1,3 +1,8 @@
+#pragma once
+
+#include "..\\monoid\\MinMonoid.cpp"
+#include "..\\monoid\\SetMonoid.cpp"
+
 template<typename T>
 struct RangeUpdateRangeMin{
   using Monoid = MinMonoid<T>;

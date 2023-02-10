@@ -1,3 +1,5 @@
+#pragma once
+
 #define ADD_OVERFLOW(a, b) __builtin_add_overflow_p (a, b, (decltype(a)) 0)
 #define SUB_OVERFLOW(a, b) __builtin_sub_overflow_p (a, b, (decltype(a)) 0)
 #define MUL_OVERFLOW(a, b) __builtin_mul_overflow_p (a, b, (decltype(a)) 0)

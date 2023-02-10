@@ -1,3 +1,7 @@
+#pragma once
+
+#include "..\\Graph.cpp"
+
 template<typename T = int>
 struct HeavyLightDecomposition{
   int n;

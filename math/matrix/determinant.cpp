@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\Matrix.cpp"
+
 template<typename T>
 T determinant(Matrix<T> a){
   assert(a.height() == a.width());

@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct SumIdxMonoid{
   T sum = 0;

@@ -1,3 +1,5 @@
+#pragma once
+
 namespace NTT{
 
   int bsf(unsigned int n) { return __builtin_ctz(n); }

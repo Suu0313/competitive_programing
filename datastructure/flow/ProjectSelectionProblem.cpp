@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\MaximumFlow.cpp"
+
 template<typename T>
 struct ProjectSelectionProblem{
   int n, s, t;

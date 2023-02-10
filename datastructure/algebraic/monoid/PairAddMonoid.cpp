@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct PairAddMonoid{
   T a = T{}, b = T{};

@@ -1,5 +1,11 @@
+#pragma once
+
+#include "..\\Graph.cpp"
+
+#include "..\..\\datastructure\\heap\\FibonacciHeap.cpp"
+
 template<typename T>
-vector<T> Dijkstra(const Graph<T> &g, int s){
+vector<T> dijkstra_fibonacci(const Graph<T> &g, int s){
   FibonacciHeap<T, int> heap;
   vector nodes(g.size(), heap.get_np());
   vector<T> dist(g.size(), numeric_limits<T>::max());

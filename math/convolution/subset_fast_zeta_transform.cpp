@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, class Plus = plus<T>>
 vector<T> subset_fast_zeta_transform(vector<T> f, const Plus &op = Plus{}){
   int n = int(f.size());

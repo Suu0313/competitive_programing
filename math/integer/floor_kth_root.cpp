@@ -1,3 +1,5 @@
+#pragma once
+
 uint64_t floor_kth_root(uint64_t a, int k){
   if(a <= 1 || k <= 1) return a;
   if(k >= 64) return 1;

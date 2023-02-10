@@ -1,3 +1,5 @@
+#pragma once
+
 struct Dice{
   static constexpr array<int, 6> dice[24] = { // {u, d, f, b, l, r}
     {1,6,2,5,4,3}, {1,6,3,4,2,5}, {1,6,4,3,5,2}, {1,6,5,2,3,4},

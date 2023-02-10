@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<vector<T>> binomial_table(int n){
   vector<vector<T>> mat(n+1, vector<T>(n+1));

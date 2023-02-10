@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct Set : set<T> {
   using set<T>::set;

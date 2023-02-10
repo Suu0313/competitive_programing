@@ -1,3 +1,5 @@
+#pragma once
+
 template<class Container> auto myref(Container &c, size_t i){ return ref(c[i]); }
 template<class Container> auto myref(Container &&c, size_t i){ return c[i]; }
 

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "..\mod\ModInt.cpp"
 #include ".\NTT.cpp"
 

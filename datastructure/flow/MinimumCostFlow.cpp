@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename cap_t, typename cost_t>
 struct PrimalDual{
   struct Edge{

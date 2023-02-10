@@ -1,3 +1,5 @@
+#pragma once
+
 struct combination{
   struct itr{
     uint64_t bit;

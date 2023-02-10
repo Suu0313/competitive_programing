@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct MaxSubsumMonoid{
   T pre = 0, suf = 0, mx = 0, whole = 0;

@@ -1,3 +1,5 @@
+#pragma once
+
 template<class Container = vector<int>>
 struct permutation{
   struct itr{

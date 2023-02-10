@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> mulinv_sparse(vector<T> f, vector<pair<int, T>> g, int d){
   assert(!g.empty());

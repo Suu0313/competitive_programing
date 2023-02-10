@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\LongestCommonPrefixArray.cpp"
+
 template<typename Container>
 tuple<int,int,int> longest_common_substr_lcp(const Container &s, const Container &t){
   int n = s.size(), m = t.size();

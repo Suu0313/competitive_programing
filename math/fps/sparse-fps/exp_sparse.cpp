@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<T> exp_sparse(vector<pair<int, T>> f, int n){
   if(n == 0) return {};

@@ -1,5 +1,7 @@
+#pragma once
+
 template<class Container>
-vector<int> Palindromic_length(Container s){
+vector<int> palindromic_length(Container s){
   int n = int(s.size());
   vector<int> pl(n+1), gpl(n+1);
   queue<tuple<int,int,int>> g, g2, g3;

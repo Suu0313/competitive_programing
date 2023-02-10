@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct CompositeMonoid{
   T a = 1, b = 0;

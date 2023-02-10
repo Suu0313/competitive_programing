@@ -1,3 +1,5 @@
+#pragma once
+
 namespace myliterals{
   constexpr size_t operator ""_sz(unsigned long long n){ return n; }
   constexpr int8_t operator ""_i8(unsigned long long n){ return n; }

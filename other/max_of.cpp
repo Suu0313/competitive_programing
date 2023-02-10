@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, class Iiter, class Fn>
 T max_of(Iiter first, Iiter last, const Fn &f){
   T res = f(*first);

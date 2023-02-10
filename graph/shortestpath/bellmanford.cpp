@@ -1,5 +1,9 @@
+#pragma once
+
+#include "..\\Graph.cpp"
+
 template<typename T>
-vector<T> BellmanFord(const Edges<T> &edges, int V, int s){
+vector<T> bellmanford(const Edges<T> &edges, int V, int s){
   const T inf = numeric_limits<T>::max();
   vector<T> dist(V, inf); dist[s] = 0;
 

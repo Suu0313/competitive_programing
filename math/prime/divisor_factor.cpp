@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 set<T> divisor_factor(T n){
   set<T> s;

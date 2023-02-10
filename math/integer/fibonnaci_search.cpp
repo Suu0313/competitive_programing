@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T, typename U, typename F, typename C>
 T fibonnaci_search(T l, T r, const F &f, const C &cmp){
   if(l >= r) return l;

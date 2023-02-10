@@ -1,3 +1,5 @@
+#pragma once
+
 struct Date{
   uint64_t G;
   constexpr Date() : G() {}

@@ -1,3 +1,6 @@
+#pragma once
+
+
 template<typename T>
 struct PersistentSegmentTree{
   using OP = function<T(T,T)>;

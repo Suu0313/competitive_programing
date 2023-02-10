@@ -1,3 +1,5 @@
+#pragma once
+
 struct subsets{
   struct itr{
     uint64_t s, t;

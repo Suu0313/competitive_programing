@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 void WarshallFloyd(vector<vector<T>> &g, T inf){
   const int n = g.size();

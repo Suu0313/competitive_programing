@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 auto make_ref_vector(vector<T> &v, const vector<int> &idx){
   vector<reference_wrapper<T>> res;

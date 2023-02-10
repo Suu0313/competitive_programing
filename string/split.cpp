@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename F>
 void split(const string& str, char delim, const F& f){
   istringstream iss{str};

@@ -1,3 +1,5 @@
+#pragma once
+
 template<class F>
 struct MaximuFlowLB{
   using Cap = F::cap_type;

@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 vector<vector<T>> partition_table(int n, int k){
   vector<vector<T>> dp(n + 1, vector<T>(k + 1));

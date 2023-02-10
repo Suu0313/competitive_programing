@@ -1,3 +1,7 @@
+#pragma once
+
+#include ".\\z_algorithm.cpp"
+
 template<typename Container> // (p, l, r)
 vector<tuple<int, int, int>> run_enumerate(const Container &s){
   auto solve_impl = [](Container l, Container r){

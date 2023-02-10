@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename T>
 struct FenwickTree_RAQ{ //ToDo: verify
   int n;

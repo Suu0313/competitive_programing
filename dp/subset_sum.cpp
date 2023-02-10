@@ -1,3 +1,5 @@
+#pragma once
+
 vector<int> subset_sum(const vector<int> &a, int x){
   int n = int(a.size()), s = 0;
   vector<int> b(a), d(n), idx(n);

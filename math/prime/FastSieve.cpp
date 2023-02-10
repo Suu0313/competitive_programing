@@ -1,3 +1,5 @@
+#pragma once
+
 struct FastSieve{
   using i8 = uint8_t;
   int n, m;

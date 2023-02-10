@@ -1,3 +1,5 @@
+#pragma once
+
 uint64_t isqrt(uint64_t x){
   uint64_t res = 0, over = 1;
   while(over*over <= x) over <<= 1;

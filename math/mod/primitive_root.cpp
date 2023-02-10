@@ -1,3 +1,5 @@
+#pragma once
+
 int primitive_root(int64_t p){
   if (p == 2) return 1;
   if (p == 167772161) return 3;

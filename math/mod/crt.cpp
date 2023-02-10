@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 pair<int64_t, int64_t> crt(const vector<T> &r, const vector<T> &m){
 

@@ -1,3 +1,5 @@
+#pragma once
+
 template<typename T>
 struct DisjointSparseTable2D{
   using F = function<T(T, T)>;

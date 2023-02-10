@@ -1,3 +1,8 @@
+#pragma once
+
+#include ".\\FenwickTree.cpp"
+#include "..\\..\\other\\sort\\merge_sort.cpp"
+
 struct StaticRangeInversionsQuery{
   int n, sn;
   vector<int> a;
@@ -32,7 +37,7 @@ struct StaticRangeInversionsQuery{
   int64_t query(int l, int r){
     if(l/sn == (r-1)/sn){
       vector<int> b(begin(a)+l, begin(a)+r);
-      return MergeSort(b);
+      return merge_sort(b);
     }
 
     int i = (l+sn-1)/sn, j = r/sn;
@@ -47,7 +52,7 @@ struct StaticRangeInversionsQuery{
       b.push_back(a[k]);
     }
 
-    inv += MergeSort(b);
+    inv += merge_sort(b);
     return inv;
   }
 };

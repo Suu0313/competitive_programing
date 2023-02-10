@@ -1,3 +1,6 @@
+#pragma once
+
+
 struct ArbitraryModInt {
   
   int x;

@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename T>
 T longest_common_subsequence(T s, T t){
   int n = s.size(), m = t.size();
