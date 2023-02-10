@@ -1,3 +1,5 @@
+#pragma once
+
 template< int mod >
 struct ModInt {
   int x;
@@ -75,9 +77,9 @@ constexpr ModInt<mod> operator/(const int64_t &p, const ModInt<mod> &m){ return 
 
 //constexpr int MOD = 1e9 + 7;
 //constexpr int MOD = 998244353;
-using mint = ModInt< MOD >;
-using VM = vector<mint>;
-using VVM = vector<VM>;
+// using mint = ModInt< MOD >;
+// using VM = vector<mint>;
+// using VVM = vector<VM>;
 
-namespace mintliteral{ constexpr mint operator""_m(unsigned long long x) { return mint(x); } }
-using namespace mintliteral;
+// namespace mintliteral{ constexpr mint operator""_m(unsigned long long x) { return mint(x); } }
+// using namespace mintliteral;

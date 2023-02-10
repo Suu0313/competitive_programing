@@ -1,3 +1,5 @@
+#include ".\FFT-ntt.cpp"
+
 template< typename T >
 struct Formalpowerseries : vector<T> {
   using vector<T>::vector;
