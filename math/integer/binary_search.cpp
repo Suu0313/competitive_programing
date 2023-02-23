@@ -1,7 +1,7 @@
 #pragma once
 
 template<typename T, typename F>
-pair<T, T> binary_search(T ok, T ng, const F &isok){
+pair<T, T> ibinary_search(T ok, T ng, const F &isok){
   while(abs(ok - ng) > 1){
     T wj = (ok & ng) + ((ok ^ ng) >> 1);
     (isok(wj)?ok : ng) = wj;
