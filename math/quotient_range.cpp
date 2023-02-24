@@ -1,5 +1,8 @@
 #pragma once
 
+/**
+* @brief x in [l, r),  n // x = d, O(sqrt(n))
+*/
 template<typename T>
 vector<tuple<T, T, T>> quotient_range(T n){
   vector<tuple<T, T, T>> res;

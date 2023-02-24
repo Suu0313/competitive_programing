@@ -1,8 +1,10 @@
 #pragma once
 
+/**
+* @brief sum[0,n) floor((ai+b)/m), O(log min{n, m, a})
+*/
 template<typename T>
 T floor_sum(T n, T m, T a, T b){
-  // sum[0,n) \floor((ai+b)/m)
   T res = 0;
   if(a < 0){
     T a2 = a % m;
