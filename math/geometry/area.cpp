@@ -32,6 +32,8 @@ double common_area(const Circle<T> &c, const Polygon<T> &ps){
     int m = int(cs.size());
     if(m == 0) return calc_impl(pa[0], pb[0], 0);
     if(m == 2){
+      assert(!pa.empty());
+      assert(!pb.empty());
       return calc_impl(pa[0], cs[0], 0) + calc_impl(cs[0], cs[1], 1) + calc_impl(cs[1], pb[0], 0);
     }
     if(c.contains(p) <= 1){
