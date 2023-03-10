@@ -13,6 +13,7 @@ template<typename T> T area(const Polygon<T> &ps, bool harf = true){
   return res;
 }
 
+// FIXME:
 template<typename T>
 double common_area(const Circle<T> &c, const Polygon<T> &ps){
   int n = int(ps.size());
