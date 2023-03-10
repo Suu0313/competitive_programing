@@ -1,13 +1,12 @@
-#pragma once
-
 template<typename T = char>
 struct PalindromicTree{
 private:
   struct Node{
     map<T, int> link;
-    int suffix_link; // same suffix maximum pal
+    int link_rev = -1;
+    int suffix_link = -1; // same suffix maximum pal
     int len; // palindrome length
-    int cnt; // number of this
+    int cnt; // freq of this
     int idx; // one of the start pos
 
     Node() = default;
@@ -70,6 +69,8 @@ public:
     ston.push_back(suffix_max);
     int len = nodes[k].len + 2;
     nodes.emplace_back(len, 1, int(seq.size()) - len);
+    
+    nodes.back().link_rev = k;
 
     if(len == 1) nodes.back().suffix_link = 1;
     else nodes.back().suffix_link = 
@@ -89,18 +90,34 @@ public:
   // seq[i] = node[k].last
   int get_node_idx(int i) const { return ston[i]; }
 
-  // length of suffix palindromes of node k
+  // idx of suffix palindromes of node k
   vector<int> suffix_palindromes(int k) const {
     vector<int> ret;
     for(; nodes[k].len > 0; k = nodes[k].suffix_link){
-      ret.push_back(nodes[k].len);
+      ret.push_back(k);
     }
     return ret;
   }
 
-  // length of suffix palindromes of seq
+  // idx of suffix palindromes of seq
   vector<int> suffix_palindromes() const {
     return suffix_palindromes(suffix_max);
+  }
+
+  // idx of substring palindromes of node k
+  vector<int> substr_palindroms(int k) const {
+    vector<int> ret, seen(nodes.size());
+    queue<int> qu;
+    qu.push(k); seen[k] = 1;
+    for(; !qu.empty(); qu.pop()){
+      int v = qu.front();
+      ret.push_back(v);
+      for(int u : {nodes[v].suffix_link, nodes[v].link_rev}){
+        if(u == -1) continue;
+        if(!seen[u]) qu.push(u), seen[u] = 1;
+      }
+    }
+    return ret;
   }
 
   // not count ""
@@ -115,4 +132,6 @@ public:
     }
     return freq;
   }
+
+  const Node &operator[](int k) const { return nodes[k]; }
 };
