@@ -75,7 +75,7 @@ struct LazySegTree{
   }
 
   template<typename C>
-  int max_right(int l, C &check){
+  int max_right(int l, const C &check){
     if(l == n) return n;
     l += n;
     resolve(l);
@@ -112,7 +112,7 @@ struct LazySegTree{
   }
 
   template<typename C>
-  int max_left(int r, C &check){
+  int min_left(int r, const C &check){
     if(r == 0) return 0;
     r += n;
     resolve(r - 1);
