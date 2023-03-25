@@ -5,7 +5,7 @@ struct UnionFind {
   vector<int> data;
   int cnt,n,smax;
   
-  UnionFind() {}
+  UnionFind() = default;
   UnionFind(int n_): data(n_,-1),cnt(n_),n(n_),smax(1) {}
   
   void init(int n_) {
