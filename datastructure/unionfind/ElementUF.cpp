@@ -1,15 +1,19 @@
 #pragma once
 
-template<typename T>
+template<class Monoid>
 struct ElementUF {
-  using F = function<void(T&, T&)>;
   
   vector<int> data;
-  vector<T> val;
-  const F f;
+  vector<Monoid> val;
   
-  ElementUF() {}
-  ElementUF(int n, const F &f, const T &id = T{}): data(n, -1), val(n, id), f(f) {}
+  ElementUF() = default;
+  ElementUF(int n): data(n, -1), val(n) {}
+  template<typename Iiter>
+  ElementUF(Iiter first, Iiter last): ElementUF(distance(first, last)) {
+    for(int i = 0; first != last; ++i, ++first) val[i] = *first;
+  }
+  template<typename T>
+  ElementUF(const vector<T> &x): ElementUF(x.begin(), x.end()) {}
   
   int find(int x) {
     int root = x;
@@ -23,9 +27,9 @@ struct ElementUF {
     y = find(y);
     if(x == y) return false;
 
-    if(data[x] > data[y]) swap(x,y);
+    if(data[x] > data[y]) swap(x, y);
 
-    f(val[x], val[y]);
+    val[x] += val[y];
     data[x] += data[y];
     data[y] = x;
     return true;
@@ -39,7 +43,6 @@ struct ElementUF {
     return -data[find(x)];
   }
 
-  T &operator[](int k){ return val[k]; }
-  const T &operator[](int k) const { return val[k]; }
-
+  Monoid &operator[](int k){ return val[k]; }
+  const Monoid &operator[](int k) const { return val[k]; }
 };
