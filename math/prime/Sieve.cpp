@@ -36,7 +36,7 @@ struct Sieve{
     return ps;
   }
 
-  bool isPrime(int p) const {
+  bool is_prime(int p) const {
     if(p<=1) return false;
     if(p==2) return true;
     return min_factor[p>>1] == p;
@@ -45,31 +45,28 @@ struct Sieve{
   vector<int> prime_table() const {
     vector<int> res;
     for(int i=2; i < n ; i++){
-      if(isPrime(i)) res.push_back(i);
+      if(is_prime(i)) res.push_back(i);
     }
     return res;
   }
 
   vector<int> divisors(int a) const {
-    vector<pair<int, int>> ps;
-
-    for(auto&&p : vfactor(a)){
-      if(!ps.empty() && ps.back().first == p) ++ps.back().second;
-      else ps.emplace_back(p, 1);
-    }
-    int m = int(ps.size());
-    stack<pair<int, int>> st; st.emplace(0, 1);
-    vector<int> res;
-
-    while(!st.empty()){
-      auto[i, s] = st.top(); st.pop();
-      if(i == m){
-        res.push_back(s);
-        continue;
+    if(a <= 0) return {};
+    vector<int> res(1, 1);
+    for(const auto[p, c] : factor(a)){
+      int m = int(res.size());
+      res.resize(m * (c + 1));
+      for(int i = 0; i < m * c; ++i){
+        res[i + m] = res[i] * p;
       }
-      auto[p, c] = ps[i];
-      for(int j = 0; j <= c; j++, s *= p) st.emplace(i+1, s);
     }
+    return res;
+  }
+
+  int cnt_divisors(int a) const {
+    if(a <= 0) return 0;
+    int res = 1;
+    for(const auto[p, c] : factor(a)) res *= c + 1;
     return res;
   }
 };
