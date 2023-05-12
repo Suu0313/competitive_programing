@@ -39,7 +39,7 @@ struct TwoSat{
     scc.build();
     vector<int> res(n);
     for(int i = 0; i < n; i++){
-      if(scc.issame(i,rev(i))) return {};
+      if(scc.is_same(i,rev(i))) return {};
       res.at(i) = scc.at(i) > scc.at(rev(i));
     }
     return res;
