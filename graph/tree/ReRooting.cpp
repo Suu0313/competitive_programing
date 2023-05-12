@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+ * @brief calculate rerooting dp (T, T) => T, (T, U) => T
+ * 
+ * @tparam T dp value
+ * @tparam U edge value
+ */
 template<typename T, typename U>
 struct ReRooting{
   struct Edge{
@@ -25,7 +31,14 @@ struct ReRooting{
   ReRooting(const ReRooting&) = delete;
   ReRooting(ReRooting&&) = delete;
 
-  // f(s, g(dp, edge))
+  /**
+   * @brief f(s, g(dp, edge))
+   * 
+   * @param V vertex size
+   * @param f (dp[v], dp[v2]) => dp[v]
+   * @param g (dp[c], edge) => dp[v]
+   * @param e identity
+   */
   ReRooting(int V, const F f, const G g, const T &e)
     : V(V), tree(V), f(f), g(g), e(e), dp(V, e), dp_p(V, e) {}
   
