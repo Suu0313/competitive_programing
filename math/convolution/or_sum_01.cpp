@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\and_sum_01.cpp"
+#include "./and_sum_01.cpp"
 
 /**
 * @brief c[k] = sum (a[i + k] | b[i])

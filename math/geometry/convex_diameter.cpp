@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\convex_hull.cpp"
+#include "./convex_hull.cpp"
 
 
 template<typename T>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include ".\\superset_fast_zeta_transform.cpp"
+#include "./superset_fast_zeta_transform.cpp"
 
-#include ".\\superset_fast_mobius_transform.cpp"
+#include "./superset_fast_mobius_transform.cpp"
 
 template<typename T>
 vector<T> bitwise_and_convolution(vector<T> f, vector<T> g){

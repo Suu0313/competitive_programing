@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\\mod\\ModInt.cpp"
-#include "..\\fps\\NTT.cpp"
+#include "../mod/ModInt.cpp"
+#include "../fps/NTT.cpp"
 
 /**
 * @brief c[k] = sum (a[i + k] & b[i])

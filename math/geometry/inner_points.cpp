@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Point.cpp"
+#include "./Point.cpp"
 
 template<typename T>
 pair<int64_t, int64_t> inner_points(const Polygon<T> &ps){

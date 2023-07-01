@@ -1,8 +1,8 @@
 #pragma once
 
-#include ".\\divisor_fast_zeta_transform.cpp"
+#include "./divisor_fast_zeta_transform.cpp"
 
-#include ".\\divisor_fast_mobius_transform.cpp"
+#include "./divisor_fast_mobius_transform.cpp"
 
 template<typename T>
 vector<T> lcm_convolution(vector<T> f, vector<T> g){

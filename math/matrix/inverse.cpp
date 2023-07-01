@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Matrix.cpp"
+#include "./Matrix.cpp"
 
 template<typename T>
 Matrix<T> inverse(Matrix<T> a){

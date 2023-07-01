@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\WaveletMatrix.cpp"
+#include "./WaveletMatrix.cpp"
 
 template<size_t bn, typename T, typename V>
 struct WaveletMatrixPointAddRectangleSum : WaveletMatrix<bn, T> {

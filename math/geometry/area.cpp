@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Geometry.cpp"
+#include "./Geometry.cpp"
 
 
 template<typename T> T area(const Polygon<T> &ps, bool harf = true){

@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\z_algorithm.cpp"
+#include "./z_algorithm.cpp"
 
 template<typename Container> // (p, l, r)
 vector<tuple<int, int, int>> run_enumerate(const Container &s){

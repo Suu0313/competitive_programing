@@ -1,8 +1,8 @@
 #pragma once
 
-#include ".\\subset_fast_zeta_transform.cpp"
+#include "./subset_fast_zeta_transform.cpp"
 
-#include ".\\subset_fast_mobius_transform.cpp"
+#include "./subset_fast_mobius_transform.cpp"
 
 template<typename T>
 vector<T> bitwise_or_convolution(vector<T> f, vector<T> g){

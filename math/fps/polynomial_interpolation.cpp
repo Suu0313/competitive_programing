@@ -1,8 +1,8 @@
 #pragma once
 
-#include ".\\Formalpowerseries.cpp"
+#include "./Formalpowerseries.cpp"
 
-#include ".\\multipoint_evaluation.cpp"
+#include "./multipoint_evaluation.cpp"
 
 
 template<typename T>

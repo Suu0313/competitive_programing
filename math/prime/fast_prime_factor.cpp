@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\is_prime_64bit.cpp"
+#include "./is_prime_64bit.cpp"
 
 int64_t pollard_pho(int64_t n){
   if(~n & 1) return 2;

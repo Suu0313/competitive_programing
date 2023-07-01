@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\..\\Graph.cpp"
+#include "../../Graph.cpp"
 
 template<typename T>
 struct CentroidDecomposition : Graph<T>{

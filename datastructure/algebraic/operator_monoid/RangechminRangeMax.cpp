@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\\monoid\\MaxMonoid.cpp"
-#include "..\\monoid\\MinMonoid.cpp"
+#include "../monoid/MaxMonoid.cpp"
+#include "../monoid/MinMonoid.cpp"
 
 template<typename T>
 struct RangechminRangeMax{

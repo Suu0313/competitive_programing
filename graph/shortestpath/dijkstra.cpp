@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\Graph.cpp"
+#include "../Graph.cpp"
 
 template<typename T>
 vector<T> dijkstra(const Graph<T> &g, int s){

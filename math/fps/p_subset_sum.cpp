@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Formalpowerseries.cpp"
+#include "./Formalpowerseries.cpp"
 
 template<typename T>
 Formalpowerseries<T> p_subset_sum(const vector<int> &a, int s){

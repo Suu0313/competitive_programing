@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Matrix.cpp"
+#include "./Matrix.cpp"
 
 template<typename T>
 T minordet(const Matrix<T> &a, size_t i, size_t j){

@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Combination.cpp"
+#include "./Combination.cpp"
 
 template<typename T, int p = T::get_mod()>
 struct Lucas{

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\\monoid\\MinMonoid.cpp"
-#include "..\\monoid\\SetMonoid.cpp"
+#include "../monoid/MinMonoid.cpp"
+#include "../monoid/SetMonoid.cpp"
 
 template<typename T>
 struct RangeUpdateRangeMin{

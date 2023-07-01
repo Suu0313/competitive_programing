@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Matrix.cpp"
+#include "./Matrix.cpp"
 
 template<typename T>
 pair<vector<T>, Matrix<T>> linear_equation(const Matrix<T> &a, const vector<T> &b){

@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\StronglyConnectedComponents.cpp"
+#include "./StronglyConnectedComponents.cpp"
 
 struct TwoSat{
   int n;
