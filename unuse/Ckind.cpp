@@ -14,7 +14,7 @@ void Cchange(char &c){
 }
 
 bool isvowel(char c){
-  VC vowel = {'a','i','u','e','o'};
+  vector<char> vowel = {'a','i','u','e','o'};
   for(auto a : vowel) if(a == c) return true;
   return false;
 }
