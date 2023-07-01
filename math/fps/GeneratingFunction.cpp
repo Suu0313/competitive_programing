@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Formalpowerseries.cpp"
+#include "./Formalpowerseries.cpp"
 
 template<typename T>
 T GeneratingFunction(Formalpowerseries<T> P, Formalpowerseries<T> Q, long long n){

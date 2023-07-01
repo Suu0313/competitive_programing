@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\Formalpowerseries.cpp"
+#include "../Formalpowerseries.cpp"
 
 template<typename T>
 Formalpowerseries<T> stirling_number_of_the_second_kind(int n){

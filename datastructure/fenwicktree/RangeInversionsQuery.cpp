@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\FenwickTree.cpp"
+#include "./FenwickTree.cpp"
 
 struct RangeInversionsQuery{
   int n, upper;

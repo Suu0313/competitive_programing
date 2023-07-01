@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\geometry_base.cpp"
+#include "./geometry_base.cpp"
 
 
 template<class T> struct Point{

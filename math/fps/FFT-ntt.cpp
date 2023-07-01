@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\mod\ModInt.cpp"
-#include ".\NTT.cpp"
+#include "../mod/ModInt.cpp"
+#include "./NTT.cpp"
 
 namespace FFT{
   template<int mod, typename T>

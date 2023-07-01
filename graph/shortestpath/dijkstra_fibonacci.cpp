@@ -1,8 +1,8 @@
 #pragma once
 
-#include "..\\Graph.cpp"
+#include "../Graph.cpp"
 
-#include "..\..\\datastructure\\heap\\FibonacciHeap.cpp"
+#include "../../datastructure/heap/FibonacciHeap.cpp"
 
 template<typename T>
 vector<T> dijkstra_fibonacci(const Graph<T> &g, int s){

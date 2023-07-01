@@ -1,7 +1,7 @@
 #pragma once
 
-#include ".\\geometry_base.cpp"
-#include ".\\Point.cpp"
+#include "./geometry_base.cpp"
+#include "./Point.cpp"
 
 
 template<class T> struct Line{

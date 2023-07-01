@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Formalpowerseries.cpp"
+#include "./Formalpowerseries.cpp"
 
 template<typename T>
 struct SemiRelaxedConvolution{

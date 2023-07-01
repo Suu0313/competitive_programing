@@ -1,8 +1,8 @@
 #pragma once
 
-#include ".\\Matrix.cpp"
+#include "./Matrix.cpp"
 
-#include ".\\determinant.cpp"
+#include "./determinant.cpp"
 
 template<typename T>
 struct MatrixTree : Matrix<T>{

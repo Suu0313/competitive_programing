@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\MaximumFlow.cpp"
+#include "./MaximumFlow.cpp"
 
 template<typename T>
 struct ProjectSelectionProblem{

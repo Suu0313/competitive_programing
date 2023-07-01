@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\graph\\Graph.cpp"
+#include "../graph/Graph.cpp"
 
 template<typename T>
 T chinese_postman_problem(const Graph<T> &g){

@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\StaticRangeTree.cpp"
+#include "./StaticRangeTree.cpp"
 
 struct RangeSetQuery{
   StaticRangeTree<int, int, int> seg;

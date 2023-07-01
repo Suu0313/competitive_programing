@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\\monoid\\MaxMonoid.cpp"
-#include "..\\monoid\\SetMonoid.cpp"
+#include "../monoid/MaxMonoid.cpp"
+#include "../monoid/SetMonoid.cpp"
 
 
 template<typename T>

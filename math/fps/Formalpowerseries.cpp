@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\FFT-ntt.cpp"
+#include "./FFT-ntt.cpp"
 
 template< typename T >
 struct Formalpowerseries : vector<T> {

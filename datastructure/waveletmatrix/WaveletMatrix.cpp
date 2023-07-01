@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\BitVector.cpp"
+#include "./BitVector.cpp"
 
 template<size_t bn, typename T>
 struct WaveletMatrix{

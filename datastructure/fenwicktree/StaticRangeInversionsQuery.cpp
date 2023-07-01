@@ -1,7 +1,7 @@
 #pragma once
 
-#include ".\\FenwickTree.cpp"
-#include "..\\..\\other\\sort\\merge_sort.cpp"
+#include "./FenwickTree.cpp"
+#include "../../other/sort/merge_sort.cpp"
 
 struct StaticRangeInversionsQuery{
   int n, sn;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\DynamicSegTree.cpp"
+#include "./DynamicSegTree.cpp"
 
 template<typename T>
 struct Dynamic2DSegTree{

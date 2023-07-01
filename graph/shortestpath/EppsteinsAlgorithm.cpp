@@ -1,8 +1,8 @@
 #pragma once
 
-#include "..\\Graph.cpp"
+#include "../Graph.cpp"
 
-#include "..\..\\datastructure\\heap\\PersistentLeftistHeap.cpp"
+#include "../../datastructure/heap/PersistentLeftistHeap.cpp"
 
 template<typename T>
 struct EppsteinsAlgorithm{

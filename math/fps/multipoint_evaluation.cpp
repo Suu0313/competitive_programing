@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Formalpowerseries.cpp"
+#include "./Formalpowerseries.cpp"
 
 template< typename T >
 vector<T> multipoint_evaluation(const Formalpowerseries<T> &f, const vector<T> &xs){

@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\CentroidDecomposition.cpp"
+#include "./CentroidDecomposition.cpp"
 
 template<typename T>
 struct ContourAggregationQueryOnTree{

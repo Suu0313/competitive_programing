@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Graph.cpp"
+#include "./Graph.cpp"
 
 template<typename T>
 vector<tuple<int,int,int>> enumerate_triangles(const Graph<T> &g){

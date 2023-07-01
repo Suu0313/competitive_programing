@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Point.cpp"
+#include "./Point.cpp"
 
 
 template<typename T>

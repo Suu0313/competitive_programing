@@ -1,8 +1,8 @@
 #pragma once
 
-#include "..\\Graph.cpp"
+#include "../Graph.cpp"
 
-#include ".\\shortest_path_faster_algorithm.cpp"
+#include "./shortest_path_faster_algorithm.cpp"
 
 template<typename T>
 vector<vector<T>> johnson_APSP(const Graph<T> &g){

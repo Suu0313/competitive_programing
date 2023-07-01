@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\SuffixArray.cpp"
+#include "./SuffixArray.cpp"
 
 template<typename Container>
 struct LongestCommonPrefixArray{

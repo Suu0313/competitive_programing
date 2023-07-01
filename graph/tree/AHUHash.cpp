@@ -1,8 +1,8 @@
 #pragma once
 
-#include "..\\Graph.cpp"
+#include "../Graph.cpp"
 
-#include "..\..\\string\\RollingHash.cpp"
+#include "../../string/RollingHash.cpp"
 
 template<typename T>
 struct IsomorphismofTree{

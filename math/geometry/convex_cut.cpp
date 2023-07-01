@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Geometry.cpp"
+#include "./Geometry.cpp"
 
 template<typename T>
 pair<Polygon<T>,Polygon<T>> convex_cut(const Polygon<T> &ps, const Line<T> &l){

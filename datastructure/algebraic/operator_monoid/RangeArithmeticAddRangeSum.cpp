@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\\monoid\\SumIdxMonoid.cpp"
-#include "..\\monoid\\PairAddMonoid.cpp"
+#include "../monoid/SumIdxMonoid.cpp"
+#include "../monoid/PairAddMonoid.cpp"
 
 template<typename T>
 struct RangeArithmeticAddRangeSum{

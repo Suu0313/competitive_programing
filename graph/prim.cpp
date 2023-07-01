@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Graph.cpp"
+#include "./Graph.cpp"
 
 template<typename T>
 pair<T, Graph<T>> prim(const Graph<T> &g){

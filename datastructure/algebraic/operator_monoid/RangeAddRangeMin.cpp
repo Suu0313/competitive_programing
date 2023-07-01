@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\monoid\\MinMonoid.cpp"
+#include "../monoid/MinMonoid.cpp"
 
 template<typename T>
 struct RangeAddRangeMin{

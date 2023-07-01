@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\Graph.cpp"
+#include "../Graph.cpp"
 
 template<typename T>
 vector<T> bellmanford(const Edges<T> &edges, int V, int s){

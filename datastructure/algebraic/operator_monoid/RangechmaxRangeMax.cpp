@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\monoid\\MaxMonoid.cpp"
+#include "../monoid/MaxMonoid.cpp"
 
 template<typename T>
 struct RangechmaxRangeMax{

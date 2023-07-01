@@ -1,6 +1,6 @@
 #pragma once
 
-#include ".\\Point.cpp"
+#include "./Point.cpp"
 
 
 template<typename T> bool is_convex(const Polygon<T> &ps, bool strict = true){
