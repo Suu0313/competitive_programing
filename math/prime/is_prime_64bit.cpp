@@ -11,7 +11,7 @@ constexpr bool is_prime_64bit(long long n){
     long long t = d, y = 1;
     {
       long long x = a%n, k = t, m = n;
-      while(k){ // there is not int128 in my enviroment
+      while(k){
         if(k & 1) y = (__int128_t)y * x % m;
         x = (__int128_t)x * x % m; k >>= 1;
       }
