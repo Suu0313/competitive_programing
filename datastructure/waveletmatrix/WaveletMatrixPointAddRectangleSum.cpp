@@ -21,7 +21,7 @@ struct WaveletMatrixPointAddRectangleSum : WaveletMatrix<bn, T> {
       swap(ord, zero);
       ord.insert(end(ord), begin(one), end(one));
       size_t j = bn - i - 1;
-      vs[j].assign(n + 1, 0);
+      vs[j].assign(n + 1, V{});
       for(size_t k = 0; k < n; ++k) vs[j][k+1] = v[ord[k]];
       for(size_t k = 1; k <= n; ++k){
         size_t l = k + (k & -k);
@@ -31,7 +31,7 @@ struct WaveletMatrixPointAddRectangleSum : WaveletMatrix<bn, T> {
   }
 
   V sum_impl(size_t j, int i) const {
-    V res = 0;
+    V res{};
     for(; i > 0; i -= (i & -i)) res += vs[j][i];
     return res;
   }
@@ -42,7 +42,7 @@ struct WaveletMatrixPointAddRectangleSum : WaveletMatrix<bn, T> {
   }
 
   V sum(const T &x, int s, int t) const {
-    V res = 0;
+    V res{};
     for(size_t i = bn; i--; ){
       size_t j = bn - i - 1;
       if(x >> i & 1){

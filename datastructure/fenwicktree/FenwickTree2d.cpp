@@ -5,7 +5,7 @@ struct FenwickTree2d{
   int H, W;
   vector<vector<T>> node;
   
-  FenwickTree2d(int H_, int W_): H(H_+1), W(W_+1), node(H, vector<T>(W, 0)) {}
+  FenwickTree2d(int H_, int W_): H(H_+1), W(W_+1), node(H, vector<T>(W)) {}
 
   void add(int h, int w, T x){
     for(int i = h+1; i < H; i += (i&-i)){
@@ -16,7 +16,7 @@ struct FenwickTree2d{
   }
 
   T sum(int h, int w) const { // [0,H) * [0,W)
-    T s(0);
+    T s{};
     for(int i = h; i > 0; i -= (i&-i)){
       for(int j = w; j > 0; j -= (j&-j)){
         s += node.at(i).at(j);
