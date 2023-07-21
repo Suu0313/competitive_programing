@@ -18,7 +18,7 @@ struct UnionFind {
   int find(int x) {
     int root = x;
     while(data[root] >= 0) root = data[root];
-    while(data[x] >= 0) tie(data[x], x) = make_pair(root, data[x]);
+    while(data[x] >= 0) x = exchange(data[x], root);
     return root;
   }
 
