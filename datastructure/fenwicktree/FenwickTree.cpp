@@ -4,8 +4,8 @@ template <typename T=int>
 struct FenwickTree{
   int n;
   vector<T> node;
-  FenwickTree() {}
-  FenwickTree(int n_) : n(n_+1), node(n,0) {}
+  FenwickTree() = default;
+  FenwickTree(int n_) : n(n_+1), node(n) {}
   FenwickTree(const FenwickTree&) = default;
   FenwickTree(FenwickTree&&) = default;
   FenwickTree &operator=(const FenwickTree&) = default;
@@ -18,7 +18,7 @@ struct FenwickTree{
   }
 
   T sum(int i) const { //[0,i)
-    T s(0);
+    T s{};
     for(int idx = i; idx > 0; idx -= (idx & -idx)){
       s += node.at(idx);
     }

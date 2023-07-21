@@ -5,7 +5,7 @@ struct FenwickTree_RAQ{ //ToDo: verify
   int n;
   vector<T> node0, node1;
 
-  FenwickTree_RAQ() : n(0) {}
+  FenwickTree_RAQ() = default;
   FenwickTree_RAQ(int n_) : n(n_+1), node0(n, 0), node1(n, 0) {}
 
   void add(int l, int r, T x){ // [l,r)
@@ -33,7 +33,7 @@ private:
   }
 
   T sum_sub(const vector<T> &node, int i) const {
-    T s(0);
+    T s{};
     for(int idx = i; idx > 0; idx -= (idx & -idx)){
       s += node[idx];
     }
