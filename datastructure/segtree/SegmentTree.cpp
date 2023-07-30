@@ -1,10 +1,5 @@
 #pragma once
 
-/**
- * @brief Segment Tree
- * @docs docs/SegmentTree.md
- */
-
 template<class Monoid>
 struct SegmentTree{
   int n;
