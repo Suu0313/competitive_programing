@@ -6,6 +6,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: test/verify/aoj/dsl_1_a.test.cpp
     title: test/verify/aoj/dsl_1_a.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/unionfind.test.cpp
+    title: test/verify/lc/unionfind.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -56,6 +59,7 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/verify/aoj/dsl_1_a.test.cpp
+  - test/verify/lc/unionfind.test.cpp
 documentation_of: datastructure/unionfind/UnionFind.cpp
 layout: document
 redirect_from:
