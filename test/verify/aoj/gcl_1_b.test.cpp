@@ -1,4 +1,5 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B"
+#define ERROR 0.00000001
 
 #include <bits/stdc++.h>
 using namespace std;
