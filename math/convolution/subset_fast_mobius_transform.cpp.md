@@ -1,0 +1,38 @@
+---
+data:
+  _extendedDependsOn: []
+  _extendedRequiredBy:
+  - icon: ':warning:'
+    path: math/convolution/bitwise_or_convolution.cpp
+    title: math/convolution/bitwise_or_convolution.cpp
+  _extendedVerifiedWith: []
+  _isVerificationFailed: false
+  _pathExtension: cpp
+  _verificationStatusIcon: ':warning:'
+  attributes:
+    links: []
+  bundledCode: "#line 2 \"math/convolution/subset_fast_mobius_transform.cpp\"\n\r\n\
+    template<typename T, class Minus = minus<T>>\r\nvector<T> subset_fast_mobius_transform(vector<T>\
+    \ f, const Minus &op = Minus{}){\r\n  int n = int(f.size());\r\n  for(int i =\
+    \ 1; i < n; i <<= 1){\r\n    for(int j = 0; j < n; ++j){\r\n      if((i&j) ==\
+    \ 0) f[j | i] = op(f[j | i], f[j]);\r\n    }\r\n  }\r\n  return f;\r\n}\r\n"
+  code: "#pragma once\r\n\r\ntemplate<typename T, class Minus = minus<T>>\r\nvector<T>\
+    \ subset_fast_mobius_transform(vector<T> f, const Minus &op = Minus{}){\r\n  int\
+    \ n = int(f.size());\r\n  for(int i = 1; i < n; i <<= 1){\r\n    for(int j = 0;\
+    \ j < n; ++j){\r\n      if((i&j) == 0) f[j | i] = op(f[j | i], f[j]);\r\n    }\r\
+    \n  }\r\n  return f;\r\n}\r\n"
+  dependsOn: []
+  isVerificationFile: false
+  path: math/convolution/subset_fast_mobius_transform.cpp
+  requiredBy:
+  - math/convolution/bitwise_or_convolution.cpp
+  timestamp: '2023-02-10 14:54:58+09:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: math/convolution/subset_fast_mobius_transform.cpp
+layout: document
+redirect_from:
+- /library/math/convolution/subset_fast_mobius_transform.cpp
+- /library/math/convolution/subset_fast_mobius_transform.cpp.html
+title: math/convolution/subset_fast_mobius_transform.cpp
+---
