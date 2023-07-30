@@ -252,7 +252,7 @@ data:
       title: datastructure/flow/ProjectSelectionProblem.cpp
   - name: datastructure/heap
     pages:
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/heap/DoubleEndedPriorityQueue.cpp
       title: datastructure/heap/DoubleEndedPriorityQueue.cpp
     - icon: ':warning:'
@@ -349,7 +349,7 @@ data:
     - icon: ':warning:'
       path: datastructure/unionfind/UnionEnumerate.cpp
       title: datastructure/unionfind/UnionEnumerate.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/unionfind/UnionFind.cpp
       title: datastructure/unionfind/UnionFind.cpp
     - icon: ':warning:'
@@ -669,10 +669,10 @@ data:
       title: math/fps/sparse-fps/sqrt_sparse.cpp
   - name: math/geometry
     pages:
-    - icon: ':warning:'
+    - icon: ':x:'
       path: math/geometry/Geometry.cpp
       title: math/geometry/Geometry.cpp
-    - icon: ':warning:'
+    - icon: ':question:'
       path: math/geometry/Point.cpp
       title: math/geometry/Point.cpp
     - icon: ':warning:'
@@ -696,7 +696,7 @@ data:
     - icon: ':warning:'
       path: math/geometry/convex_hull.cpp
       title: math/geometry/convex_hull.cpp
-    - icon: ':warning:'
+    - icon: ':question:'
       path: math/geometry/geometry_base.cpp
       title: math/geometry/geometry_base.cpp
     - icon: ':warning:'
@@ -1016,25 +1016,6 @@ data:
     - icon: ':warning:'
       path: template/template_integers.cpp
       title: template/template_integers.cpp
-  - name: test/verify/aoj
-    pages:
-    - icon: ':warning:'
-      path: test/verify/aoj/dsl_1_a.cpp
-      title: test/verify/aoj/dsl_1_a.cpp
-    - icon: ':warning:'
-      path: test/verify/aoj/gcl_1_a.cpp
-      title: test/verify/aoj/gcl_1_a.cpp
-    - icon: ':warning:'
-      path: test/verify/aoj/gcl_1_b.cpp
-      title: test/verify/aoj/gcl_1_b.cpp
-    - icon: ':warning:'
-      path: test/verify/aoj/gcl_1_c.cpp
-      title: test/verify/aoj/gcl_1_c.cpp
-  - name: test/verify/lc
-    pages:
-    - icon: ':warning:'
-      path: test/verify/lc/double_ended_priority_queue.cpp
-      title: test/verify/lc/double_ended_priority_queue.cpp
   - name: unuse
     pages:
     - icon: ':warning:'
@@ -1100,11 +1081,30 @@ data:
       path: unuse/old_datastructure/old_segtree.cpp
       title: unuse/old_datastructure/old_segtree.cpp
   verificationCategories:
+  - name: test/verify/aoj
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/verify/aoj/dsl_1_a.test.cpp
+      title: test/verify/aoj/dsl_1_a.test.cpp
+    - icon: ':x:'
+      path: test/verify/aoj/gcl_1_a.test.cpp
+      title: test/verify/aoj/gcl_1_a.test.cpp
+    - icon: ':x:'
+      path: test/verify/aoj/gcl_1_b.test.cpp
+      title: test/verify/aoj/gcl_1_b.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/aoj/gcl_1_c.test.cpp
+      title: test/verify/aoj/gcl_1_c.test.cpp
   - name: test/verify
     pages:
     - icon: ':heavy_check_mark:'
       path: test/verify/example.test.cpp
       title: test/verify/example.test.cpp
+  - name: test/verify/lc
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/double_ended_priority_queue.test.cpp
+      title: test/verify/lc/double_ended_priority_queue.test.cpp
 layout: toppage
 ---
 # competitive_programing

@@ -1,11 +1,11 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':question:'
     path: math/geometry/geometry_base.cpp
     title: math/geometry/geometry_base.cpp
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':x:'
     path: math/geometry/Geometry.cpp
     title: math/geometry/Geometry.cpp
   - icon: ':warning:'
@@ -47,19 +47,19 @@ data:
   - icon: ':warning:'
     path: math/geometry/smallest_enclosing_circle.cpp
     title: math/geometry/smallest_enclosing_circle.cpp
-  - icon: ':warning:'
-    path: test/verify/aoj/gcl_1_a.cpp
-    title: test/verify/aoj/gcl_1_a.cpp
-  - icon: ':warning:'
-    path: test/verify/aoj/gcl_1_b.cpp
-    title: test/verify/aoj/gcl_1_b.cpp
-  - icon: ':warning:'
-    path: test/verify/aoj/gcl_1_c.cpp
-    title: test/verify/aoj/gcl_1_c.cpp
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: test/verify/aoj/gcl_1_a.test.cpp
+    title: test/verify/aoj/gcl_1_a.test.cpp
+  - icon: ':x:'
+    path: test/verify/aoj/gcl_1_b.test.cpp
+    title: test/verify/aoj/gcl_1_b.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/verify/aoj/gcl_1_c.test.cpp
+    title: test/verify/aoj/gcl_1_c.test.cpp
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math/geometry/Point.cpp\"\n\r\n#line 2 \"math/geometry/geometry_base.cpp\"\
@@ -201,12 +201,12 @@ data:
   - math/geometry/convex_cut.cpp
   - math/geometry/inner_points.cpp
   - math/geometry/is_convex.cpp
-  - test/verify/aoj/gcl_1_a.cpp
-  - test/verify/aoj/gcl_1_b.cpp
-  - test/verify/aoj/gcl_1_c.cpp
   timestamp: '2023-07-01 17:56:18+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - test/verify/aoj/gcl_1_c.test.cpp
+  - test/verify/aoj/gcl_1_a.test.cpp
+  - test/verify/aoj/gcl_1_b.test.cpp
 documentation_of: math/geometry/Point.cpp
 layout: document
 redirect_from:

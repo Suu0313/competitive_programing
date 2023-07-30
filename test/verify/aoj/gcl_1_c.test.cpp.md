@@ -1,21 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':question:'
     path: math/geometry/Point.cpp
     title: math/geometry/Point.cpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: math/geometry/geometry_base.cpp
     title: math/geometry/geometry_base.cpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_C
     links:
     - https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_C
-  bundledCode: "#line 1 \"test/verify/aoj/gcl_1_c.cpp\"\n#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_C\"\
+  bundledCode: "#line 1 \"test/verify/aoj/gcl_1_c.test.cpp\"\n#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_C\"\
     \r\n\r\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#line 2 \"math/geometry/Point.cpp\"\
     \n\r\n#line 2 \"math/geometry/geometry_base.cpp\"\n\r\nnamespace geometry{\r\n\
     \  constexpr double eps = 1e-10;\r\n  bool eq(double a, double b){ return fabs(a\
@@ -81,7 +83,7 @@ data:
     }\r\n\r\ntemplate<typename T>\r\nbool cmp_arg(const Point<T>& p1, const Point<T>\
     \ &p2){\r\n  if(p1.ort() != p2.ort()) return p1.ort() < p2.ort();\r\n  return\
     \ p1.cross(p2) > 0;\r\n}\r\n\r\ntemplate<typename T>\r\nvoid arg_sort(Polygon<T>\
-    \ &ps){\r\n  sort(begin(ps), end(ps), cmp_arg<T>);\r\n}\r\n#line 7 \"test/verify/aoj/gcl_1_c.cpp\"\
+    \ &ps){\r\n  sort(begin(ps), end(ps), cmp_arg<T>);\r\n}\r\n#line 7 \"test/verify/aoj/gcl_1_c.test.cpp\"\
     \n\r\nint main() {\r\n  cout << fixed << setprecision(12);\r\n  \r\n  Point<int>\
     \ a, b; cin >> a >> b;\r\n\r\n  int q; cin >> q;\r\n  while(q--){\r\n    Point<int>\
     \ p; cin >> p;\r\n    int c = iSP(a, b, p);\r\n\r\n    if(c == geometry::CCW)\
@@ -101,16 +103,16 @@ data:
   dependsOn:
   - math/geometry/Point.cpp
   - math/geometry/geometry_base.cpp
-  isVerificationFile: false
-  path: test/verify/aoj/gcl_1_c.cpp
+  isVerificationFile: true
+  path: test/verify/aoj/gcl_1_c.test.cpp
   requiredBy: []
-  timestamp: '2023-07-30 22:15:18+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
+  timestamp: '2023-07-30 22:51:32+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: test/verify/aoj/gcl_1_c.cpp
+documentation_of: test/verify/aoj/gcl_1_c.test.cpp
 layout: document
 redirect_from:
-- /library/test/verify/aoj/gcl_1_c.cpp
-- /library/test/verify/aoj/gcl_1_c.cpp.html
-title: test/verify/aoj/gcl_1_c.cpp
+- /verify/test/verify/aoj/gcl_1_c.test.cpp
+- /verify/test/verify/aoj/gcl_1_c.test.cpp.html
+title: test/verify/aoj/gcl_1_c.test.cpp
 ---

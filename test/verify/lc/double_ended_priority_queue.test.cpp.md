@@ -1,20 +1,22 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/heap/DoubleEndedPriorityQueue.cpp
     title: datastructure/heap/DoubleEndedPriorityQueue.cpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/double_ended_priority_queue
     links:
     - https://judge.yosupo.jp/problem/double_ended_priority_queue
-  bundledCode: "#line 1 \"test/verify/lc/double_ended_priority_queue.cpp\"\n#define\
-    \ PROBLEM \"https://judge.yosupo.jp/problem/double_ended_priority_queue\"\n\n\
-    #include <bits/stdc++.h>\nusing namespace std;\n\n#line 2 \"datastructure/heap/DoubleEndedPriorityQueue.cpp\"\
+  bundledCode: "#line 1 \"test/verify/lc/double_ended_priority_queue.test.cpp\"\n\
+    #define PROBLEM \"https://judge.yosupo.jp/problem/double_ended_priority_queue\"\
+    \n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#line 2 \"datastructure/heap/DoubleEndedPriorityQueue.cpp\"\
     \n\r\ntemplate<typename T>\r\nstruct DoubleEndedPriorityQueue{\r\n  DoubleEndedPriorityQueue()\
     \ = default;\r\n  DoubleEndedPriorityQueue(const DoubleEndedPriorityQueue&) =\
     \ default;\r\n  DoubleEndedPriorityQueue(DoubleEndedPriorityQueue&&) = default;\r\
@@ -49,8 +51,8 @@ data:
     \ par(size_t k) const { return ((k >> 1) - 1) & ~1; }\r\n\r\n  void make_heap(){\r\
     \n    for(size_t k = c.size(); k--; ){\r\n      if(k & 1 && c[k - 1] < c[k]) swap(c[k\
     \ - 1], c[k]);\r\n      lift_up(down(k), k);\r\n    }\r\n  }\r\n};\r\n#line 7\
-    \ \"test/verify/lc/double_ended_priority_queue.cpp\"\n\nint main(){\n  int n,\
-    \ q; cin >> n >> q;\n  vector<int> s(n); for(int &e : s) cin >> e;\n  DoubleEndedPriorityQueue<int>\
+    \ \"test/verify/lc/double_ended_priority_queue.test.cpp\"\n\nint main(){\n  int\
+    \ n, q; cin >> n >> q;\n  vector<int> s(n); for(int &e : s) cin >> e;\n  DoubleEndedPriorityQueue<int>\
     \ pq(s);\n\n  while(q--){\n    int t; cin >> t;\n    if(t == 0){\n      int x;\
     \ cin >> x; pq.push(x);\n    }\n\n    if(t == 1) cout << pq.get_min() << \"\\\
     n\", pq.pop_min();\n    if(t == 2) cout << pq.get_max() << \"\\n\", pq.pop_max();\n\
@@ -64,16 +66,16 @@ data:
     \ cout << pq.get_max() << \"\\n\", pq.pop_max();\n  }\n}"
   dependsOn:
   - datastructure/heap/DoubleEndedPriorityQueue.cpp
-  isVerificationFile: false
-  path: test/verify/lc/double_ended_priority_queue.cpp
+  isVerificationFile: true
+  path: test/verify/lc/double_ended_priority_queue.test.cpp
   requiredBy: []
-  timestamp: '2023-07-30 22:15:27+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
+  timestamp: '2023-07-30 22:51:32+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: test/verify/lc/double_ended_priority_queue.cpp
+documentation_of: test/verify/lc/double_ended_priority_queue.test.cpp
 layout: document
 redirect_from:
-- /library/test/verify/lc/double_ended_priority_queue.cpp
-- /library/test/verify/lc/double_ended_priority_queue.cpp.html
-title: test/verify/lc/double_ended_priority_queue.cpp
+- /verify/test/verify/lc/double_ended_priority_queue.test.cpp
+- /verify/test/verify/lc/double_ended_priority_queue.test.cpp.html
+title: test/verify/lc/double_ended_priority_queue.test.cpp
 ---

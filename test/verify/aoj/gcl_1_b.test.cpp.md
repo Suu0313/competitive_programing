@@ -1,24 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':x:'
     path: math/geometry/Geometry.cpp
     title: math/geometry/Geometry.cpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: math/geometry/Point.cpp
     title: math/geometry/Point.cpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: math/geometry/geometry_base.cpp
     title: math/geometry/geometry_base.cpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B
     links:
-    - https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_A
-  bundledCode: "#line 1 \"test/verify/aoj/gcl_1_a.cpp\"\n#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_A\"\
+    - https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B
+  bundledCode: "#line 1 \"test/verify/aoj/gcl_1_b.test.cpp\"\n#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B\"\
     \r\n\r\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#line 2 \"math/geometry/Geometry.cpp\"\
     \n\r\n#line 2 \"math/geometry/geometry_base.cpp\"\n\r\nnamespace geometry{\r\n\
     \  constexpr double eps = 1e-10;\r\n  bool eq(double a, double b){ return fabs(a\
@@ -186,29 +188,29 @@ data:
     \ &operator<<(ostream &os, const Circle &c) {\r\n    return os << c.o << \" \"\
     \ << c.r;\r\n  }\r\n  friend istream &operator>>(istream &is, Circle &c) {\r\n\
     \    Point<T> p; T l; is >> p >> l;\r\n    c = Circle<T>(p, l);\r\n    return\
-    \ (is);\r\n  }\r\n};\r\n#line 7 \"test/verify/aoj/gcl_1_a.cpp\"\n\r\nint main()\
-    \ {\r\n  cout << fixed << setprecision(12);\r\n  \r\n  Line<double> l; cin >>\
-    \ l.a >> l.b;\r\n  int q; cin >> q;\r\n  while(q--){\r\n    Point<double> p; cin\
-    \ >> p;\r\n    cout << l.projection(p) << \"\\n\";\r\n  }\r\n}\r\n"
-  code: "#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_A\"\r\n\
+    \ (is);\r\n  }\r\n};\r\n#line 7 \"test/verify/aoj/gcl_1_b.test.cpp\"\n\r\nint\
+    \ main() {\r\n  cout << fixed << setprecision(12);\r\n  \r\n  Line<double> l;\
+    \ cin >> l.a >> l.b;\r\n  int q; cin >> q;\r\n  while(q--){\r\n    Point<double>\
+    \ p; cin >> p;\r\n    cout << l.reflection(p) << \"\\n\";\r\n  }\r\n}\n"
+  code: "#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B\"\r\n\
     \r\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#include \"math/geometry/Geometry.cpp\"\
     \r\n\r\nint main() {\r\n  cout << fixed << setprecision(12);\r\n  \r\n  Line<double>\
     \ l; cin >> l.a >> l.b;\r\n  int q; cin >> q;\r\n  while(q--){\r\n    Point<double>\
-    \ p; cin >> p;\r\n    cout << l.projection(p) << \"\\n\";\r\n  }\r\n}\r\n"
+    \ p; cin >> p;\r\n    cout << l.reflection(p) << \"\\n\";\r\n  }\r\n}"
   dependsOn:
   - math/geometry/Geometry.cpp
   - math/geometry/geometry_base.cpp
   - math/geometry/Point.cpp
-  isVerificationFile: false
-  path: test/verify/aoj/gcl_1_a.cpp
+  isVerificationFile: true
+  path: test/verify/aoj/gcl_1_b.test.cpp
   requiredBy: []
-  timestamp: '2023-07-30 22:15:18+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
+  timestamp: '2023-07-30 22:51:32+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
-documentation_of: test/verify/aoj/gcl_1_a.cpp
+documentation_of: test/verify/aoj/gcl_1_b.test.cpp
 layout: document
 redirect_from:
-- /library/test/verify/aoj/gcl_1_a.cpp
-- /library/test/verify/aoj/gcl_1_a.cpp.html
-title: test/verify/aoj/gcl_1_a.cpp
+- /verify/test/verify/aoj/gcl_1_b.test.cpp
+- /verify/test/verify/aoj/gcl_1_b.test.cpp.html
+title: test/verify/aoj/gcl_1_b.test.cpp
 ---

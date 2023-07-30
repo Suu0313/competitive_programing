@@ -1,14 +1,14 @@
 ---
 data:
   _extendedDependsOn: []
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: test/verify/lc/double_ended_priority_queue.cpp
-    title: test/verify/lc/double_ended_priority_queue.cpp
-  _extendedVerifiedWith: []
+  _extendedRequiredBy: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/double_ended_priority_queue.test.cpp
+    title: test/verify/lc/double_ended_priority_queue.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"datastructure/heap/DoubleEndedPriorityQueue.cpp\"\n\r\n\
@@ -83,11 +83,11 @@ data:
   dependsOn: []
   isVerificationFile: false
   path: datastructure/heap/DoubleEndedPriorityQueue.cpp
-  requiredBy:
-  - test/verify/lc/double_ended_priority_queue.cpp
+  requiredBy: []
   timestamp: '2023-06-25 00:59:21+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/double_ended_priority_queue.test.cpp
 documentation_of: datastructure/heap/DoubleEndedPriorityQueue.cpp
 layout: document
 redirect_from:

@@ -1,18 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/unionfind/UnionFind.cpp
     title: datastructure/unionfind/UnionFind.cpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_A
     links:
     - https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_A
-  bundledCode: "#line 1 \"test/verify/aoj/dsl_1_a.cpp\"\n#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_A\"\
+  bundledCode: "#line 1 \"test/verify/aoj/dsl_1_a.test.cpp\"\n#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_A\"\
     \r\n\r\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#line 2 \"datastructure/unionfind/UnionFind.cpp\"\
     \n\nstruct UnionFind {\n  \n  vector<int> data;\n  int cnt,n,smax;\n  \n  UnionFind()\
     \ = default;\n  UnionFind(int n_): data(n_,-1),cnt(n_),n(n_),smax(1) {}\n  \n\
@@ -31,10 +33,10 @@ data:
     \      result.at(leader_buf.at(i)).emplace_back(i);\n    }\n    result.erase(\n\
     \      remove_if(\n        result.begin(), result.end(),\n        [&](const vector<int>&\
     \ v) { return v.empty(); }\n      ),\n      result.end()\n    );\n    return result;\n\
-    \  }\n\n};\n#line 7 \"test/verify/aoj/dsl_1_a.cpp\"\n\r\nint main() {\r\n  int\
-    \ n, q; cin >> n >> q;\r\n  UnionFind uf(n);\r\n\r\n  while(q--){\r\n    int com,\
-    \ x, y; cin >> com >> x >> y;\r\n    if(com == 0) uf.unite(x, y);\r\n    else\
-    \ cout << uf.same(x, y) << \"\\n\";\r\n  }\r\n}\r\n"
+    \  }\n\n};\n#line 7 \"test/verify/aoj/dsl_1_a.test.cpp\"\n\r\nint main() {\r\n\
+    \  int n, q; cin >> n >> q;\r\n  UnionFind uf(n);\r\n\r\n  while(q--){\r\n   \
+    \ int com, x, y; cin >> com >> x >> y;\r\n    if(com == 0) uf.unite(x, y);\r\n\
+    \    else cout << uf.same(x, y) << \"\\n\";\r\n  }\r\n}\r\n"
   code: "#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_A\"\r\n\
     \r\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#include \"datastructure/unionfind/UnionFind.cpp\"\
     \r\n\r\nint main() {\r\n  int n, q; cin >> n >> q;\r\n  UnionFind uf(n);\r\n\r\
@@ -42,16 +44,16 @@ data:
     \ uf.unite(x, y);\r\n    else cout << uf.same(x, y) << \"\\n\";\r\n  }\r\n}\r\n"
   dependsOn:
   - datastructure/unionfind/UnionFind.cpp
-  isVerificationFile: false
-  path: test/verify/aoj/dsl_1_a.cpp
+  isVerificationFile: true
+  path: test/verify/aoj/dsl_1_a.test.cpp
   requiredBy: []
-  timestamp: '2023-07-30 22:15:18+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
+  timestamp: '2023-07-30 22:51:32+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: test/verify/aoj/dsl_1_a.cpp
+documentation_of: test/verify/aoj/dsl_1_a.test.cpp
 layout: document
 redirect_from:
-- /library/test/verify/aoj/dsl_1_a.cpp
-- /library/test/verify/aoj/dsl_1_a.cpp.html
-title: test/verify/aoj/dsl_1_a.cpp
+- /verify/test/verify/aoj/dsl_1_a.test.cpp
+- /verify/test/verify/aoj/dsl_1_a.test.cpp.html
+title: test/verify/aoj/dsl_1_a.test.cpp
 ---

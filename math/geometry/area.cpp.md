@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':x:'
     path: math/geometry/Geometry.cpp
     title: math/geometry/Geometry.cpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: math/geometry/Point.cpp
     title: math/geometry/Point.cpp
-  - icon: ':warning:'
+  - icon: ':question:'
     path: math/geometry/geometry_base.cpp
     title: math/geometry/geometry_base.cpp
   _extendedRequiredBy: []
