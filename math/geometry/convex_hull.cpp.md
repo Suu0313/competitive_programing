@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/geometry/Point.cpp
     title: math/geometry/Point.cpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/geometry/geometry_base.cpp
     title: math/geometry/geometry_base.cpp
   _extendedRequiredBy:

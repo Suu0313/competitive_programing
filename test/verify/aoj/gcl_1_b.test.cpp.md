@@ -1,61 +1,62 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/geometry/Geometry.cpp
     title: math/geometry/Geometry.cpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/geometry/Point.cpp
     title: math/geometry/Point.cpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/geometry/geometry_base.cpp
     title: math/geometry/geometry_base.cpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
+    ERROR: '0.00000001'
     PROBLEM: https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B
     links:
     - https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B
   bundledCode: "#line 1 \"test/verify/aoj/gcl_1_b.test.cpp\"\n#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B\"\
-    \r\n\r\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#line 2 \"math/geometry/Geometry.cpp\"\
-    \n\r\n#line 2 \"math/geometry/geometry_base.cpp\"\n\r\nnamespace geometry{\r\n\
-    \  constexpr double eps = 1e-10;\r\n  bool eq(double a, double b){ return fabs(a\
-    \ - b) < eps; }\r\n  template<typename T>  bool eq(T a, T b){ return a == b; }\r\
-    \n  bool is_zero(double a){ return fabs(a) < eps; }\r\n  template<typename T>\
-    \ bool is_zero(T a){ return a == 0; }\r\n  bool le(double a, double b){ return\
-    \ a <= b + eps; }\r\n  template<typename T> bool le(T a, T b){ return a <= b;\
-    \ }\r\n  bool lt(double a, double b){ return a < b - eps; }\r\n  template<typename\
-    \ T> bool lt(T a, T b){ return a < b; }\r\n  int sgn(double a){ return is_zero(a)\
-    \ ? 0 : ((a < 0) ? -1 : 1); }\r\n  template<typename T> int sgn(T a){ return (a<0)\
-    \ ? -1 : ((a > 0) ? 1 : 0); }\r\n  template<typename T> double psqrt(T a){ return\
-    \ sqrt(max(T(0), a)); }\r\n\r\n  enum Dir{ BAC = -2, CW, ACB, CCW, ABC };\r\n\
-    };\r\n\r\n#line 2 \"math/geometry/Point.cpp\"\n\r\n#line 4 \"math/geometry/Point.cpp\"\
-    \n\r\n\r\ntemplate<class T> struct Point{\r\n  T x,y;\r\n  Point() = default;\r\
-    \n  Point(T x, T y) : x(x), y(y) {}\r\n  Point(const pair<T,T> &p) : x(p.first),\
-    \ y(p.second) {}\r\n\r\n  Point operator*(const T b) const { return Point(x *\
-    \ b, y * b); }\r\n  Point operator/(const T b) const { return Point(x / b, y /\
-    \ b); }\r\n  Point operator+(const Point &b) const { return Point(x + b.x, y +\
-    \ b.y); }\r\n  Point operator-(const Point &b) const { return Point(x - b.x, y\
-    \ - b.y); }\r\n  Point operator*(const Point &b) const { return Point(x*b.x -\
-    \ y*b.y, x*b.y + y*b.x); }\r\n  Point operator/(const Point &b) const { return\
-    \ Point(x*b.x + y*b.y, y*b.x - x*b.y)/(b.x*b.x + b.y*b.y); }\r\n\r\n  Point &operator*=(const\
-    \ T b){ return (*this) = (*this) * b; }\r\n  Point &operator/=(const T b){ return\
-    \ (*this) = (*this) / b; }\r\n  Point &operator+=(const Point &b){ return (*this)\
-    \ = (*this) + b; }\r\n  Point &operator-=(const Point &b){ return (*this) = (*this)\
-    \ - b; }\r\n  Point &operator*=(const Point &b){ return (*this) = (*this) * b;\
-    \ }\r\n  Point &operator/=(const Point &b){ return (*this) = (*this) / b; }\r\n\
-    \  \r\n  bool operator==(const Point &b) const {\r\n    return geometry::eq(x,\
-    \ b.x) && geometry::eq(y, b.y);\r\n  }\r\n  bool operator!=(const Point &b) const\
-    \ {\r\n    return !(geometry::eq(x, b.x) && geometry::eq(y, b.y));\r\n  }\r\n\
-    \  bool operator<(const Point &b) const { \r\n    if(geometry::eq(x, b.x)) return\
-    \ y < b.y;\r\n    return x < b.x;\r\n  }\r\n  T norm() const { return x * x +\
-    \ y * y; }\r\n  double abs() const { return hypot<double>(x, y); }\r\n  double\
-    \ dist(const Point &b) const { return hypot<double>(x - b.x, y - b.y); }\r\n \
-    \ double arg() const { return atan2<double>(y, x); }\r\n  \r\n  Point ArgVec()\
+    \r\n#define ERROR 0.00000001\r\n\r\n#include <bits/stdc++.h>\r\nusing namespace\
+    \ std;\r\n\r\n#line 2 \"math/geometry/Geometry.cpp\"\n\r\n#line 2 \"math/geometry/geometry_base.cpp\"\
+    \n\r\nnamespace geometry{\r\n  constexpr double eps = 1e-10;\r\n  bool eq(double\
+    \ a, double b){ return fabs(a - b) < eps; }\r\n  template<typename T>  bool eq(T\
+    \ a, T b){ return a == b; }\r\n  bool is_zero(double a){ return fabs(a) < eps;\
+    \ }\r\n  template<typename T> bool is_zero(T a){ return a == 0; }\r\n  bool le(double\
+    \ a, double b){ return a <= b + eps; }\r\n  template<typename T> bool le(T a,\
+    \ T b){ return a <= b; }\r\n  bool lt(double a, double b){ return a < b - eps;\
+    \ }\r\n  template<typename T> bool lt(T a, T b){ return a < b; }\r\n  int sgn(double\
+    \ a){ return is_zero(a) ? 0 : ((a < 0) ? -1 : 1); }\r\n  template<typename T>\
+    \ int sgn(T a){ return (a<0) ? -1 : ((a > 0) ? 1 : 0); }\r\n  template<typename\
+    \ T> double psqrt(T a){ return sqrt(max(T(0), a)); }\r\n\r\n  enum Dir{ BAC =\
+    \ -2, CW, ACB, CCW, ABC };\r\n};\r\n\r\n#line 2 \"math/geometry/Point.cpp\"\n\r\
+    \n#line 4 \"math/geometry/Point.cpp\"\n\r\n\r\ntemplate<class T> struct Point{\r\
+    \n  T x,y;\r\n  Point() = default;\r\n  Point(T x, T y) : x(x), y(y) {}\r\n  Point(const\
+    \ pair<T,T> &p) : x(p.first), y(p.second) {}\r\n\r\n  Point operator*(const T\
+    \ b) const { return Point(x * b, y * b); }\r\n  Point operator/(const T b) const\
+    \ { return Point(x / b, y / b); }\r\n  Point operator+(const Point &b) const {\
+    \ return Point(x + b.x, y + b.y); }\r\n  Point operator-(const Point &b) const\
+    \ { return Point(x - b.x, y - b.y); }\r\n  Point operator*(const Point &b) const\
+    \ { return Point(x*b.x - y*b.y, x*b.y + y*b.x); }\r\n  Point operator/(const Point\
+    \ &b) const { return Point(x*b.x + y*b.y, y*b.x - x*b.y)/(b.x*b.x + b.y*b.y);\
+    \ }\r\n\r\n  Point &operator*=(const T b){ return (*this) = (*this) * b; }\r\n\
+    \  Point &operator/=(const T b){ return (*this) = (*this) / b; }\r\n  Point &operator+=(const\
+    \ Point &b){ return (*this) = (*this) + b; }\r\n  Point &operator-=(const Point\
+    \ &b){ return (*this) = (*this) - b; }\r\n  Point &operator*=(const Point &b){\
+    \ return (*this) = (*this) * b; }\r\n  Point &operator/=(const Point &b){ return\
+    \ (*this) = (*this) / b; }\r\n  \r\n  bool operator==(const Point &b) const {\r\
+    \n    return geometry::eq(x, b.x) && geometry::eq(y, b.y);\r\n  }\r\n  bool operator!=(const\
+    \ Point &b) const {\r\n    return !(geometry::eq(x, b.x) && geometry::eq(y, b.y));\r\
+    \n  }\r\n  bool operator<(const Point &b) const { \r\n    if(geometry::eq(x, b.x))\
+    \ return y < b.y;\r\n    return x < b.x;\r\n  }\r\n  T norm() const { return x\
+    \ * x + y * y; }\r\n  double abs() const { return hypot<double>(x, y); }\r\n \
+    \ double dist(const Point &b) const { return hypot<double>(x - b.x, y - b.y);\
+    \ }\r\n  double arg() const { return atan2<double>(y, x); }\r\n  \r\n  Point ArgVec()\
     \ const {\r\n    if((*this) == Point(0, 0)) return (*this);\r\n    if(geometry::is_zero(x))\
     \ return Point(0, -1);\r\n    return (*this) / gcd(x, y) * (x < 0 ? -1 : 1);\r\
     \n  }\r\n\r\n  int ort() const {\r\n    if(geometry::is_zero(x) && geometry::is_zero(y))\
@@ -188,15 +189,16 @@ data:
     \ &operator<<(ostream &os, const Circle &c) {\r\n    return os << c.o << \" \"\
     \ << c.r;\r\n  }\r\n  friend istream &operator>>(istream &is, Circle &c) {\r\n\
     \    Point<T> p; T l; is >> p >> l;\r\n    c = Circle<T>(p, l);\r\n    return\
-    \ (is);\r\n  }\r\n};\r\n#line 7 \"test/verify/aoj/gcl_1_b.test.cpp\"\n\r\nint\
+    \ (is);\r\n  }\r\n};\r\n#line 8 \"test/verify/aoj/gcl_1_b.test.cpp\"\n\r\nint\
     \ main() {\r\n  cout << fixed << setprecision(12);\r\n  \r\n  Line<double> l;\
     \ cin >> l.a >> l.b;\r\n  int q; cin >> q;\r\n  while(q--){\r\n    Point<double>\
     \ p; cin >> p;\r\n    cout << l.reflection(p) << \"\\n\";\r\n  }\r\n}\n"
   code: "#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/problems/CGL_1_B\"\r\n\
-    \r\n#include <bits/stdc++.h>\r\nusing namespace std;\r\n\r\n#include \"math/geometry/Geometry.cpp\"\
-    \r\n\r\nint main() {\r\n  cout << fixed << setprecision(12);\r\n  \r\n  Line<double>\
-    \ l; cin >> l.a >> l.b;\r\n  int q; cin >> q;\r\n  while(q--){\r\n    Point<double>\
-    \ p; cin >> p;\r\n    cout << l.reflection(p) << \"\\n\";\r\n  }\r\n}"
+    #define ERROR 0.00000001\r\n\r\n#include <bits/stdc++.h>\r\nusing namespace std;\r\
+    \n\r\n#include \"math/geometry/Geometry.cpp\"\r\n\r\nint main() {\r\n  cout <<\
+    \ fixed << setprecision(12);\r\n  \r\n  Line<double> l; cin >> l.a >> l.b;\r\n\
+    \  int q; cin >> q;\r\n  while(q--){\r\n    Point<double> p; cin >> p;\r\n   \
+    \ cout << l.reflection(p) << \"\\n\";\r\n  }\r\n}"
   dependsOn:
   - math/geometry/Geometry.cpp
   - math/geometry/geometry_base.cpp
@@ -204,8 +206,8 @@ data:
   isVerificationFile: true
   path: test/verify/aoj/gcl_1_b.test.cpp
   requiredBy: []
-  timestamp: '2023-07-30 22:51:32+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2023-07-30 23:00:12+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/verify/aoj/gcl_1_b.test.cpp
 layout: document

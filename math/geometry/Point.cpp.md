@@ -1,11 +1,11 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/geometry/geometry_base.cpp
     title: math/geometry/geometry_base.cpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/geometry/Geometry.cpp
     title: math/geometry/Geometry.cpp
   - icon: ':warning:'
@@ -48,18 +48,18 @@ data:
     path: math/geometry/smallest_enclosing_circle.cpp
     title: math/geometry/smallest_enclosing_circle.cpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/verify/aoj/gcl_1_a.test.cpp
     title: test/verify/aoj/gcl_1_a.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: test/verify/aoj/gcl_1_b.test.cpp
     title: test/verify/aoj/gcl_1_b.test.cpp
   - icon: ':heavy_check_mark:'
     path: test/verify/aoj/gcl_1_c.test.cpp
     title: test/verify/aoj/gcl_1_c.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math/geometry/Point.cpp\"\n\r\n#line 2 \"math/geometry/geometry_base.cpp\"\
@@ -202,7 +202,7 @@ data:
   - math/geometry/inner_points.cpp
   - math/geometry/is_convex.cpp
   timestamp: '2023-07-01 17:56:18+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/verify/aoj/gcl_1_c.test.cpp
   - test/verify/aoj/gcl_1_a.test.cpp

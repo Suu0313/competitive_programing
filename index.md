@@ -669,10 +669,10 @@ data:
       title: math/fps/sparse-fps/sqrt_sparse.cpp
   - name: math/geometry
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: math/geometry/Geometry.cpp
       title: math/geometry/Geometry.cpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/geometry/Point.cpp
       title: math/geometry/Point.cpp
     - icon: ':warning:'
@@ -696,7 +696,7 @@ data:
     - icon: ':warning:'
       path: math/geometry/convex_hull.cpp
       title: math/geometry/convex_hull.cpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/geometry/geometry_base.cpp
       title: math/geometry/geometry_base.cpp
     - icon: ':warning:'
@@ -1086,10 +1086,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/verify/aoj/dsl_1_a.test.cpp
       title: test/verify/aoj/dsl_1_a.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/verify/aoj/gcl_1_a.test.cpp
       title: test/verify/aoj/gcl_1_a.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: test/verify/aoj/gcl_1_b.test.cpp
       title: test/verify/aoj/gcl_1_b.test.cpp
     - icon: ':heavy_check_mark:'
