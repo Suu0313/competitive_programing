@@ -4,5 +4,6 @@
 "test/verify/aoj/gcl_1_b.test.cpp": "2023-07-30 23:00:12 +0900",
 "test/verify/aoj/gcl_1_c.test.cpp": "2023-07-30 22:51:32 +0900",
 "test/verify/example.test.cpp": "2021-03-09 17:36:46 +0900",
-"test/verify/lc/double_ended_priority_queue.test.cpp": "2023-07-30 22:51:32 +0900"
+"test/verify/lc/double_ended_priority_queue.test.cpp": "2023-07-30 22:51:32 +0900",
+"test/verify/lc/unionfind.test.cpp": "2023-07-31 01:08:36 +0900"
 }
