@@ -67,7 +67,7 @@ vector<T> re_order(const vector<T> &a, const vector<int> &idx){
   return res;
 }
 template<typename... Ts>
-string format(const string &fmt, Ts... ts){
+string cformat(const string &fmt, Ts... ts){
   size_t len = snprintf(nullptr, 0, fmt.c_str(), ts...);
   vector<char> buf(len + 1);
   snprintf(&buf[0], len + 1, fmt.c_str(), ts...);
