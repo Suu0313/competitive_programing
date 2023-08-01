@@ -3,7 +3,13 @@
 "test/verify/aoj/gcl_1_a.test.cpp": "2023-07-30 23:00:12 +0900",
 "test/verify/aoj/gcl_1_b.test.cpp": "2023-07-30 23:00:12 +0900",
 "test/verify/aoj/gcl_1_c.test.cpp": "2023-07-30 22:51:32 +0900",
-"test/verify/example.test.cpp": "2021-03-09 17:36:46 +0900",
 "test/verify/lc/double_ended_priority_queue.test.cpp": "2023-07-30 22:51:32 +0900",
+"test/verify/lc/point_add_range_sum_FenwickTree.test.cpp": "2023-08-01 22:12:46 +0900",
+"test/verify/lc/point_set_range_composite.test.cpp": "2023-08-01 22:12:46 +0900",
+"test/verify/lc/range_affine_point_get.test.cpp": "2023-08-01 22:12:46 +0900",
+"test/verify/lc/range_affine_range_sum.test.cpp": "2023-08-01 22:12:46 +0900",
+"test/verify/lc/static_range_sum_DisjointSparseTable.test.cpp": "2023-08-01 22:12:46 +0900",
+"test/verify/lc/staticrmq_DequeAggregation.test.cpp": "2023-08-01 22:12:46 +0900",
+"test/verify/lc/staticrmq_SparseTable.test.cpp": "2023-08-01 22:12:46 +0900",
 "test/verify/lc/unionfind.test.cpp": "2023-07-31 01:08:36 +0900"
 }
