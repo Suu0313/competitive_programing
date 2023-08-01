@@ -2,10 +2,13 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/range_affine_range_sum.test.cpp
+    title: test/verify/lc/range_affine_range_sum.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"datastructure/segtree/LazySegTree.cpp\"\n\r\n\r\ntemplate<class\
@@ -125,8 +128,9 @@ data:
   path: datastructure/segtree/LazySegTree.cpp
   requiredBy: []
   timestamp: '2023-03-24 00:46:10+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/range_affine_range_sum.test.cpp
 documentation_of: datastructure/segtree/LazySegTree.cpp
 layout: document
 redirect_from:

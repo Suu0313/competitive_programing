@@ -4,7 +4,7 @@ data:
   - icon: ':warning:'
     path: datastructure/algebraic/monoid/MaxMonoid.cpp
     title: datastructure/algebraic/monoid/MaxMonoid.cpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/algebraic/monoid/MinMonoid.cpp
     title: datastructure/algebraic/monoid/MinMonoid.cpp
   _extendedRequiredBy: []

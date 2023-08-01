@@ -1,17 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/algebraic/monoid/CompositeMonoid.cpp
     title: datastructure/algebraic/monoid/CompositeMonoid.cpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/algebraic/monoid/LengthMonoid.cpp
     title: datastructure/algebraic/monoid/LengthMonoid.cpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/range_affine_range_sum.test.cpp
+    title: test/verify/lc/range_affine_range_sum.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp\"\
@@ -53,8 +56,9 @@ data:
   path: datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
   requiredBy: []
   timestamp: '2023-07-01 17:56:18+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/range_affine_range_sum.test.cpp
 documentation_of: datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
 layout: document
 redirect_from:

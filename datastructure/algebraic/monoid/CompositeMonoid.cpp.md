@@ -5,13 +5,22 @@ data:
   - icon: ':warning:'
     path: datastructure/algebraic/operator_monoid/RangeAffineRangeMinMaxSum.cpp
     title: datastructure/algebraic/operator_monoid/RangeAffineRangeMinMaxSum.cpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
     title: datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/point_set_range_composite.test.cpp
+    title: test/verify/lc/point_set_range_composite.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/range_affine_point_get.test.cpp
+    title: test/verify/lc/range_affine_point_get.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/range_affine_range_sum.test.cpp
+    title: test/verify/lc/range_affine_range_sum.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"datastructure/algebraic/monoid/CompositeMonoid.cpp\"\n\r\
@@ -43,8 +52,11 @@ data:
   - datastructure/algebraic/operator_monoid/RangeAffineRangeMinMaxSum.cpp
   - datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/range_affine_point_get.test.cpp
+  - test/verify/lc/range_affine_range_sum.test.cpp
+  - test/verify/lc/point_set_range_composite.test.cpp
 documentation_of: datastructure/algebraic/monoid/CompositeMonoid.cpp
 layout: document
 redirect_from:

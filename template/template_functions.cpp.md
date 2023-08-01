@@ -58,7 +58,7 @@ data:
     \ Compair>(a, idx, cmp);\r\n}\r\ntemplate<typename T>\r\nvector<T> re_order(const\
     \ vector<T> &a, const vector<int> &idx){\r\n  int n = int(a.size());\r\n  vector<T>\
     \ res(n); for(int i = 0; i < n; ++i) res[i] = a[idx[i]];\r\n  return res;\r\n\
-    }\r\ntemplate<typename... Ts>\r\nstring format(const string &fmt, Ts... ts){\r\
+    }\r\ntemplate<typename... Ts>\r\nstring cformat(const string &fmt, Ts... ts){\r\
     \n  size_t len = snprintf(nullptr, 0, fmt.c_str(), ts...);\r\n  vector<char> buf(len\
     \ + 1);\r\n  snprintf(&buf[0], len + 1, fmt.c_str(), ts...);\r\n  return string(buf.begin(),\
     \ buf.end()-1);\r\n}\r\ntemplate<typename Container>\r\nstring join(const Container&v,\
@@ -144,7 +144,7 @@ data:
     \ Compair>(a, idx, cmp);\r\n}\r\ntemplate<typename T>\r\nvector<T> re_order(const\
     \ vector<T> &a, const vector<int> &idx){\r\n  int n = int(a.size());\r\n  vector<T>\
     \ res(n); for(int i = 0; i < n; ++i) res[i] = a[idx[i]];\r\n  return res;\r\n\
-    }\r\ntemplate<typename... Ts>\r\nstring format(const string &fmt, Ts... ts){\r\
+    }\r\ntemplate<typename... Ts>\r\nstring cformat(const string &fmt, Ts... ts){\r\
     \n  size_t len = snprintf(nullptr, 0, fmt.c_str(), ts...);\r\n  vector<char> buf(len\
     \ + 1);\r\n  snprintf(&buf[0], len + 1, fmt.c_str(), ts...);\r\n  return string(buf.begin(),\
     \ buf.end()-1);\r\n}\r\ntemplate<typename Container>\r\nstring join(const Container&v,\
@@ -188,7 +188,7 @@ data:
   path: template/template_functions.cpp
   requiredBy:
   - template/template.cpp
-  timestamp: '2023-02-10 14:54:58+09:00'
+  timestamp: '2023-08-01 21:17:09+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: template/template_functions.cpp

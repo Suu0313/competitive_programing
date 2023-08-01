@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/algebraic/monoid/CompositeMonoid.cpp
     title: datastructure/algebraic/monoid/CompositeMonoid.cpp
   - icon: ':warning:'

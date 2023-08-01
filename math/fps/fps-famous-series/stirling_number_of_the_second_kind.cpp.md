@@ -10,7 +10,7 @@ data:
   - icon: ':warning:'
     path: math/fps/NTT.cpp
     title: math/fps/NTT.cpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: math/mod/ModInt.cpp
     title: math/mod/ModInt.cpp
   _extendedRequiredBy: []

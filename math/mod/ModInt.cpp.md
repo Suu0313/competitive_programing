@@ -44,10 +44,19 @@ data:
   - icon: ':warning:'
     path: math/fps/taylor_shift.cpp
     title: math/fps/taylor_shift.cpp
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/point_set_range_composite.test.cpp
+    title: test/verify/lc/point_set_range_composite.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/range_affine_point_get.test.cpp
+    title: test/verify/lc/range_affine_point_get.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/range_affine_range_sum.test.cpp
+    title: test/verify/lc/range_affine_range_sum.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math/mod/ModInt.cpp\"\n\r\ntemplate< int mod >\r\nstruct\
@@ -151,8 +160,11 @@ data:
   - math/convolution/or_sum_01.cpp
   - math/convolution/and_sum_01.cpp
   timestamp: '2023-02-10 18:05:26+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/range_affine_point_get.test.cpp
+  - test/verify/lc/range_affine_range_sum.test.cpp
+  - test/verify/lc/point_set_range_composite.test.cpp
 documentation_of: math/mod/ModInt.cpp
 layout: document
 redirect_from:

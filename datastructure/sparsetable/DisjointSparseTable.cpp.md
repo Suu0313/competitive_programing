@@ -2,10 +2,13 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/static_range_sum_DisjointSparseTable.test.cpp
+    title: test/verify/lc/static_range_sum_DisjointSparseTable.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"datastructure/sparsetable/DisjointSparseTable.cpp\"\n\r\n\
@@ -46,8 +49,9 @@ data:
   path: datastructure/sparsetable/DisjointSparseTable.cpp
   requiredBy: []
   timestamp: '2023-02-10 14:54:58+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/static_range_sum_DisjointSparseTable.test.cpp
 documentation_of: datastructure/sparsetable/DisjointSparseTable.cpp
 layout: document
 redirect_from:

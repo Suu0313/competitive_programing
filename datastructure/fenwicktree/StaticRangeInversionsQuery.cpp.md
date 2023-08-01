@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/fenwicktree/FenwickTree.cpp
     title: datastructure/fenwicktree/FenwickTree.cpp
   - icon: ':warning:'

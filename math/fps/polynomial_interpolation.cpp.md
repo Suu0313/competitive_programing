@@ -13,7 +13,7 @@ data:
   - icon: ':warning:'
     path: math/fps/multipoint_evaluation.cpp
     title: math/fps/multipoint_evaluation.cpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: math/mod/ModInt.cpp
     title: math/mod/ModInt.cpp
   _extendedRequiredBy: []

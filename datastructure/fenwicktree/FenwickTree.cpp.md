@@ -8,10 +8,13 @@ data:
   - icon: ':warning:'
     path: datastructure/fenwicktree/StaticRangeInversionsQuery.cpp
     title: datastructure/fenwicktree/StaticRangeInversionsQuery.cpp
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/point_add_range_sum_FenwickTree.test.cpp
+    title: test/verify/lc/point_add_range_sum_FenwickTree.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"datastructure/fenwicktree/FenwickTree.cpp\"\n\ntemplate\
@@ -48,8 +51,9 @@ data:
   - datastructure/fenwicktree/StaticRangeInversionsQuery.cpp
   - datastructure/fenwicktree/RangeInversionsQuery.cpp
   timestamp: '2023-07-22 06:20:20+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/point_add_range_sum_FenwickTree.test.cpp
 documentation_of: datastructure/fenwicktree/FenwickTree.cpp
 layout: document
 redirect_from:

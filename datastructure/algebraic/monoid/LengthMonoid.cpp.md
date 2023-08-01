@@ -5,16 +5,19 @@ data:
   - icon: ':warning:'
     path: datastructure/algebraic/operator_monoid/RangeAddRangeSum.cpp
     title: datastructure/algebraic/operator_monoid/RangeAddRangeSum.cpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
     title: datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
   - icon: ':warning:'
     path: datastructure/algebraic/operator_monoid/RangeUpdateRangeSum.cpp
     title: datastructure/algebraic/operator_monoid/RangeUpdateRangeSum.cpp
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/range_affine_range_sum.test.cpp
+    title: test/verify/lc/range_affine_range_sum.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"datastructure/algebraic/monoid/LengthMonoid.cpp\"\n\r\n\
@@ -46,8 +49,9 @@ data:
   - datastructure/algebraic/operator_monoid/RangeAddRangeSum.cpp
   - datastructure/algebraic/operator_monoid/RangeUpdateRangeSum.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/range_affine_range_sum.test.cpp
 documentation_of: datastructure/algebraic/monoid/LengthMonoid.cpp
 layout: document
 redirect_from:

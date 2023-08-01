@@ -56,7 +56,7 @@ data:
     - icon: ':warning:'
       path: datastructure/CumulativeSum.cpp
       title: datastructure/CumulativeSum.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/DequeAggregation.cpp
       title: datastructure/DequeAggregation.cpp
     - icon: ':warning:'
@@ -91,13 +91,13 @@ data:
     - icon: ':warning:'
       path: datastructure/algebraic/monoid/ClampAddMonoid.cpp
       title: datastructure/algebraic/monoid/ClampAddMonoid.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/algebraic/monoid/CompositeMonoid.cpp
       title: datastructure/algebraic/monoid/CompositeMonoid.cpp
     - icon: ':warning:'
       path: datastructure/algebraic/monoid/GcdMonoid.cpp
       title: datastructure/algebraic/monoid/GcdMonoid.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/algebraic/monoid/LengthMonoid.cpp
       title: datastructure/algebraic/monoid/LengthMonoid.cpp
     - icon: ':warning:'
@@ -112,7 +112,7 @@ data:
     - icon: ':warning:'
       path: datastructure/algebraic/monoid/MinMaxSumMonoid.cpp
       title: datastructure/algebraic/monoid/MinMaxSumMonoid.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/algebraic/monoid/MinMonoid.cpp
       title: datastructure/algebraic/monoid/MinMonoid.cpp
     - icon: ':warning:'
@@ -150,7 +150,7 @@ data:
     - icon: ':warning:'
       path: datastructure/algebraic/operator_monoid/RangeAffineRangeMinMaxSum.cpp
       title: datastructure/algebraic/operator_monoid/RangeAffineRangeMinMaxSum.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
       title: datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
     - icon: ':warning:'
@@ -215,7 +215,7 @@ data:
       title: datastructure/cht/PersistentDynamicLiChaoTree.cpp
   - name: datastructure/fenwicktree
     pages:
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/fenwicktree/FenwickTree.cpp
       title: datastructure/fenwicktree/FenwickTree.cpp
     - icon: ':warning:'
@@ -286,7 +286,7 @@ data:
     - icon: ':warning:'
       path: datastructure/segtree/CountPersistentSegTree.cpp
       title: datastructure/segtree/CountPersistentSegTree.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/segtree/DualSegTree.cpp
       title: datastructure/segtree/DualSegTree.cpp
     - icon: ':warning:'
@@ -295,24 +295,24 @@ data:
     - icon: ':warning:'
       path: datastructure/segtree/DynamicSegTree.cpp
       title: datastructure/segtree/DynamicSegTree.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/segtree/LazySegTree.cpp
       title: datastructure/segtree/LazySegTree.cpp
     - icon: ':warning:'
       path: datastructure/segtree/PersistentSegmentTree.cpp
       title: datastructure/segtree/PersistentSegmentTree.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/segtree/SegmentTree.cpp
       title: Segment Tree
   - name: datastructure/sparsetable
     pages:
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/sparsetable/DisjointSparseTable.cpp
       title: datastructure/sparsetable/DisjointSparseTable.cpp
     - icon: ':warning:'
       path: datastructure/sparsetable/DisjointSparseTable2D.cpp
       title: datastructure/sparsetable/DisjointSparseTable2D.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/sparsetable/SparseTable.cpp
       title: datastructure/sparsetable/SparseTable.cpp
     - icon: ':warning:'
@@ -810,7 +810,7 @@ data:
     - icon: ':warning:'
       path: math/mod/Lucas.cpp
       title: math/mod/Lucas.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: math/mod/ModInt.cpp
       title: math/mod/ModInt.cpp
     - icon: ':warning:'
@@ -929,7 +929,7 @@ data:
       title: other/range-based-for/Supersets.cpp
   - name: other/sort
     pages:
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: other/sort/hilbert_sort.cpp
       title: other/sort/hilbert_sort.cpp
     - icon: ':warning:'
@@ -1095,16 +1095,32 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/verify/aoj/gcl_1_c.test.cpp
       title: test/verify/aoj/gcl_1_c.test.cpp
-  - name: test/verify
-    pages:
-    - icon: ':heavy_check_mark:'
-      path: test/verify/example.test.cpp
-      title: test/verify/example.test.cpp
   - name: test/verify/lc
     pages:
     - icon: ':heavy_check_mark:'
       path: test/verify/lc/double_ended_priority_queue.test.cpp
       title: test/verify/lc/double_ended_priority_queue.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/point_add_range_sum_FenwickTree.test.cpp
+      title: test/verify/lc/point_add_range_sum_FenwickTree.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/point_set_range_composite.test.cpp
+      title: test/verify/lc/point_set_range_composite.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/range_affine_point_get.test.cpp
+      title: test/verify/lc/range_affine_point_get.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/range_affine_range_sum.test.cpp
+      title: test/verify/lc/range_affine_range_sum.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/static_range_sum_DisjointSparseTable.test.cpp
+      title: test/verify/lc/static_range_sum_DisjointSparseTable.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/staticrmq_DequeAggregation.test.cpp
+      title: test/verify/lc/staticrmq_DequeAggregation.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/staticrmq_SparseTable.test.cpp
+      title: test/verify/lc/staticrmq_SparseTable.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/verify/lc/unionfind.test.cpp
       title: test/verify/lc/unionfind.test.cpp
@@ -1114,6 +1130,5 @@ layout: toppage
 
 [![Suu0313](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2FSuu0313)](https://atcoder.jp/users/Suu0313)
 [![Suu0313](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fcodeforces%2Fjson%2FSuu0313)](https://codeforces.com/profile/Suu0313)
-[![GitHub Pages](https://img.shields.io/static/v1?label=GitHub+Pages&message=+&color=brightgreen&logo=github)](https://Suu0313.github.io/competitive_programing/)
 
 [home](https://suu0313.github.io/)

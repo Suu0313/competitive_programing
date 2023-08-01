@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/algebraic/monoid/LengthMonoid.cpp
     title: datastructure/algebraic/monoid/LengthMonoid.cpp
   - icon: ':warning:'
