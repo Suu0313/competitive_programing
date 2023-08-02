@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/waveletmatrix/BitVector.cpp
     title: datastructure/waveletmatrix/BitVector.cpp
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/waveletmatrix/WaveletMatrix.cpp
     title: datastructure/waveletmatrix/WaveletMatrix.cpp
   _extendedRequiredBy: []

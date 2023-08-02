@@ -45,8 +45,8 @@ data:
   isVerificationFile: false
   path: datastructure/algebraic/monoid/LengthMonoid.cpp
   requiredBy:
-  - datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
   - datastructure/algebraic/operator_monoid/RangeAddRangeSum.cpp
+  - datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
   - datastructure/algebraic/operator_monoid/RangeUpdateRangeSum.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
   verificationStatus: LIBRARY_ALL_AC

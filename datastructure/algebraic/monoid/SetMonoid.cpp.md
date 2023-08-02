@@ -43,9 +43,9 @@ data:
   isVerificationFile: false
   path: datastructure/algebraic/monoid/SetMonoid.cpp
   requiredBy:
+  - datastructure/algebraic/operator_monoid/RangeUpdateRangeMin.cpp
   - datastructure/algebraic/operator_monoid/RangeUpdateRangeMax.cpp
   - datastructure/algebraic/operator_monoid/RangeUpdateRangeSum.cpp
-  - datastructure/algebraic/operator_monoid/RangeUpdateRangeMin.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []

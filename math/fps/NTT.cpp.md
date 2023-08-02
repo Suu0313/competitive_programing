@@ -180,18 +180,18 @@ data:
   isVerificationFile: false
   path: math/fps/NTT.cpp
   requiredBy:
-  - math/fps/p_subset_sum.cpp
+  - math/fps/taylor_shift.cpp
   - math/fps/GeneratingFunction.cpp
-  - math/fps/SemiRelaxedConvolution.cpp
-  - math/fps/multipoint_evaluation.cpp
+  - math/fps/FFT-ntt.cpp
+  - math/fps/FastKitamasa.cpp
   - math/fps/fps-famous-series/partition_function_table_fps.cpp
   - math/fps/fps-famous-series/stirling_number_of_the_second_kind.cpp
   - math/fps/fps-famous-series/bernoulli_number.cpp
+  - math/fps/SemiRelaxedConvolution.cpp
   - math/fps/polynomial_interpolation.cpp
-  - math/fps/FastKitamasa.cpp
-  - math/fps/FFT-ntt.cpp
+  - math/fps/multipoint_evaluation.cpp
   - math/fps/Formalpowerseries.cpp
-  - math/fps/taylor_shift.cpp
+  - math/fps/p_subset_sum.cpp
   - math/convolution/or_sum_01.cpp
   - math/convolution/and_sum_01.cpp
   timestamp: '2023-02-10 14:54:58+09:00'

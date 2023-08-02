@@ -187,26 +187,26 @@ data:
   isVerificationFile: false
   path: math/geometry/Point.cpp
   requiredBy:
-  - math/geometry/Geometry.cpp
-  - math/geometry/closest_pair.cpp
-  - math/geometry/manhattan_intersections.cpp
-  - math/geometry/convex_diameter.cpp
-  - math/geometry/is_contains.cpp
-  - math/geometry/convex_hull.cpp
-  - math/geometry/clock_hands.cpp
-  - math/geometry/bitonicTSP.cpp
-  - math/geometry/area.cpp
-  - math/geometry/is_congruence.cpp
   - math/geometry/smallest_enclosing_circle.cpp
+  - math/geometry/manhattan_intersections.cpp
+  - math/geometry/bitonicTSP.cpp
+  - math/geometry/convex_diameter.cpp
+  - math/geometry/clock_hands.cpp
   - math/geometry/convex_cut.cpp
   - math/geometry/inner_points.cpp
+  - math/geometry/Geometry.cpp
+  - math/geometry/is_congruence.cpp
+  - math/geometry/convex_hull.cpp
+  - math/geometry/area.cpp
+  - math/geometry/is_contains.cpp
+  - math/geometry/closest_pair.cpp
   - math/geometry/is_convex.cpp
   timestamp: '2023-07-01 17:56:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/verify/aoj/gcl_1_c.test.cpp
   - test/verify/aoj/gcl_1_a.test.cpp
   - test/verify/aoj/gcl_1_b.test.cpp
+  - test/verify/aoj/gcl_1_c.test.cpp
 documentation_of: math/geometry/Point.cpp
 layout: document
 redirect_from:

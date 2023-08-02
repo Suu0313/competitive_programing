@@ -43,11 +43,11 @@ data:
   isVerificationFile: false
   path: datastructure/algebraic/monoid/MaxMonoid.cpp
   requiredBy:
-  - datastructure/algebraic/operator_monoid/RangechmaxRangeMax.cpp
   - datastructure/algebraic/operator_monoid/RangeUpdateRangeMax.cpp
-  - datastructure/algebraic/operator_monoid/RangechmaxRangeMin.cpp
   - datastructure/algebraic/operator_monoid/RangechminRangeMax.cpp
   - datastructure/algebraic/operator_monoid/RangeAddRangeMax.cpp
+  - datastructure/algebraic/operator_monoid/RangechmaxRangeMin.cpp
+  - datastructure/algebraic/operator_monoid/RangechmaxRangeMax.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []

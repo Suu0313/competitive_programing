@@ -145,26 +145,26 @@ data:
   isVerificationFile: false
   path: math/mod/ModInt.cpp
   requiredBy:
-  - math/fps/p_subset_sum.cpp
+  - math/fps/taylor_shift.cpp
   - math/fps/GeneratingFunction.cpp
-  - math/fps/SemiRelaxedConvolution.cpp
-  - math/fps/multipoint_evaluation.cpp
+  - math/fps/FFT-ntt.cpp
+  - math/fps/FastKitamasa.cpp
   - math/fps/fps-famous-series/partition_function_table_fps.cpp
   - math/fps/fps-famous-series/stirling_number_of_the_second_kind.cpp
   - math/fps/fps-famous-series/bernoulli_number.cpp
+  - math/fps/SemiRelaxedConvolution.cpp
   - math/fps/polynomial_interpolation.cpp
-  - math/fps/FastKitamasa.cpp
-  - math/fps/FFT-ntt.cpp
+  - math/fps/multipoint_evaluation.cpp
   - math/fps/Formalpowerseries.cpp
-  - math/fps/taylor_shift.cpp
+  - math/fps/p_subset_sum.cpp
   - math/convolution/or_sum_01.cpp
   - math/convolution/and_sum_01.cpp
   timestamp: '2023-02-10 18:05:26+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/verify/lc/range_affine_point_get.test.cpp
-  - test/verify/lc/range_affine_range_sum.test.cpp
   - test/verify/lc/point_set_range_composite.test.cpp
+  - test/verify/lc/range_affine_range_sum.test.cpp
+  - test/verify/lc/range_affine_point_get.test.cpp
 documentation_of: math/mod/ModInt.cpp
 layout: document
 redirect_from:

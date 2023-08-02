@@ -49,14 +49,14 @@ data:
   isVerificationFile: false
   path: datastructure/algebraic/monoid/CompositeMonoid.cpp
   requiredBy:
-  - datastructure/algebraic/operator_monoid/RangeAffineRangeMinMaxSum.cpp
   - datastructure/algebraic/operator_monoid/RangeAffineRangeSum.cpp
+  - datastructure/algebraic/operator_monoid/RangeAffineRangeMinMaxSum.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/verify/lc/range_affine_point_get.test.cpp
-  - test/verify/lc/range_affine_range_sum.test.cpp
   - test/verify/lc/point_set_range_composite.test.cpp
+  - test/verify/lc/range_affine_range_sum.test.cpp
+  - test/verify/lc/range_affine_point_get.test.cpp
 documentation_of: datastructure/algebraic/monoid/CompositeMonoid.cpp
 layout: document
 redirect_from:

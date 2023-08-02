@@ -2,7 +2,7 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: datastructure/waveletmatrix/WaveletMatrix.cpp
     title: datastructure/waveletmatrix/WaveletMatrix.cpp
   - icon: ':warning:'
@@ -11,10 +11,13 @@ data:
   - icon: ':warning:'
     path: datastructure/waveletmatrix/WaveletMatrixRectangleSum.cpp
     title: datastructure/waveletmatrix/WaveletMatrixRectangleSum.cpp
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: test/verify/lc/range_kth_smallest_WaveletMatrix.test.cpp
+    title: test/verify/lc/range_kth_smallest_WaveletMatrix.test.cpp
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"datastructure/waveletmatrix/BitVector.cpp\"\n\r\n\r\nstruct\
@@ -68,12 +71,13 @@ data:
   isVerificationFile: false
   path: datastructure/waveletmatrix/BitVector.cpp
   requiredBy:
+  - datastructure/waveletmatrix/WaveletMatrixPointAddRectangleSum.cpp
   - datastructure/waveletmatrix/WaveletMatrix.cpp
   - datastructure/waveletmatrix/WaveletMatrixRectangleSum.cpp
-  - datastructure/waveletmatrix/WaveletMatrixPointAddRectangleSum.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - test/verify/lc/range_kth_smallest_WaveletMatrix.test.cpp
 documentation_of: datastructure/waveletmatrix/BitVector.cpp
 layout: document
 redirect_from:

@@ -58,8 +58,8 @@ data:
   timestamp: '2023-07-22 06:23:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - test/verify/aoj/dsl_1_a.test.cpp
   - test/verify/lc/unionfind.test.cpp
+  - test/verify/aoj/dsl_1_a.test.cpp
 documentation_of: datastructure/unionfind/UnionFind.cpp
 layout: document
 redirect_from:

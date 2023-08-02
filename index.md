@@ -357,10 +357,10 @@ data:
       title: datastructure/unionfind/UnionFindTree.cpp
   - name: datastructure/waveletmatrix
     pages:
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/waveletmatrix/BitVector.cpp
       title: datastructure/waveletmatrix/BitVector.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: datastructure/waveletmatrix/WaveletMatrix.cpp
       title: datastructure/waveletmatrix/WaveletMatrix.cpp
     - icon: ':warning:'
@@ -836,7 +836,7 @@ data:
     - icon: ':warning:'
       path: math/prime/Sieve.cpp
       title: math/prime/Sieve.cpp
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: math/prime/count_primes.cpp
       title: math/prime/count_primes.cpp
     - icon: ':warning:'
@@ -1098,6 +1098,9 @@ data:
   - name: test/verify/lc
     pages:
     - icon: ':heavy_check_mark:'
+      path: test/verify/lc/counting_primes.test.cpp
+      title: test/verify/lc/counting_primes.test.cpp
+    - icon: ':heavy_check_mark:'
       path: test/verify/lc/double_ended_priority_queue.test.cpp
       title: test/verify/lc/double_ended_priority_queue.test.cpp
     - icon: ':heavy_check_mark:'
@@ -1112,6 +1115,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/verify/lc/range_affine_range_sum.test.cpp
       title: test/verify/lc/range_affine_range_sum.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/verify/lc/range_kth_smallest_WaveletMatrix.test.cpp
+      title: test/verify/lc/range_kth_smallest_WaveletMatrix.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/verify/lc/static_range_sum_DisjointSparseTable.test.cpp
       title: test/verify/lc/static_range_sum_DisjointSparseTable.test.cpp

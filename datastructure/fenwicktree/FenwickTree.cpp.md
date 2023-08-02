@@ -48,8 +48,8 @@ data:
   isVerificationFile: false
   path: datastructure/fenwicktree/FenwickTree.cpp
   requiredBy:
-  - datastructure/fenwicktree/StaticRangeInversionsQuery.cpp
   - datastructure/fenwicktree/RangeInversionsQuery.cpp
+  - datastructure/fenwicktree/StaticRangeInversionsQuery.cpp
   timestamp: '2023-07-22 06:20:20+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

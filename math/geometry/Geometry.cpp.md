@@ -307,10 +307,10 @@ data:
   isVerificationFile: false
   path: math/geometry/Geometry.cpp
   requiredBy:
-  - math/geometry/manhattan_intersections.cpp
-  - math/geometry/area.cpp
   - math/geometry/smallest_enclosing_circle.cpp
+  - math/geometry/manhattan_intersections.cpp
   - math/geometry/convex_cut.cpp
+  - math/geometry/area.cpp
   timestamp: '2023-07-01 17:56:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

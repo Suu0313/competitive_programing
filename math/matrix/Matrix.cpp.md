@@ -145,12 +145,12 @@ data:
   isVerificationFile: false
   path: math/matrix/Matrix.cpp
   requiredBy:
-  - math/matrix/MatrixTree.cpp
   - math/matrix/rank.cpp
-  - math/matrix/inverse.cpp
+  - math/matrix/linear_equation.cpp
   - math/matrix/minordet.cpp
   - math/matrix/determinant.cpp
-  - math/matrix/linear_equation.cpp
+  - math/matrix/inverse.cpp
+  - math/matrix/MatrixTree.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []

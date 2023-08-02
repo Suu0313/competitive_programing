@@ -49,11 +49,11 @@ data:
   isVerificationFile: false
   path: datastructure/algebraic/monoid/MinMonoid.cpp
   requiredBy:
-  - datastructure/algebraic/operator_monoid/RangechmaxRangeMin.cpp
-  - datastructure/algebraic/operator_monoid/RangechminRangeMax.cpp
   - datastructure/algebraic/operator_monoid/RangeUpdateRangeMin.cpp
   - datastructure/algebraic/operator_monoid/RangeAddRangeMin.cpp
+  - datastructure/algebraic/operator_monoid/RangechminRangeMax.cpp
   - datastructure/algebraic/operator_monoid/RangechminRangeMin.cpp
+  - datastructure/algebraic/operator_monoid/RangechmaxRangeMin.cpp
   timestamp: '2023-02-10 14:54:58+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
