@@ -22,7 +22,7 @@ documentation_of: //../datastructure/segtree/SegmentTree.cpp
 - `SegmentTree(int n, const Monoid &x)`: $n$ 個の `x` で構築. $\Theta(n)$
 - `SegmentTree(Iiter first, Iiter last)`: イレテータ範囲 `[first, last)` を要素としてコピーしてオブジェクトを構築. `distance(first, last)` $= n$ として $\Theta(n)$
 - `SegmentTree(const Container &c)`: `SegmentTree(begin(c), end(c))` と等価
-- ` void build()`: 現在セットされている値でセグ木を構築. $\Theta(n)$
+- `void build()`: 現在セットされている値でセグ木を構築. $\Theta(n)$
 - `void set(int k, const Monoid &x)`: $k$ 番目の値を `x` に変更, 伝播はさせない. $O(1)$
 - `void change(int k, const Monoid &x)`: $k$ 番目の値を `x` に変更. $O(\log n)$
 - `void change(int l, int r, const Monoid &x)`: $k \in [l, r)$ に対して `change(k, x)` を適用. $O((r - l)\log n)$
