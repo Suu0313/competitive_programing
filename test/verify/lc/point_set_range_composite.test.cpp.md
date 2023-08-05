@@ -6,7 +6,7 @@ data:
     title: datastructure/algebraic/monoid/CompositeMonoid.cpp
   - icon: ':heavy_check_mark:'
     path: datastructure/segtree/SegmentTree.cpp
-    title: Segment Tree
+    title: datastructure/segtree/SegmentTree.cpp
   - icon: ':heavy_check_mark:'
     path: math/mod/ModInt.cpp
     title: math/mod/ModInt.cpp

@@ -303,7 +303,7 @@ data:
       title: datastructure/segtree/PersistentSegmentTree.cpp
     - icon: ':heavy_check_mark:'
       path: datastructure/segtree/SegmentTree.cpp
-      title: Segment Tree
+      title: datastructure/segtree/SegmentTree.cpp
   - name: datastructure/sparsetable
     pages:
     - icon: ':heavy_check_mark:'
