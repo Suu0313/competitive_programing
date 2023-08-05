@@ -106,13 +106,8 @@ data:
   - test/verify/lc/point_set_range_composite.test.cpp
 documentation_of: datastructure/segtree/SegmentTree.cpp
 layout: document
-title: Segment Tree
+redirect_from:
+- /library/datastructure/segtree/SegmentTree.cpp
+- /library/datastructure/segtree/SegmentTree.cpp.html
+title: datastructure/segtree/SegmentTree.cpp
 ---
-
-## 概要
-
-セグ木です テストで書いてみた
-
-## 使い方
-
-いい感じにやったら $\log$ になるよ
