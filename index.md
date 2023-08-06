@@ -1,6 +1,14 @@
 ---
 data:
   libraryCategories:
+  - name: algorithm
+    pages:
+    - icon: ':warning:'
+      path: algorithm/monotone_minima.cpp
+      title: algorithm/monotone_minima.cpp
+    - icon: ':warning:'
+      path: algorithm/totally_monotone_minima.cpp
+      title: algorithm/totally_monotone_minima.cpp
   - name: container
     pages:
     - icon: ':warning:'
